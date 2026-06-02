@@ -239,3 +239,254 @@ footer a,
         transform: none;
     }
 }
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) {
+    --bag-dashboard-brown: #7a4a24;
+    --bag-dashboard-gold: #c8924f;
+    --bag-dashboard-charcoal: #17110d;
+    background: #f6efe5;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page {
+    background:
+        linear-gradient(180deg, rgba(255, 250, 244, .94) 0, rgba(246, 239, 229, .98) 42rem),
+        radial-gradient(circle at 8% 38rem, rgba(200, 146, 79, .20), transparent 18rem),
+        radial-gradient(circle at 96% 56rem, rgba(83, 106, 74, .16), transparent 20rem);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page.drawers .main-inner {
+    max-width: none;
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header {
+    position: relative;
+    min-height: clamp(25rem, 58vh, 38rem);
+    margin: 0 calc(50% - 50vw) 4.5rem;
+    padding: clamp(6rem, 10vw, 8rem) max(1.25rem, calc((100vw - 1180px) / 2)) 5rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    color: #fff8ed;
+    background:
+        linear-gradient(90deg, rgba(19, 12, 8, .84) 0, rgba(34, 23, 16, .70) 42%, rgba(42, 29, 20, .36) 100%),
+        radial-gradient(circle at 82% 20%, rgba(200, 146, 79, .28), transparent 18rem),
+        linear-gradient(135deg, #1b130f 0, #4b3324 48%, #19120e 100%);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::before {
+    content: "";
+    position: absolute;
+    inset: auto 7vw 0 auto;
+    width: min(43vw, 34rem);
+    height: min(34vw, 28rem);
+    background:
+        radial-gradient(circle at 36% 40%, rgba(255, 255, 255, .16) 0 .35rem, transparent .42rem),
+        radial-gradient(circle at 58% 52%, rgba(255, 255, 255, .11) 0 .28rem, transparent .36rem),
+        radial-gradient(circle at 50% 50%, rgba(120, 77, 42, .90), rgba(42, 24, 15, .96) 61%, transparent 62%);
+    border-radius: 50%;
+    opacity: .72;
+    filter: blur(.2px);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::after {
+    content: "500+ learners   20+ programmes   5+ expert instructors";
+    position: absolute;
+    left: max(1.25rem, calc((100vw - 1180px) / 2));
+    bottom: 2.4rem;
+    max-width: min(44rem, calc(100vw - 2.5rem));
+    color: rgba(255, 248, 237, .80);
+    font-size: .84rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .w-100 {
+    position: relative;
+    z-index: 1;
+    max-width: 43rem;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1 {
+    max-width: 42rem;
+    margin: 0;
+    color: #fff8ed;
+    font-size: clamp(2.55rem, 6vw, 5.2rem);
+    line-height: .95;
+    text-transform: uppercase;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1::before {
+    content: "Empower your future";
+    display: block;
+    margin-bottom: .9rem;
+    color: var(--bag-dashboard-gold);
+    font-size: .88rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .header-actions-container,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .singlebutton {
+    margin-top: 1.35rem;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .btn {
+    border-radius: .35rem;
+    padding: .72rem 1.25rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 1.25rem 4rem;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content::before {
+    content: "Expertise across all disciplines";
+    display: block;
+    margin: 0 auto 2.4rem;
+    max-width: 36rem;
+    color: var(--bag-dashboard-charcoal);
+    font-size: clamp(1.65rem, 3vw, 2.4rem);
+    line-height: 1.05;
+    font-weight: 850;
+    text-align: center;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #region-main {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .card,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .path-my .block_myoverview {
+    border: 1px solid rgba(80, 52, 32, .12);
+    border-radius: .55rem;
+    box-shadow: 0 18px 42px rgba(56, 34, 19, .10);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block {
+    background: rgba(255, 252, 247, .96);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block .card-title,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block h2,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block h3 {
+    color: var(--bag-dashboard-charcoal);
+    font-size: 1.15rem;
+    letter-spacing: 0;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block_myoverview {
+    padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card-deck,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .courses-view-course-item {
+    gap: 1.15rem;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card {
+    background: #fffdfa;
+    overflow: hidden;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card-img,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .courseimage,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .course-card-img {
+    min-height: 10rem;
+    background:
+        linear-gradient(145deg, rgba(23, 17, 13, .28), rgba(122, 74, 36, .18)),
+        linear-gradient(135deg, #2b1b13 0, #8c623a 48%, #dac2a4 100%);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card .card-body {
+    padding: 1.15rem;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card .coursename,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card .coursename a {
+    color: #1b130f;
+    font-weight: 800;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .progress {
+    height: .45rem;
+    border-radius: 999px;
+    background: rgba(122, 74, 36, .12);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .progress-bar {
+    background: linear-gradient(90deg, var(--bag-dashboard-brown), var(--bag-dashboard-gold));
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn-primary,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn.btn-primary {
+    background: var(--bag-dashboard-brown);
+    border-color: var(--bag-dashboard-brown);
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn-primary:hover,
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn.btn-primary:hover {
+    background: #5d3518;
+    border-color: #5d3518;
+}
+
+body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content::after {
+    content: "Ready to begin your journey?";
+    display: block;
+    margin: 3.5rem auto 0;
+    padding: 2rem 1.5rem;
+    max-width: 100%;
+    border-radius: .55rem;
+    background:
+        linear-gradient(90deg, rgba(122, 74, 36, .96), rgba(91, 55, 27, .96)),
+        radial-gradient(circle at 90% 50%, rgba(255, 248, 237, .22), transparent 14rem);
+    color: #fff8ed;
+    font-size: clamp(1.35rem, 2.8vw, 2.05rem);
+    line-height: 1.1;
+    font-weight: 850;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media (max-width: 767.98px) {
+    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header {
+        min-height: 31rem;
+        margin-bottom: 3rem;
+        padding-top: 5.25rem;
+        align-items: flex-start;
+    }
+
+    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::before {
+        right: -7rem;
+        bottom: -4rem;
+        width: 21rem;
+        height: 21rem;
+    }
+
+    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::after {
+        font-size: .72rem;
+        line-height: 1.8;
+    }
+
+    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1 {
+        font-size: 2.65rem;
+    }
+
+    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content {
+        padding-inline: 1rem;
+    }
+}
