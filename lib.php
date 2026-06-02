@@ -68,3 +68,28 @@ function theme_baitulghawa_get_pre_scss($theme): string {
 function theme_baitulghawa_get_extra_scss($theme): string {
     return !empty($theme->settings->rawscss) ? $theme->settings->rawscss : '';
 }
+
+/**
+ * Injects dashboard CSS directly into the page head.
+ *
+ * This is intentionally used as a fallback because some Moodle installs can
+ * serve the Boost preset without appending this child theme's post SCSS.
+ *
+ * @return string
+ */
+function theme_baitulghawa_before_standard_html_head(): string {
+    global $CFG, $PAGE;
+
+    if (empty($PAGE) || $PAGE->pagetype !== 'my-index') {
+        return '';
+    }
+
+    $dashboardcss = $CFG->dirroot . '/theme/baitulghawa/style/dashboard.css';
+    if (!is_readable($dashboardcss)) {
+        return '';
+    }
+
+    return html_writer::tag('style', file_get_contents($dashboardcss), [
+        'id' => 'theme-baitulghawa-dashboard-css',
+    ]);
+}
