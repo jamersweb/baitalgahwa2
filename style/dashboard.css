@@ -1,0 +1,196 @@
+body#page-my-index,
+body.path-my {
+    background: #f6efe5 !important;
+}
+
+body#page-my-index #page,
+body.path-my #page {
+    background: #f6efe5 !important;
+}
+
+body#page-my-index #page.drawers .main-inner,
+body.path-my #page.drawers .main-inner {
+    max-width: none !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body#page-my-index #page-header,
+body.path-my #page-header {
+    position: relative !important;
+    min-height: 520px !important;
+    margin: 0 -50vw 70px !important;
+    left: 50% !important;
+    right: 50% !important;
+    padding: 115px 7vw 78px !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    color: #fff8ed !important;
+    background: #1b130f !important;
+    background-image:
+        linear-gradient(90deg, rgba(19, 12, 8, .88) 0, rgba(34, 23, 16, .72) 45%, rgba(42, 29, 20, .32) 100%),
+        linear-gradient(135deg, #1b130f 0, #4b3324 48%, #19120e 100%) !important;
+}
+
+body#page-my-index #page-header::before,
+body.path-my #page-header::before {
+    content: "" !important;
+    position: absolute !important;
+    right: 8vw !important;
+    bottom: -40px !important;
+    width: 470px !important;
+    height: 360px !important;
+    border-radius: 50% !important;
+    opacity: .72 !important;
+    background:
+        radial-gradient(circle at 36% 40%, rgba(255, 255, 255, .16) 0 .35rem, transparent .42rem),
+        radial-gradient(circle at 58% 52%, rgba(255, 255, 255, .11) 0 .28rem, transparent .36rem),
+        radial-gradient(circle at 50% 50%, rgba(120, 77, 42, .90), rgba(42, 24, 15, .96) 61%, transparent 62%) !important;
+}
+
+body#page-my-index #page-header::after,
+body.path-my #page-header::after {
+    content: "500+ learners   20+ programmes   5+ expert instructors" !important;
+    position: absolute !important;
+    left: 7vw !important;
+    bottom: 34px !important;
+    max-width: 680px !important;
+    color: rgba(255, 248, 237, .80) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: .08em !important;
+    text-transform: uppercase !important;
+}
+
+body#page-my-index #page-header .w-100,
+body.path-my #page-header .w-100 {
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: 690px !important;
+}
+
+body#page-my-index #page-header h1,
+body.path-my #page-header h1 {
+    max-width: 680px !important;
+    margin: 0 !important;
+    color: #fff8ed !important;
+    font-size: 76px !important;
+    line-height: .96 !important;
+    text-transform: uppercase !important;
+}
+
+body#page-my-index #page-header h1::before,
+body.path-my #page-header h1::before {
+    content: "Empower your future" !important;
+    display: block !important;
+    margin-bottom: 14px !important;
+    color: #c8924f !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    letter-spacing: .16em !important;
+}
+
+body#page-my-index #page-content,
+body.path-my #page-content {
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 20px 64px !important;
+}
+
+body#page-my-index #page-content::before,
+body.path-my #page-content::before {
+    content: "Expertise across all disciplines" !important;
+    display: block !important;
+    margin: 0 auto 38px !important;
+    max-width: 580px !important;
+    color: #17110d !important;
+    font-size: 36px !important;
+    line-height: 1.05 !important;
+    font-weight: 850 !important;
+    text-align: center !important;
+}
+
+body#page-my-index #region-main,
+body.path-my #region-main {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body#page-my-index .block,
+body#page-my-index .card,
+body#page-my-index .dashboard-card,
+body.path-my .block,
+body.path-my .card,
+body.path-my .dashboard-card {
+    border: 1px solid rgba(80, 52, 32, .12) !important;
+    border-radius: .55rem !important;
+    box-shadow: 0 18px 42px rgba(56, 34, 19, .10) !important;
+}
+
+body#page-my-index .block,
+body.path-my .block {
+    background: rgba(255, 252, 247, .96) !important;
+}
+
+body#page-my-index .block_myoverview,
+body.path-my .block_myoverview {
+    padding: 24px !important;
+}
+
+body#page-my-index #page-content::after,
+body.path-my #page-content::after {
+    content: "Ready to begin your journey?" !important;
+    display: block !important;
+    margin: 56px auto 0 !important;
+    padding: 32px 24px !important;
+    max-width: 100% !important;
+    border-radius: .55rem !important;
+    background: #7a4a24 !important;
+    color: #fff8ed !important;
+    font-size: 30px !important;
+    line-height: 1.1 !important;
+    font-weight: 850 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+}
+
+@media (max-width: 767.98px) {
+    body#page-my-index #page-header,
+    body.path-my #page-header {
+        min-height: 480px !important;
+        margin-bottom: 48px !important;
+        padding: 84px 20px 78px !important;
+        align-items: flex-start !important;
+    }
+
+    body#page-my-index #page-header::before,
+    body.path-my #page-header::before {
+        right: -110px !important;
+        bottom: -64px !important;
+        width: 336px !important;
+        height: 336px !important;
+    }
+
+    body#page-my-index #page-header::after,
+    body.path-my #page-header::after {
+        left: 20px !important;
+        font-size: 11px !important;
+        line-height: 1.8 !important;
+    }
+
+    body#page-my-index #page-header h1,
+    body.path-my #page-header h1 {
+        font-size: 42px !important;
+    }
+
+    body#page-my-index #page-content,
+    body.path-my #page-content {
+        padding-right: 16px !important;
+        padding-left: 16px !important;
+    }
+}

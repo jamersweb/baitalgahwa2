@@ -5,7 +5,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $THEME->name = 'baitulghawa';
 $THEME->parents = ['boost'];
-$THEME->sheets = [];
+$THEME->sheets = ['dashboard'];
 $THEME->editor_sheets = [];
 $THEME->parents_exclude_sheets = [];
 $THEME->enable_dock = false;
