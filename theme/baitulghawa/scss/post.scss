@@ -240,21 +240,21 @@ footer a,
     }
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) {
+body.path-my {
     --bag-dashboard-brown: #7a4a24;
     --bag-dashboard-gold: #c8924f;
     --bag-dashboard-charcoal: #17110d;
     background: #f6efe5;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page {
+body.path-my #page {
     background:
         linear-gradient(180deg, rgba(255, 250, 244, .94) 0, rgba(246, 239, 229, .98) 42rem),
         radial-gradient(circle at 8% 38rem, rgba(200, 146, 79, .20), transparent 18rem),
         radial-gradient(circle at 96% 56rem, rgba(83, 106, 74, .16), transparent 20rem);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page.drawers .main-inner {
+body.path-my #page.drawers .main-inner {
     max-width: none;
     width: 100%;
     margin-top: 0;
@@ -263,7 +263,7 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page.drawers .main-inn
     box-shadow: none;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header {
+body.path-my #page-header {
     position: relative;
     min-height: clamp(25rem, 58vh, 38rem);
     margin: 0 calc(50% - 50vw) 4.5rem;
@@ -278,7 +278,7 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header {
         linear-gradient(135deg, #1b130f 0, #4b3324 48%, #19120e 100%);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::before {
+body.path-my #page-header::before {
     content: "";
     position: absolute;
     inset: auto 7vw 0 auto;
@@ -293,7 +293,7 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::before {
     filter: blur(.2px);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::after {
+body.path-my #page-header::after {
     content: "500+ learners   20+ programmes   5+ expert instructors";
     position: absolute;
     left: max(1.25rem, calc((100vw - 1180px) / 2));
@@ -306,13 +306,13 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::after {
     text-transform: uppercase;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .w-100 {
+body.path-my #page-header .w-100 {
     position: relative;
     z-index: 1;
     max-width: 43rem;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1 {
+body.path-my #page-header h1 {
     max-width: 42rem;
     margin: 0;
     color: #fff8ed;
@@ -321,7 +321,7 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1 {
     text-transform: uppercase;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1::before {
+body.path-my #page-header h1::before {
     content: "Empower your future";
     display: block;
     margin-bottom: .9rem;
@@ -331,12 +331,12 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1::before
     letter-spacing: .16em;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .header-actions-container,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .singlebutton {
+body.path-my #page-header .header-actions-container,
+body.path-my #page-header .singlebutton {
     margin-top: 1.35rem;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .btn {
+body.path-my #page-header .btn {
     border-radius: .35rem;
     padding: .72rem 1.25rem;
     font-weight: 800;
@@ -344,13 +344,13 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header .btn {
     letter-spacing: .04em;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content {
+body.path-my #page-content {
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 1.25rem 4rem;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content::before {
+body.path-my #page-content::before {
     content: "Expertise across all disciplines";
     display: block;
     margin: 0 auto 2.4rem;
@@ -362,89 +362,89 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content::before {
     text-align: center;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #region-main {
+body.path-my #region-main {
     background: transparent;
     border: 0;
     box-shadow: none;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .card,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .path-my .block_myoverview {
+body.path-my .block,
+body.path-my .card,
+body.path-my .dashboard-card,
+body.path-my .path-my .block_myoverview {
     border: 1px solid rgba(80, 52, 32, .12);
     border-radius: .55rem;
     box-shadow: 0 18px 42px rgba(56, 34, 19, .10);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block {
+body.path-my .block {
     background: rgba(255, 252, 247, .96);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block .card-title,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block h2,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block h3 {
+body.path-my .block .card-title,
+body.path-my .block h2,
+body.path-my .block h3 {
     color: var(--bag-dashboard-charcoal);
     font-size: 1.15rem;
     letter-spacing: 0;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .block_myoverview {
+body.path-my .block_myoverview {
     padding: clamp(1rem, 2vw, 1.5rem);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card-deck,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .courses-view-course-item {
+body.path-my .dashboard-card-deck,
+body.path-my .courses-view-course-item {
     gap: 1.15rem;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card {
+body.path-my .dashboard-card {
     background: #fffdfa;
     overflow: hidden;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card-img,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .courseimage,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .course-card-img {
+body.path-my .dashboard-card-img,
+body.path-my .courseimage,
+body.path-my .course-card-img {
     min-height: 10rem;
     background:
         linear-gradient(145deg, rgba(23, 17, 13, .28), rgba(122, 74, 36, .18)),
         linear-gradient(135deg, #2b1b13 0, #8c623a 48%, #dac2a4 100%);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card .card-body {
+body.path-my .dashboard-card .card-body {
     padding: 1.15rem;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card .coursename,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .dashboard-card .coursename a {
+body.path-my .dashboard-card .coursename,
+body.path-my .dashboard-card .coursename a {
     color: #1b130f;
     font-weight: 800;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .progress {
+body.path-my .progress {
     height: .45rem;
     border-radius: 999px;
     background: rgba(122, 74, 36, .12);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .progress-bar {
+body.path-my .progress-bar {
     background: linear-gradient(90deg, var(--bag-dashboard-brown), var(--bag-dashboard-gold));
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn-primary,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn.btn-primary {
+body.path-my .btn-primary,
+body.path-my .btn.btn-primary {
     background: var(--bag-dashboard-brown);
     border-color: var(--bag-dashboard-brown);
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn-primary:hover,
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) .btn.btn-primary:hover {
+body.path-my .btn-primary:hover,
+body.path-my .btn.btn-primary:hover {
     background: #5d3518;
     border-color: #5d3518;
 }
 
-body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content::after {
+body.path-my #page-content::after {
     content: "Ready to begin your journey?";
     display: block;
     margin: 3.5rem auto 0;
@@ -463,30 +463,30 @@ body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content::after {
 }
 
 @media (max-width: 767.98px) {
-    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header {
+    body.path-my #page-header {
         min-height: 31rem;
         margin-bottom: 3rem;
         padding-top: 5.25rem;
         align-items: flex-start;
     }
 
-    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::before {
+    body.path-my #page-header::before {
         right: -7rem;
         bottom: -4rem;
         width: 21rem;
         height: 21rem;
     }
 
-    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header::after {
+    body.path-my #page-header::after {
         font-size: .72rem;
         line-height: 1.8;
     }
 
-    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-header h1 {
+    body.path-my #page-header h1 {
         font-size: 2.65rem;
     }
 
-    body.path-my.pagelayout-mydashboard:not(.role-siteadmin) #page-content {
+    body.path-my #page-content {
         padding-inline: 1rem;
     }
 }
