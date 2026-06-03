@@ -4,6 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Baitulghawa';
+$string['configtitle'] = 'Bait Al Gahwa';
 $string['choosereadme'] = 'Baitulghawa is a custom Boost child theme for the Bait Al Gahwa Moodle site.';
 $string['brandcolor'] = 'Brand colour';
 $string['brandcolor_desc'] = 'Primary brand colour used for buttons, links, navigation accents and focus states.';

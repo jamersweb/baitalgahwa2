@@ -3,6 +3,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$settings = new admin_settingpage(
+    'themesettingbaitulghawa',
+    get_string('configtitle', 'theme_baitulghawa')
+);
+
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcolourpicker(
         'theme_baitulghawa/brandcolor',
