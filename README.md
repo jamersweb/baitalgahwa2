@@ -38,6 +38,35 @@ Then purge caches from Moodle:
 Site administration > Development > Purge caches
 ```
 
+### AcuSync live site path
+
+For `moodle1.acusync.net`, Moodle's live `$CFG->dirroot` is:
+
+```text
+/home/u789527441/domains/acusync.net/public_html/moodle1/public
+```
+
+So the live theme folder is:
+
+```text
+/home/u789527441/domains/acusync.net/public_html/moodle1/public/theme/baitulghawa
+```
+
+Do not deploy to this sibling folder, because Moodle does not serve it:
+
+```text
+/home/u789527441/domains/acusync.net/public_html/moodle1/theme/baitulghawa
+```
+
+Use these commands for future live updates:
+
+```bash
+cd /home/u789527441/domains/acusync.net/public_html/moodle1/public/theme/baitulghawa
+git pull origin main
+cd /home/u789527441/domains/acusync.net/public_html/moodle1
+php ./admin/cli/purge_caches.php
+```
+
 ## Customisation
 
 Most visual work lives in `scss/pre.scss` and `scss/post.scss`.
