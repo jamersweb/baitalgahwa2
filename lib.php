@@ -99,6 +99,7 @@ function theme_baitulghawa_before_standard_html_head(): string {
         if (is_readable($landingcss)) {
             $styles .= "\n" . file_get_contents($landingcss);
         }
+        $styles .= "\n" . theme_baitulghawa_landing_asset_override_css();
     }
 
     if ($styles === '') {
@@ -108,6 +109,28 @@ function theme_baitulghawa_before_standard_html_head(): string {
     return html_writer::tag('style', $styles, [
         'id' => 'theme-baitulghawa-inline-css',
     ]);
+}
+
+/**
+ * Overrides key image assets after the full stylesheet has loaded.
+ *
+ * @return string
+ */
+function theme_baitulghawa_landing_asset_override_css(): string {
+    $hero = theme_baitulghawa_asset_url('hero-workshop.png');
+    $flower = theme_baitulghawa_asset_url('footer-flower.png');
+
+    return '
+        .bag-hero {
+            background: linear-gradient(rgba(10, 10, 10, .58), rgba(10, 10, 10, .58)), url("' . s($hero) . '") center / cover !important;
+        }
+        .bag-student-photo {
+            background-image: url("' . s($hero) . '") !important;
+        }
+        .bag-hero::before {
+            background-image: url("' . s($flower) . '") !important;
+        }
+    ';
 }
 
 /**
