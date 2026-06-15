@@ -354,7 +354,7 @@ function theme_baitulghawa_home_page(array $urls): string {
         );
     }
 
-    $programmes = theme_baitulghawa_programme_cards($urls, 3);
+    $programmes = theme_baitulghawa_programme_cards(3);
 
     return html_writer::tag('main',
         html_writer::tag('section',
@@ -487,8 +487,7 @@ function theme_baitulghawa_programmes_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('p', 'Featured Learning', ['class' => 'bag-eyebrow bag-center']) .
             html_writer::tag('h1', 'Our Training Programmes', ['class' => 'bag-center']) .
-            html_writer::tag('div', theme_baitulghawa_programme_cards($urls, 6), ['class' => 'bag-programme-grid bag-programme-grid-wide']) .
-            html_writer::tag('div', html_writer::link($urls['course'], '1', ['class' => 'bag-page-dot is-active']) . html_writer::link($urls['course'], '2', ['class' => 'bag-page-dot']), ['class' => 'bag-pagination']),
+                html_writer::tag('div', theme_baitulghawa_programme_cards(0), ['class' => 'bag-programme-grid bag-programme-grid-wide']),
             ['class' => 'bag-page-section']
         ),
         ['class' => 'bag-landing-main']
@@ -770,29 +769,33 @@ function theme_baitulghawa_auth_field(string $type, string $name, string $label,
  * @param int $count
  * @return string
  */
-function theme_baitulghawa_programme_cards(array $urls, int $count): string {
-    $cards = [
-        ['Coffee Barista Specialist', 'bag-card-img-1', '6 Weeks'],
-        ['Barista Art Basics', 'bag-card-img-2', '4 Weeks'],
-        ['Certified Customer Hospitality', 'bag-card-img-3', '5 Weeks'],
-        ['Certified Coffee Specialist', 'bag-card-img-4', '6 Weeks'],
-        ['General Artisan', 'bag-card-img-5', '3 Weeks'],
-        ['Certified Service Associate', 'bag-card-img-6', '5 Weeks'],
-    ];
+function theme_baitulghawa_programme_cards(int $count): string {
+    $courses = theme_baitulghawa_get_public_courses($count);
+
+    if (empty($courses)) {
+        return html_writer::tag('p', 'Training programmes will appear here as soon as courses are published.', [
+            'class' => 'bag-empty-programmes',
+        ]);
+    }
 
     $html = '';
-    foreach (array_slice($cards, 0, $count) as $card) {
+    foreach ($courses as $course) {
         $html .= html_writer::tag('article',
-            html_writer::tag('a', '', ['class' => 'bag-card-image ' . $card[1], 'href' => (string)$urls['course'], 'aria-label' => $card[0]]) .
+            html_writer::tag('a', '', [
+                'class' => 'bag-card-image',
+                'href' => (string)$course['url'],
+                'aria-label' => $course['name'],
+                'style' => 'background-image: url("' . s($course['image']) . '");',
+            ]) .
             html_writer::tag('div',
-                html_writer::tag('h3', html_writer::link($urls['course'], $card[0])) .
-                html_writer::tag('p', 'Build practical skills with guided instruction and workplace-focused practice.') .
+                html_writer::tag('h3', html_writer::link($course['url'], $course['name'])) .
+                html_writer::tag('p', $course['summary']) .
                 html_writer::tag('div',
-                    html_writer::tag('span', $card[2]) .
-                    html_writer::tag('span', 'Certificate'),
+                    html_writer::tag('span', $course['category']) .
+                    html_writer::tag('span', 'Course'),
                     ['class' => 'bag-card-meta']
                 ) .
-                html_writer::link($urls['course'], 'View Details', ['class' => 'bag-card-link']),
+                html_writer::link($course['url'], 'View Details', ['class' => 'bag-card-link']),
                 ['class' => 'bag-card-body']
             ),
             ['class' => 'bag-programme-card']
@@ -800,6 +803,104 @@ function theme_baitulghawa_programme_cards(array $urls, int $count): string {
     }
 
     return $html;
+}
+
+/**
+ * Gets visible Moodle courses for the public training programme cards.
+ *
+ * @param int $limit Zero means all visible courses.
+ * @return array
+ */
+function theme_baitulghawa_get_public_courses(int $limit = 0): array {
+    global $DB, $SITE;
+
+    $params = ['siteid' => $SITE->id, 'visible' => 1];
+    $records = $DB->get_records_select(
+        'course',
+        'id <> :siteid AND visible = :visible',
+        $params,
+        'sortorder ASC, fullname ASC',
+        'id, fullname, shortname, summary, summaryformat, category',
+        0,
+        $limit > 0 ? $limit : 0
+    );
+
+    $courses = [];
+    foreach ($records as $record) {
+        $courses[] = [
+            'name' => format_string($record->fullname),
+            'summary' => theme_baitulghawa_course_summary($record),
+            'category' => theme_baitulghawa_course_category_name((int)$record->category),
+            'url' => new moodle_url('/course/view.php', ['id' => $record->id]),
+            'image' => theme_baitulghawa_course_image_url($record),
+        ];
+    }
+
+    return $courses;
+}
+
+/**
+ * Builds a short card summary from the course summary.
+ *
+ * @param stdClass $course
+ * @return string
+ */
+function theme_baitulghawa_course_summary(stdClass $course): string {
+    $summary = trim(strip_tags(format_text($course->summary, $course->summaryformat, ['noclean' => true, 'para' => false])));
+    if ($summary === '') {
+        return 'Build practical skills with guided instruction and workplace-focused practice.';
+    }
+
+    return shorten_text($summary, 115);
+}
+
+/**
+ * Gets the category name for a course.
+ *
+ * @param int $categoryid
+ * @return string
+ */
+function theme_baitulghawa_course_category_name(int $categoryid): string {
+    global $DB;
+
+    if ($categoryid <= 0) {
+        return 'Training';
+    }
+
+    $category = $DB->get_record('course_categories', ['id' => $categoryid], 'name', IGNORE_MISSING);
+    return $category ? format_string($category->name) : 'Training';
+}
+
+/**
+ * Uses the course image when available, otherwise falls back to supplied artwork.
+ *
+ * @param stdClass $course
+ * @return string
+ */
+function theme_baitulghawa_course_image_url(stdClass $course): string {
+    global $CFG;
+
+    require_once($CFG->libdir . '/filestorage/file_storage.php');
+
+    $context = context_course::instance($course->id, IGNORE_MISSING);
+    if ($context) {
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'sortorder ASC, id ASC', false);
+        foreach ($files as $file) {
+            if ($file->is_valid_image()) {
+                return moodle_url::make_pluginfile_url(
+                    $file->get_contextid(),
+                    $file->get_component(),
+                    $file->get_filearea(),
+                    null,
+                    $file->get_filepath(),
+                    $file->get_filename()
+                )->out(false);
+            }
+        }
+    }
+
+    return theme_baitulghawa_asset_url('training-screen.png');
 }
 
 /**
