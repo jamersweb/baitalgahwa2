@@ -313,29 +313,15 @@ footer a,
 }
 
 .bag-brand {
-    color: var(--bag-brown-dark);
     display: inline-flex;
-    flex-direction: column;
-    font-family: Georgia, "Times New Roman", serif;
-    font-weight: 700;
-    line-height: 1;
+    line-height: 0;
     text-decoration: none;
 }
 
-.bag-brand span {
-    color: #7a431f;
-    font-size: 1.45rem;
-    letter-spacing: .01em;
-}
-
-.bag-brand small {
-    color: #9a6a44;
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    font-size: .47rem;
-    font-weight: 850;
-    letter-spacing: .48em;
-    margin-top: .42rem;
-    text-transform: uppercase;
+.bag-brand img {
+    display: block;
+    height: auto;
+    width: 7.8rem;
 }
 
 .bag-nav-links,
@@ -405,7 +391,7 @@ footer a,
     align-items: center;
     background:
         linear-gradient(90deg, rgba(20, 13, 8, .82), rgba(20, 13, 8, .42)),
-        url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1800&q=80") center / cover;
+        url(/theme/baitulghawa/pix/hero-workshop.png) center / cover;
     color: #fff;
     display: flex;
     min-height: min(74vh, 44rem);
@@ -540,18 +526,18 @@ footer a,
 }
 
 .bag-collage-main {
-    background-image: url("https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/training-screen.png);
     border-radius: .65rem;
     grid-row: 1 / span 2;
 }
 
 .bag-collage-beans {
-    background-image: url("https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=700&q=80");
+    background-image: url(/theme/baitulghawa/pix/coffee-beans-bag.png);
     border-radius: .65rem;
 }
 
 .bag-collage-cup {
-    background-image: url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=80");
+    background-image: url(/theme/baitulghawa/pix/coffee-roast.png);
     border-radius: .65rem;
 }
 
@@ -612,27 +598,27 @@ footer a,
 }
 
 .bag-card-img-1 {
-    background-image: url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/training-screen.png);
 }
 
 .bag-card-img-2 {
-    background-image: url("https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/coffee-beans-bag.png);
 }
 
 .bag-card-img-3 {
-    background-image: url("https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/instructor.png);
 }
 
 .bag-card-img-4 {
-    background-image: url("https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/coffee-roast.png);
 }
 
 .bag-card-img-5 {
-    background-image: url("https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/course-training-screen.png);
 }
 
 .bag-card-img-6 {
-    background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/course-training-screen-alt.png);
 }
 
 .bag-card-body {
@@ -690,7 +676,7 @@ footer a,
 }
 
 .bag-student-photo {
-    background-image: url("https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=900&q=80");
+    background-image: url(/theme/baitulghawa/pix/instructor.png);
     border-radius: .65rem;
     min-height: 28rem;
 }
@@ -751,7 +737,7 @@ footer a,
 }
 
 .bag-course-photo {
-    background-image: url("https://images.unsplash.com/photo-1510972527921-ce03766a1cf1?auto=format&fit=crop&w=1100&q=80");
+    background-image: url(/theme/baitulghawa/pix/coffee-beans-bag.png);
 }
 
 .bag-course-summary {
@@ -849,7 +835,7 @@ footer a,
 }
 
 .bag-location-photo {
-    background-image: url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80");
+    background-image: url(/theme/baitulghawa/pix/location.png);
     border-radius: .65rem;
     min-height: 19rem;
 }
@@ -891,7 +877,7 @@ footer a,
 }
 
 .bag-footer::after {
-    background-image: var(--bag-footer-flower), url("https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=900&q=50");
+    background-image: var(--bag-footer-flower), url(/theme/baitulghawa/pix/footer-flower.png);
     background-position: right bottom;
     background-repeat: no-repeat;
     background-size: contain;
@@ -914,26 +900,11 @@ footer a,
     z-index: 1;
 }
 
-.bag-footer strong {
-    color: #d0a957;
+.bag-footer-logo {
     display: block;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 2.28rem;
-    font-weight: 500;
-    letter-spacing: .01em;
-    line-height: 1;
-    margin-bottom: .72rem;
-}
-
-.bag-footer strong::after {
-    color: #d0a957;
-    content: "BAIT AL GAHWA";
-    display: block;
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    font-size: .58rem;
-    font-weight: 850;
-    letter-spacing: .5em;
-    margin-top: .52rem;
+    height: auto;
+    margin-bottom: 1.28rem;
+    width: 8.8rem;
 }
 
 .bag-footer p,
@@ -1290,7 +1261,7 @@ footer a,
 .path-login .login-wrapper {
     background:
         linear-gradient(90deg, rgba(35, 22, 14, .82), rgba(35, 22, 14, .3)),
-        url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1800&q=80") center / cover;
+        url(/theme/baitulghawa/pix/hero-workshop.png) center / cover;
 }
 
 .path-login .login-container {

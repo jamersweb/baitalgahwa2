@@ -273,6 +273,7 @@ function theme_baitulghawa_landing_brand(): string {
  * @return string
  */
 function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand): string {
+    $logo = theme_baitulghawa_asset_url('logo.png');
     $items = [
         'home' => 'Home',
         'about' => 'About Us',
@@ -290,7 +291,10 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
     }
 
     return html_writer::tag('header',
-        html_writer::tag('a', html_writer::tag('span', 'Bait Al Gahwa') . html_writer::tag('small', $brand), [
+        html_writer::tag('a', html_writer::empty_tag('img', [
+            'src' => $logo,
+            'alt' => $brand,
+        ]), [
             'class' => 'bag-brand',
             'href' => (string)$urls['home'],
         ]) .
@@ -733,14 +737,17 @@ function theme_baitulghawa_cta(array $urls): string {
  * @return string
  */
 function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
-    global $CFG;
-
-    $flower = rtrim($CFG->wwwroot, '/') . '/theme/baitulghawa/pix/footer-flower.jpg';
+    $logo = theme_baitulghawa_asset_url('logo.png');
+    $flower = theme_baitulghawa_asset_url('footer-flower.png');
 
     return html_writer::tag('footer',
         html_writer::tag('div',
             html_writer::tag('div',
-                html_writer::tag('strong', '&#1576;&#1610;&#1578; &#1575;&#1604;&#1602;&#1607;&#1608;&#1577;') .
+                html_writer::empty_tag('img', [
+                    'class' => 'bag-footer-logo',
+                    'src' => $logo,
+                    'alt' => $brand,
+                ]) .
                 html_writer::tag('p', 'Empowering professionals through quality training and development programs inspired by Emirati heritage.') .
                 html_writer::tag('div',
                     html_writer::tag('span', '') . html_writer::tag('span', '') . html_writer::tag('span', ''),
@@ -769,4 +776,16 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
         html_writer::tag('p', '&#169; 2026 Bait Al Gahwa Training Platform. All rights reserved. | Developed by Acusync Technology', ['class' => 'bag-copyright']),
         ['class' => 'bag-footer', 'style' => '--bag-footer-flower: url("' . s($flower) . '");']
     );
+}
+
+/**
+ * Returns a theme pix asset URL.
+ *
+ * @param string $filename
+ * @return string
+ */
+function theme_baitulghawa_asset_url(string $filename): string {
+    global $CFG;
+
+    return rtrim($CFG->wwwroot, '/') . '/theme/baitulghawa/pix/' . rawurlencode($filename);
 }
