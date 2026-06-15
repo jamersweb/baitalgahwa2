@@ -1042,7 +1042,7 @@ footer a,
 }
 
 .bag-register-card {
-    max-width: 44rem;
+    max-width: 54rem;
 }
 
 .bag-auth-card h1 {
@@ -1057,6 +1057,10 @@ footer a,
 .bag-auth-form {
     display: grid;
     gap: 1rem;
+}
+
+.bag-register-form {
+    gap: 1.05rem;
 }
 
 .bag-auth-three {
@@ -1090,7 +1094,7 @@ footer a,
     font-size: .82rem;
     height: 2.65rem;
     outline: none;
-    padding: 0 2.45rem 0 1.05rem;
+    padding: 0 2.8rem 0 1.05rem;
     transition: border-color .16s ease, box-shadow .16s ease;
     width: 100%;
 }
@@ -1116,6 +1120,45 @@ footer a,
     top: 50%;
     transform: translateY(-50%);
     width: .65rem;
+}
+
+.bag-password-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    height: 2rem;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    right: .42rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+}
+
+.bag-password-toggle .bag-auth-icon {
+    left: auto;
+    pointer-events: none;
+    right: auto;
+    top: auto;
+    transform: none;
+}
+
+.bag-password-toggle:hover,
+.bag-password-toggle:focus {
+    background: rgba(117, 72, 34, .08);
+    outline: none;
+}
+
+.bag-password-toggle[aria-pressed="true"] .bag-auth-icon-lock {
+    background: #754822;
+}
+
+.bag-password-toggle[aria-pressed="true"] .bag-auth-icon-lock::before {
+    border-color: #754822;
+    transform: translateX(.18rem) rotate(-22deg);
 }
 
 .bag-auth-icon-paper-plane {
@@ -1210,6 +1253,7 @@ footer a,
 }
 
 .bag-password-note {
+    margin-top: -.15rem;
     text-align: left;
 }
 

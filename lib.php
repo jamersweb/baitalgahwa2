@@ -538,7 +538,7 @@ function theme_baitulghawa_login_page(array $urls): string {
                 html_writer::tag('form',
                     $hidden .
                     theme_baitulghawa_auth_field('text', 'username', 'Your Email', 'Your Email', 'paper-plane') .
-                    theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock') .
+                    theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock', true) .
                     html_writer::tag('div',
                         html_writer::tag('label',
                             html_writer::empty_tag('input', ['type' => 'checkbox', 'name' => 'rememberusername', 'value' => '1']) .
@@ -586,9 +586,9 @@ function theme_baitulghawa_register_page(array $urls): string {
                         ['class' => 'bag-auth-three']
                     ) .
                     theme_baitulghawa_auth_field('email', 'email', 'Your Email', 'Your Email', 'paper-plane') .
-                    theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock') .
+                    theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock', true) .
                     html_writer::tag('p', 'Password must be 8-15 characters and include 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.', ['class' => 'bag-password-note']) .
-                    theme_baitulghawa_auth_field('password', 'password2', 'Confirm Password*', 'Confirm Password*', 'lock') .
+                    theme_baitulghawa_auth_field('password', 'password2', 'Confirm Password*', 'Confirm Password*', 'lock', true) .
                     html_writer::tag('button', 'Register', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
                     html_writer::tag('p', 'Already have an account? ' . html_writer::link($urls['login'], 'Login'), ['class' => 'bag-auth-switch']) .
                     html_writer::link($urls['home'], 'Back', ['class' => 'bag-auth-back']),
@@ -608,6 +608,19 @@ function theme_baitulghawa_register_page(array $urls): string {
                             }
                         });
                     });
+                    document.querySelectorAll('.bag-password-toggle').forEach(function(button) {
+                        button.addEventListener('click', function() {
+                            var field = button.closest('.bag-auth-input');
+                            var input = field ? field.querySelector('input') : null;
+                            if (!input) {
+                                return;
+                            }
+                            var showing = input.type === 'text';
+                            input.type = showing ? 'password' : 'text';
+                            button.setAttribute('aria-pressed', showing ? 'false' : 'true');
+                            button.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+                        });
+                    });
                 "),
                 ['class' => 'bag-auth-card bag-register-card']
             ),
@@ -625,9 +638,10 @@ function theme_baitulghawa_register_page(array $urls): string {
  * @param string $label
  * @param string $placeholder
  * @param string $icon
+ * @param bool $toggle
  * @return string
  */
-function theme_baitulghawa_auth_field(string $type, string $name, string $label, string $placeholder, string $icon): string {
+function theme_baitulghawa_auth_field(string $type, string $name, string $label, string $placeholder, string $icon, bool $toggle = false): string {
     $attributes = [
         'type' => $type,
         'name' => $name,
@@ -637,11 +651,20 @@ function theme_baitulghawa_auth_field(string $type, string $name, string $label,
         $attributes['required'] = 'required';
     }
 
+    $iconhtml = $toggle
+        ? html_writer::tag('button', html_writer::tag('i', '', ['class' => 'bag-auth-icon bag-auth-icon-' . $icon]), [
+            'class' => 'bag-password-toggle',
+            'type' => 'button',
+            'aria-label' => 'Show password',
+            'aria-pressed' => 'false',
+        ])
+        : html_writer::tag('i', '', ['class' => 'bag-auth-icon bag-auth-icon-' . $icon]);
+
     return html_writer::tag('label',
         html_writer::tag('span', $label, ['class' => 'bag-auth-label']) .
         html_writer::tag('span',
             html_writer::empty_tag('input', $attributes) .
-            html_writer::tag('i', '', ['class' => 'bag-auth-icon bag-auth-icon-' . $icon]),
+            $iconhtml,
             ['class' => 'bag-auth-input']
         ),
         ['class' => 'bag-auth-field']
