@@ -387,6 +387,7 @@ footer a,
 
 .bag-landing-main {
     overflow: hidden;
+    padding-top: clamp(6rem, 7vw, 7.5rem);
 }
 
 .bag-hero {
@@ -1336,6 +1337,10 @@ footer a,
 }
 
 @media (max-width: 900px) {
+    .bag-landing-main {
+        padding-top: 0;
+    }
+
     .bag-site-header {
         border-radius: 0 0 1rem 1rem;
         grid-template-columns: 1fr;
