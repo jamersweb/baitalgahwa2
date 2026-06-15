@@ -1056,6 +1056,12 @@ footer a,
 
 .bag-contact-page {
     background: #f1eae2;
+    font-family: "Open Sans", "Segoe UI", Arial, sans-serif !important;
+}
+
+.bag-contact-page * {
+    font-family: "Open Sans", "Segoe UI", Arial, sans-serif !important;
+    letter-spacing: 0;
 }
 
 .bag-contact-page .bag-contact-grid {
@@ -1074,7 +1080,7 @@ footer a,
 .bag-contact-page .bag-contact-form h2 {
     color: #1f1711;
     font-size: 1rem;
-    font-weight: 850;
+    font-weight: 800;
     margin: 0 0 1.3rem;
 }
 
@@ -1098,13 +1104,14 @@ footer a,
 .bag-contact-item strong {
     color: #1f1711;
     font-size: .9rem;
-    font-weight: 850;
+    font-weight: 800;
     margin-bottom: .18rem;
 }
 
 .bag-contact-item span {
     color: #7f746d;
     font-size: .72rem;
+    font-weight: 400;
     line-height: 1.25;
 }
 
@@ -1219,6 +1226,7 @@ footer a,
 .bag-response-time p {
     color: #7f746d;
     font-size: .72rem;
+    font-weight: 400;
     line-height: 1.35;
     margin: 0 0 1.1rem;
 }
@@ -1252,6 +1260,7 @@ footer a,
     border-radius: 999px;
     color: var(--bag-text);
     font-size: .72rem;
+    font-weight: 400;
     min-height: 2.55rem;
     padding: .65rem 2.35rem .65rem .95rem;
     width: 100%;
@@ -1322,6 +1331,7 @@ footer a,
 .bag-contact-note {
     color: #918781;
     font-size: .68rem;
+    font-weight: 400;
     line-height: 1.4;
     margin: .15rem 0 0;
 }
