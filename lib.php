@@ -952,19 +952,18 @@ function theme_baitulghawa_course_category_name(int $categoryid): string {
 function theme_baitulghawa_course_image_url(stdClass $course): string {
     global $CFG;
 
-    require_once($CFG->libdir . '/filestorage/file_storage.php');
-
     $context = context_course::instance($course->id, IGNORE_MISSING);
     if ($context) {
         $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'sortorder ASC, id ASC', false);
         foreach ($files as $file) {
-            if ($file->is_valid_image()) {
+            $mimetype = (string)$file->get_mimetype();
+            if ($file->is_valid_image() || strpos($mimetype, 'image/') === 0) {
                 return moodle_url::make_pluginfile_url(
                     $file->get_contextid(),
                     $file->get_component(),
                     $file->get_filearea(),
-                    null,
+                    $file->get_itemid(),
                     $file->get_filepath(),
                     $file->get_filename()
                 )->out(false);
