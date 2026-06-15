@@ -240,10 +240,34 @@ footer a,
     }
 }
 
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) .navbar,
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) #page-header,
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) .breadcrumb,
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) .secondary-navigation,
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) .drawer,
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) .drawer-toggles,
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) #page-footer,
+.pagelayout-frontpage .navbar,
+.pagelayout-frontpage #page-header,
+.pagelayout-frontpage .breadcrumb,
+.pagelayout-frontpage .secondary-navigation,
+.pagelayout-frontpage .drawer,
+.pagelayout-frontpage .drawer-toggles,
+.pagelayout-frontpage #page-footer,
 .bag-landing-shell ~ #page-wrapper,
 .bag-landing-shell ~ #page,
 .bag-landing-shell ~ footer {
     display: none !important;
+}
+
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell),
+.pagelayout-frontpage:has(.bag-landing-shell) {
+    padding-top: 0 !important;
+}
+
+.pagelayout-login.pagetype-login-index:has(.bag-landing-shell) #page,
+.pagelayout-frontpage:has(.bag-landing-shell) #page {
+    margin-top: 0 !important;
 }
 
 .bag-landing-shell {
