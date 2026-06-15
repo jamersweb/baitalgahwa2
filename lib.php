@@ -754,13 +754,15 @@ function theme_baitulghawa_register_page(array $urls): string {
         }
 
         if (empty($errors)) {
-            $errors[] = 'Your details look valid. If this still appears, please check Moodle email self-registration and SMTP settings.';
+            $errors[] = 'Your details look valid, but Moodle did not create the account. Please check Email-based self-registration, SMTP, or any required signup fields in Moodle admin.';
         }
 
         $message = html_writer::tag('div', implode(' ', $errors), ['class' => 'bag-auth-alert', 'role' => 'alert']);
     }
 
     $hidden = html_writer::empty_tag('input', ['type' => 'hidden', 'name' => '_qf__login_signup_form', 'value' => '1']) .
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()]) .
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'submitbutton', 'value' => 'Create my new account']) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'username', 'value' => '']) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'email2', 'value' => '']) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'city', 'value' => 'Riyadh']) .
