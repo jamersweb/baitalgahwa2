@@ -1112,14 +1112,16 @@ footer a,
     align-items: center;
     background: #fffaf6;
     border-radius: 50%;
+    color: var(--bag-brown);
     display: inline-flex;
+    font-size: .86rem;
+    font-weight: 850;
     height: 2.05rem;
     justify-content: center;
     position: relative;
     width: 2.05rem;
 }
 
-.bag-contact-icon::before,
 .bag-contact-form-icon {
     background: var(--bag-brown);
     content: "";
@@ -1131,27 +1133,8 @@ footer a,
     width: .72rem;
 }
 
-.bag-contact-icon-mail::before {
-    border: 1.5px solid var(--bag-brown);
-    border-radius: .18rem;
-    background: transparent;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
-
-.bag-contact-icon-phone::before,
 .bag-contact-form-icon-phone {
     clip-path: polygon(26% 0, 55% 8%, 46% 34%, 64% 55%, 91% 47%, 100% 75%, 84% 100%, 55% 87%, 24% 56%, 0 18%);
-}
-
-.bag-contact-icon-instagram::before {
-    border: 1.5px solid var(--bag-brown);
-    border-radius: .2rem;
-    background: transparent;
-}
-
-.bag-contact-icon-location::before {
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
 }
 
 .bag-response-time {
@@ -1235,6 +1218,7 @@ footer a,
 
 .bag-contact-form-icon-user {
     border-radius: 50%;
+    overflow: visible;
 }
 
 .bag-contact-form-icon-user::after {
@@ -1246,6 +1230,13 @@ footer a,
     position: absolute;
     top: .55rem;
     width: .72rem;
+}
+
+.bag-contact-form-icon-user {
+    box-shadow: 0 .48rem 0 .08rem var(--bag-brown);
+    height: .48rem;
+    transform: translateY(-70%);
+    width: .48rem;
 }
 
 .bag-contact-form-icon-message {
