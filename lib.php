@@ -124,9 +124,6 @@ function theme_baitulghawa_landing_asset_override_css(): string {
         .bag-hero {
             background: linear-gradient(rgba(10, 10, 10, .58), rgba(10, 10, 10, .58)), url("' . s($hero) . '") center / cover !important;
         }
-        .bag-student-photo {
-            background-image: url("' . s($hero) . '") !important;
-        }
         .bag-hero::before {
             background-image: url("' . s($flower) . '") !important;
         }

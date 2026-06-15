@@ -593,7 +593,7 @@ footer a,
 }
 
 .bag-collage-main {
-    background-image: url(/theme/baitulghawa/pix/training-screen.png);
+    background-image: url(/theme/baitulghawa/pix/coffee-roast.png);
     border-radius: .65rem;
     grid-row: 1 / span 2;
 }
@@ -604,7 +604,8 @@ footer a,
 }
 
 .bag-collage-cup {
-    background-image: url(/theme/baitulghawa/pix/coffee-roast.png);
+    background-image: url(/theme/baitulghawa/pix/coffee-beans-bag.png);
+    background-position: center bottom;
     border-radius: .65rem;
 }
 
@@ -747,7 +748,7 @@ footer a,
 }
 
 .bag-student-photo {
-    background-image: url(/theme/baitulghawa/pix/hero-workshop.png);
+    background-image: url(/theme/baitulghawa/pix/instructor.png);
     border-radius: .65rem;
     min-height: 28rem;
 }
@@ -1390,16 +1391,16 @@ footer a,
 
 .bag-footer::after {
     background-image: var(--bag-footer-flower), url(/theme/baitulghawa/pix/footer-flower.png);
-    background-position: right bottom;
+    background-position: right -1.6rem bottom -2.2rem;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: min(30rem, 46vw) auto;
     bottom: -1.2rem;
     content: "";
-    opacity: .16;
+    opacity: .24;
     position: absolute;
     right: -1.25rem;
     top: 1.3rem;
-    width: min(28rem, 44vw);
+    width: min(32rem, 48vw);
 }
 
 .bag-footer-grid {
