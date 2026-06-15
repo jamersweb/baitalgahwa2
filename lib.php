@@ -733,10 +733,31 @@ function theme_baitulghawa_register_page(array $urls): string {
     $action = new moodle_url('/login/signup.php');
     $message = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $message = html_writer::tag('div',
-            'Please check your details. Use a valid email address, matching passwords, and a password that follows the rule below.',
-            ['class' => 'bag-auth-alert', 'role' => 'alert']
-        );
+        $firstname = trim(optional_param('firstname', '', PARAM_TEXT));
+        $lastname = trim(optional_param('lastname', '', PARAM_TEXT));
+        $email = trim(optional_param('email', '', PARAM_RAW_TRIMMED));
+        $password = optional_param('password', '', PARAM_RAW);
+        $password2 = optional_param('password2', '', PARAM_RAW);
+        $errors = [];
+
+        if ($firstname === '' || $lastname === '') {
+            $errors[] = 'First name and last name are required.';
+        }
+        if (!validate_email($email)) {
+            $errors[] = 'Please enter a valid email address, for example name@example.com.';
+        }
+        if ($password !== $password2) {
+            $errors[] = 'Password and confirm password must match.';
+        }
+        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,15}$/', $password)) {
+            $errors[] = 'Password must be 8-15 characters and include lowercase, uppercase, number, and special character.';
+        }
+
+        if (empty($errors)) {
+            $errors[] = 'Your details look valid. If this still appears, please check Moodle email self-registration and SMTP settings.';
+        }
+
+        $message = html_writer::tag('div', implode(' ', $errors), ['class' => 'bag-auth-alert', 'role' => 'alert']);
     }
 
     $hidden = html_writer::empty_tag('input', ['type' => 'hidden', 'name' => '_qf__login_signup_form', 'value' => '1']) .
@@ -792,6 +813,12 @@ function theme_baitulghawa_register_page(array $urls): string {
                             if (password && password2 && password.value !== password2.value) {
                                 event.preventDefault();
                                 alert.textContent = 'Password and confirm password must match.';
+                                return;
+                            }
+                            var strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,15}$/.test(password ? password.value : '');
+                            if (!strongPassword) {
+                                event.preventDefault();
+                                alert.textContent = 'Password must be 8-15 characters and include lowercase, uppercase, number, and special character.';
                                 return;
                             }
                             if (email && username) {
