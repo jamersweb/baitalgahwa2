@@ -1064,6 +1064,7 @@ footer a,
 
 .bag-auth-main {
     background: #fff;
+    padding-top: 0;
 }
 
 .bag-auth-section {
@@ -1080,6 +1081,10 @@ footer a,
     width: 100%;
 }
 
+.bag-login-card {
+    max-width: 26.3rem;
+}
+
 .bag-register-card {
     max-width: 54rem;
 }
@@ -1093,9 +1098,20 @@ footer a,
     text-align: center;
 }
 
+.bag-login-card h1 {
+    color: #3b3b3b;
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 2.25rem;
+}
+
 .bag-auth-form {
     display: grid;
     gap: 1rem;
+}
+
+.bag-login-card .bag-auth-form {
+    gap: 1.15rem;
 }
 
 .bag-register-form {
@@ -1120,6 +1136,12 @@ footer a,
     font-weight: 750;
 }
 
+.bag-login-card .bag-auth-label {
+    color: #3f3b38;
+    font-size: .74rem;
+    font-weight: 600;
+}
+
 .bag-auth-input {
     display: block;
     position: relative;
@@ -1136,6 +1158,14 @@ footer a,
     padding: 0 2.8rem 0 1.05rem;
     transition: border-color .16s ease, box-shadow .16s ease;
     width: 100%;
+}
+
+.bag-login-card .bag-auth-input input {
+    border-color: #e5dbd5;
+    border-radius: 999px;
+    font-size: .76rem;
+    height: 2.75rem;
+    padding-left: 1rem;
 }
 
 .bag-auth-input input:focus {
@@ -1246,6 +1276,10 @@ footer a,
     margin: .1rem 0 .35rem;
 }
 
+.bag-login-card .bag-auth-row {
+    margin: -.15rem 0 .25rem;
+}
+
 .bag-auth-row label {
     align-items: center;
     color: #7a7068;
@@ -1255,8 +1289,31 @@ footer a,
     margin: 0;
 }
 
+.bag-login-card .bag-auth-row label,
+.bag-login-card .bag-auth-row a {
+    color: #59514d;
+    font-size: .76rem;
+    font-weight: 500;
+}
+
 .bag-auth-row input {
     accent-color: #754822;
+}
+
+.bag-login-card .bag-auth-row input {
+    appearance: none;
+    background: #fff;
+    border: 1px solid #e5dbd5;
+    border-radius: .38rem;
+    height: 1.35rem;
+    margin: 0 .1rem 0 0;
+    width: 1.35rem;
+}
+
+.bag-login-card .bag-auth-row input:checked {
+    background: #754822;
+    border-color: #754822;
+    box-shadow: inset 0 0 0 .28rem #fff;
 }
 
 .bag-auth-row a {
@@ -1275,6 +1332,13 @@ footer a,
     min-height: 2.65rem;
     padding: .75rem 1rem;
     width: 100%;
+}
+
+.bag-login-card .bag-auth-submit {
+    border-radius: .42rem;
+    font-size: .75rem;
+    font-weight: 700;
+    min-height: 2.75rem;
 }
 
 .bag-auth-submit:hover,
@@ -1299,6 +1363,11 @@ footer a,
 .bag-auth-switch a {
     color: #754822;
     text-decoration: none;
+}
+
+.bag-login-card .bag-auth-switch {
+    font-size: .74rem;
+    margin-top: .05rem;
 }
 
 .bag-auth-back {

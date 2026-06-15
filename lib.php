@@ -639,7 +639,7 @@ function theme_baitulghawa_login_page(array $urls): string {
                         ['class' => 'bag-auth-row']
                     ) .
                     html_writer::tag('button', 'Login', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
-                    html_writer::tag('p', 'Don\'t have an account? ' . html_writer::link($urls['signup'], 'Sign up'), ['class' => 'bag-auth-switch']),
+                    html_writer::tag('p', 'Don\'t have an account? ' . html_writer::link($urls['signup'], 'Signup'), ['class' => 'bag-auth-switch']),
                     ['class' => 'bag-auth-form', 'action' => (string)$urls['login'], 'method' => 'post']
                 ),
                 ['class' => 'bag-auth-card bag-login-card']
