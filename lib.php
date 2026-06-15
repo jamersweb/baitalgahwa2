@@ -906,7 +906,7 @@ function theme_baitulghawa_get_public_courses(int $limit = 0): array {
             'name' => format_string($record->fullname),
             'summary' => theme_baitulghawa_course_summary($record),
             'category' => theme_baitulghawa_course_category_name((int)$record->category),
-            'url' => new moodle_url('/course/view.php', ['id' => $record->id]),
+            'url' => new moodle_url('/login/index.php', ['bagpage' => 'course', 'courseid' => $record->id]),
             'image' => theme_baitulghawa_course_image_url($record),
         ];
     }
@@ -1029,10 +1029,10 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
             ) .
             html_writer::tag('div',
                 html_writer::tag('h2', 'Programs') .
-                html_writer::link($urls['course'], 'Leadership Training') .
-                html_writer::link($urls['course'], 'Digital Transformation') .
-                html_writer::link($urls['course'], 'Professional Development') .
-                html_writer::link($urls['course'], 'Customer Service'),
+                html_writer::tag('span', 'Leadership Training') .
+                html_writer::tag('span', 'Digital Transformation') .
+                html_writer::tag('span', 'Professional Development') .
+                html_writer::tag('span', 'Customer Service'),
                 ['class' => 'bag-footer-links']
             ),
             ['class' => 'bag-footer-grid']
