@@ -873,14 +873,130 @@ footer a,
     font-size: 1rem;
 }
 
+.bag-contact-page {
+    background: #f1eae2;
+}
+
+.bag-contact-page .bag-contact-grid {
+    gap: clamp(2rem, 5vw, 4rem);
+    max-width: 62rem;
+}
+
+.bag-contact-page .bag-contact-info {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 1.45rem 0;
+}
+
+.bag-contact-page .bag-contact-info h2,
+.bag-contact-page .bag-contact-form h2 {
+    color: #1f1711;
+    font-size: 1rem;
+    font-weight: 850;
+    margin: 0 0 1.3rem;
+}
+
+.bag-contact-list {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.bag-contact-item {
+    align-items: center;
+    display: grid;
+    gap: .85rem;
+    grid-template-columns: 2.05rem 1fr;
+}
+
+.bag-contact-item strong,
+.bag-contact-item span {
+    display: block;
+}
+
+.bag-contact-item strong {
+    color: #1f1711;
+    font-size: .9rem;
+    font-weight: 850;
+    margin-bottom: .18rem;
+}
+
+.bag-contact-item span {
+    color: #7f746d;
+    font-size: .72rem;
+    line-height: 1.25;
+}
+
+.bag-contact-icon {
+    align-items: center;
+    background: #fffaf6;
+    border-radius: 50%;
+    display: inline-flex;
+    height: 2.05rem;
+    justify-content: center;
+    position: relative;
+    width: 2.05rem;
+}
+
+.bag-contact-icon::before,
+.bag-contact-form-icon {
+    background: var(--bag-brown);
+    content: "";
+    display: block;
+    height: .72rem;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    width: .72rem;
+}
+
+.bag-contact-icon-mail::before {
+    border: 1.5px solid var(--bag-brown);
+    border-radius: .18rem;
+    background: transparent;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.bag-contact-icon-phone::before,
+.bag-contact-form-icon-phone {
+    clip-path: polygon(26% 0, 55% 8%, 46% 34%, 64% 55%, 91% 47%, 100% 75%, 84% 100%, 55% 87%, 24% 56%, 0 18%);
+}
+
+.bag-contact-icon-instagram::before {
+    border: 1.5px solid var(--bag-brown);
+    border-radius: .2rem;
+    background: transparent;
+}
+
+.bag-contact-icon-location::before {
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+}
+
+.bag-response-time {
+    margin-top: 4rem;
+}
+
+.bag-response-time p {
+    color: #7f746d;
+    font-size: .72rem;
+    line-height: 1.35;
+    margin: 0 0 1.1rem;
+}
+
 .bag-contact-info p {
     color: var(--bag-subtle);
     margin-bottom: .8rem;
 }
 
 .bag-contact-form {
+    background: #fff;
+    border: 0;
+    border-radius: .8rem;
+    box-shadow: none;
     display: grid;
     gap: .8rem;
+    padding: clamp(1.35rem, 3vw, 1.8rem);
 }
 
 .bag-form-row {
@@ -893,11 +1009,79 @@ footer a,
 .bag-contact-form select,
 .bag-contact-form textarea {
     background: #fff;
-    border: 1px solid var(--bag-border);
-    border-radius: .28rem;
+    border: 1px solid rgba(80, 52, 32, .14);
+    border-radius: 999px;
     color: var(--bag-text);
-    min-height: 2.9rem;
-    padding: .75rem .9rem;
+    font-size: .72rem;
+    min-height: 2.55rem;
+    padding: .65rem 2.35rem .65rem .95rem;
+    width: 100%;
+}
+
+.bag-contact-form textarea {
+    border-radius: .6rem;
+    min-height: 7.8rem;
+    resize: vertical;
+}
+
+.bag-contact-field {
+    display: grid;
+    gap: .35rem;
+    margin: 0;
+}
+
+.bag-contact-field > span:first-child {
+    color: #2b211a;
+    font-size: .67rem;
+    font-weight: 700;
+}
+
+.bag-contact-input {
+    display: block;
+    position: relative;
+}
+
+.bag-contact-form-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bag-contact-form-icon-paper-plane {
+    clip-path: polygon(0 44%, 100% 0, 62% 100%, 45% 62%);
+}
+
+.bag-contact-form-icon-user {
+    border-radius: 50%;
+}
+
+.bag-contact-form-icon-user::after {
+    background: var(--bag-brown);
+    border-radius: .35rem .35rem 0 0;
+    content: "";
+    height: .32rem;
+    left: -.12rem;
+    position: absolute;
+    top: .55rem;
+    width: .72rem;
+}
+
+.bag-contact-form-icon-message {
+    top: .95rem;
+    transform: none;
+}
+
+.bag-contact-note {
+    color: #918781;
+    font-size: .68rem;
+    line-height: 1.4;
+    margin: .15rem 0 0;
+}
+
+.bag-contact-form .bag-btn {
+    border-radius: .32rem;
+    min-height: 2.75rem;
     width: 100%;
 }
 

@@ -555,40 +555,75 @@ function theme_baitulghawa_course_page(array $urls): string {
  * @return string
  */
 function theme_baitulghawa_contact_page(array $urls): string {
+    $contactitems = [
+        ['mail', 'Email', 'BaitAlGahwa@DCTAbuDhabi.ae'],
+        ['phone', 'Phone', '+971 2 444 0444'],
+        ['instagram', 'Instagram', 'abudhabiculture'],
+        ['location', 'Location', 'Abu Dhabi<br>United Arab Emirates'],
+    ];
+
+    $contacthtml = '';
+    foreach ($contactitems as $item) {
+        $contacthtml .= html_writer::tag('div',
+            html_writer::tag('span', '', ['class' => 'bag-contact-icon bag-contact-icon-' . $item[0]]) .
+            html_writer::tag('div',
+                html_writer::tag('strong', $item[1]) .
+                html_writer::tag('span', $item[2])
+            ),
+            ['class' => 'bag-contact-item']
+        );
+    }
+
     return html_writer::tag('main',
         html_writer::tag('section',
-            html_writer::tag('h1', 'Contact Us', ['class' => 'bag-center']) .
             html_writer::tag('div',
                 html_writer::tag('aside',
                     html_writer::tag('h2', 'Contact Information') .
-                    html_writer::tag('p', 'Email: info@baitalgahwa.com') .
-                    html_writer::tag('p', 'Phone: +966 55 000 0000') .
-                    html_writer::tag('p', 'Address: Riyadh, Saudi Arabia') .
-                    html_writer::tag('h2', 'Business Time') .
-                    html_writer::tag('p', 'Sunday to Thursday, 9:00 AM - 6:00 PM'),
+                    html_writer::tag('div', $contacthtml, ['class' => 'bag-contact-list']) .
+                    html_writer::tag('div',
+                        html_writer::tag('h2', 'Response Time') .
+                        html_writer::tag('p', 'We typically respond within 24-48 hours during weekdays. For urgent rescue situations, please call or WhatsApp directly.') .
+                        html_writer::tag('p', 'Usually active during UAE business hours'),
+                        ['class' => 'bag-response-time']
+                    ),
                     ['class' => 'bag-contact-info']
                 ) .
                 html_writer::tag('form',
+                    html_writer::tag('h2', 'Send Us a Message') .
                     html_writer::tag('div',
-                        html_writer::tag('input', '', ['type' => 'text', 'name' => 'firstname', 'placeholder' => 'First name']) .
-                        html_writer::tag('input', '', ['type' => 'text', 'name' => 'lastname', 'placeholder' => 'Last name']),
+                        theme_baitulghawa_contact_field('text', 'firstname', 'First Name*', 'First Name*', 'user') .
+                        theme_baitulghawa_contact_field('text', 'lastname', 'Last Name', 'Last Name*', 'user'),
                         ['class' => 'bag-form-row']
                     ) .
-                    html_writer::tag('input', '', ['type' => 'email', 'name' => 'email', 'placeholder' => 'Email address']) .
-                    html_writer::tag('input', '', ['type' => 'tel', 'name' => 'phone', 'placeholder' => 'Phone number']) .
-                    html_writer::tag('select',
-                        html_writer::tag('option', 'Course inquiry') .
-                        html_writer::tag('option', 'Corporate training') .
-                        html_writer::tag('option', 'General question'),
-                        ['name' => 'subject']
+                    theme_baitulghawa_contact_field('email', 'email', 'Your Email', 'Your Email', 'paper-plane') .
+                    theme_baitulghawa_contact_field('tel', 'phone', 'Phone Number *', 'Phone Number', 'phone') .
+                    html_writer::tag('label',
+                        html_writer::tag('span', 'Inquiry Type') .
+                        html_writer::tag('select',
+                            html_writer::tag('option', 'Select Inquiry Type') .
+                            html_writer::tag('option', 'Course inquiry') .
+                            html_writer::tag('option', 'Corporate training') .
+                            html_writer::tag('option', 'General question'),
+                            ['name' => 'subject']
+                        ),
+                        ['class' => 'bag-contact-field']
                     ) .
-                    html_writer::tag('textarea', '', ['name' => 'message', 'placeholder' => 'Write your message', 'rows' => 5]) .
+                    html_writer::tag('label',
+                        html_writer::tag('span', 'Message') .
+                        html_writer::tag('span',
+                            html_writer::tag('textarea', '', ['name' => 'message', 'placeholder' => 'Write Message...', 'rows' => 5]) .
+                            html_writer::tag('i', '', ['class' => 'bag-contact-form-icon bag-contact-form-icon-message']),
+                            ['class' => 'bag-contact-input']
+                        ),
+                        ['class' => 'bag-contact-field']
+                    ) .
+                    html_writer::tag('p', 'Note: This form is for demonstration purposes. For actual inquiries, please contact us via email at BaitAlGahwa@DCTAbuDhabi.ae', ['class' => 'bag-contact-note']) .
                     html_writer::tag('button', 'Send Message', ['class' => 'bag-btn bag-btn-primary', 'type' => 'submit']),
                     ['class' => 'bag-contact-form', 'action' => (string)$urls['contact'], 'method' => 'get']
                 ),
                 ['class' => 'bag-contact-grid']
             ),
-            ['class' => 'bag-page-section']
+            ['class' => 'bag-page-section bag-contact-page']
         ) .
         html_writer::tag('section',
             html_writer::tag('div', '', ['class' => 'bag-location-photo']) .
@@ -601,6 +636,28 @@ function theme_baitulghawa_contact_page(array $urls): string {
             ['class' => 'bag-section bag-two-column bag-location']
         ),
         ['class' => 'bag-landing-main']
+    );
+}
+
+/**
+ * Contact form field markup.
+ *
+ * @param string $type
+ * @param string $name
+ * @param string $label
+ * @param string $placeholder
+ * @param string $icon
+ * @return string
+ */
+function theme_baitulghawa_contact_field(string $type, string $name, string $label, string $placeholder, string $icon): string {
+    return html_writer::tag('label',
+        html_writer::tag('span', $label) .
+        html_writer::tag('span',
+            html_writer::tag('input', '', ['type' => $type, 'name' => $name, 'placeholder' => $placeholder]) .
+            html_writer::tag('i', '', ['class' => 'bag-contact-form-icon bag-contact-form-icon-' . $icon]),
+            ['class' => 'bag-contact-input']
+        ),
+        ['class' => 'bag-contact-field']
     );
 }
 
