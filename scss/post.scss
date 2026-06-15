@@ -799,55 +799,236 @@ footer a,
 }
 
 .bag-course-hero {
-    align-items: stretch;
+    align-items: end;
     background: var(--bag-brown);
     color: #fff;
+    min-height: 26rem;
+    overflow: visible;
+    padding: clamp(8rem, 10vw, 9rem) clamp(1.25rem, 7vw, 7rem) 0;
+    position: relative;
+}
+
+.bag-course-hero::before {
+    background: url(/theme/baitulghawa/pix/footer-flower.png) left bottom / contain no-repeat;
+    bottom: -1rem;
+    content: "";
+    left: 0;
+    opacity: .16;
+    position: absolute;
+    top: 7rem;
+    width: min(19rem, 34vw);
+}
+
+.bag-course-hero-inner {
+    align-items: center;
     display: grid;
-    grid-template-columns: minmax(18rem, .85fr) minmax(0, 1fr);
-    min-height: 32rem;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    grid-template-columns: minmax(17rem, 24rem) minmax(0, 1fr);
+    margin: 0 auto;
+    max-width: 72rem;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+.bag-course-card {
+    background: #fff;
+    border-radius: .55rem;
+    box-shadow: 0 18px 40px rgba(45, 25, 13, .18);
+    color: var(--bag-text);
+    overflow: hidden;
+    transform: translateY(4.7rem);
 }
 
 .bag-course-photo {
     background-image: url(/theme/baitulghawa/pix/coffee-beans-bag.png);
 }
 
+.bag-course-card-image {
+    background: url(/theme/baitulghawa/pix/coffee-roast.png) center / cover;
+    min-height: 25rem;
+    padding: 1rem;
+}
+
+.bag-course-status {
+    background: #fff;
+    border-radius: 999px;
+    color: #7a461f;
+    display: inline-flex;
+    font-size: .7rem;
+    font-weight: 800;
+    padding: .45rem 1.2rem;
+}
+
+.bag-course-card-body {
+    display: grid;
+    gap: .75rem;
+    padding: 1.1rem 1rem 1.25rem;
+    text-align: center;
+}
+
+.bag-course-card-body strong {
+    color: var(--bag-brown);
+    font-size: .9rem;
+    font-weight: 800;
+}
+
+.bag-course-enroll {
+    background: var(--bag-brown);
+    border-radius: .28rem;
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 850;
+    padding: .8rem 1rem;
+    text-decoration: none;
+}
+
+.bag-course-enroll:hover {
+    background: var(--bag-brown-dark);
+    color: #fff;
+    text-decoration: none;
+}
+
+.bag-course-seats {
+    color: #a7988e;
+    font-size: .68rem;
+}
+
 .bag-course-summary {
     align-self: center;
-    padding: clamp(2rem, 6vw, 5rem);
+    max-width: 46rem;
+    padding: 0 0 clamp(3rem, 7vw, 5.5rem);
 }
 
 .bag-course-summary h1 {
     color: #fff;
+    font-size: clamp(2.2rem, 4.8vw, 4rem);
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1.04;
+    margin: 0 0 .8rem;
 }
 
 .bag-course-summary p {
     color: rgba(255, 255, 255, .78);
-    line-height: 1.75;
+    font-size: .85rem;
+    line-height: 1.6;
+    margin: 0 0 1.05rem;
 }
 
-.bag-course-meta {
+.bag-course-dates {
     display: flex;
     flex-wrap: wrap;
-    gap: .65rem;
-    margin: 1.25rem 0 1.5rem;
+    gap: .6rem;
+    margin: 1rem 0 1.35rem;
 }
 
-.bag-course-meta span {
-    background: rgba(255, 255, 255, .14);
-    border: 1px solid rgba(255, 255, 255, .2);
+.bag-course-dates span {
+    background: #fff;
     border-radius: 999px;
-    color: #fff;
-    font-size: .78rem;
+    color: var(--bag-brown);
+    font-size: .72rem;
     font-weight: 800;
-    padding: .45rem .75rem;
+    padding: .45rem 1rem;
+}
+
+.bag-course-facts {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 1.35rem;
+    max-width: 31rem;
+}
+
+.bag-course-facts span,
+.bag-course-facts strong {
+    display: block;
+}
+
+.bag-course-facts span {
+    color: rgba(255, 255, 255, .58);
+    font-size: .76rem;
+    margin-bottom: .35rem;
+}
+
+.bag-course-facts strong {
+    color: #fff;
+    font-size: .98rem;
+    font-weight: 800;
+}
+
+.bag-course-teacher {
+    align-items: center;
+    display: flex;
+    gap: .7rem;
+}
+
+.bag-course-avatar {
+    background: url(/theme/baitulghawa/pix/logo.png) center / cover;
+    border: 2px solid rgba(255, 255, 255, .7);
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+}
+
+.bag-course-teacher strong {
+    color: #fff;
+    font-size: .68rem;
+    line-height: 1.2;
+}
+
+.bag-course-more {
+    background: var(--bag-gold);
+    border-radius: 999px;
+    color: var(--bag-brown-dark);
+    font-size: .7rem;
+    font-weight: 850;
+    margin-left: 1rem;
+    padding: .55rem 1.1rem;
+    text-decoration: none;
+}
+
+.bag-course-more:hover {
+    color: var(--bag-brown-dark);
+    text-decoration: none;
 }
 
 .bag-course-details {
-    background: #fff;
+    background: #f1eae2;
+    display: block;
+    padding: clamp(7rem, 12vw, 9rem) clamp(1.25rem, 7vw, 7rem) clamp(5rem, 9vw, 7rem);
+}
+
+.bag-course-outcomes {
+    margin: 0 auto;
+    max-width: 31rem;
+}
+
+.bag-course-outcomes h2 {
+    background: var(--bag-gold);
+    border-radius: .32rem;
+    color: var(--bag-brown-dark);
+    font-size: .92rem;
+    font-weight: 900;
+    margin: 0 0 1rem;
+    padding: 1.45rem 1.75rem;
+}
+
+.bag-course-outcome-list {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr;
-    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 7vw, 7rem);
+    gap: .75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bag-course-outcome-list li {
+    background: #fff;
+    border-radius: 999px;
+    color: #6f625a;
+    font-size: .76rem;
+    line-height: 1.4;
+    padding: .9rem 1.25rem;
 }
 
 .bag-detail-panel,
@@ -1693,8 +1874,7 @@ footer a,
     .bag-two-column,
     .bag-programme-grid,
     .bag-programme-grid-wide,
-    .bag-course-hero,
-    .bag-course-details,
+    .bag-course-hero-inner,
     .bag-contact-grid,
     .bag-footer-grid {
         grid-template-columns: 1fr;
@@ -1707,6 +1887,22 @@ footer a,
 
     .bag-page-section {
         padding-top: clamp(3.5rem, 7vw, 6rem);
+    }
+
+    .bag-course-hero {
+        padding-top: 3rem;
+    }
+
+    .bag-course-card {
+        transform: none;
+    }
+
+    .bag-course-summary {
+        padding: 0 0 3rem;
+    }
+
+    .bag-course-details {
+        padding-top: 3rem;
     }
 
     .bag-collage,

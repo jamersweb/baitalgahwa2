@@ -501,46 +501,64 @@ function theme_baitulghawa_programmes_page(array $urls): string {
  * @return string
  */
 function theme_baitulghawa_course_page(array $urls): string {
-    $lessons = [
-        'Espresso extraction',
-        'Milk steaming',
-        'Latte art basics',
-        'Coffee menu workflow',
+    $outcomes = [
+        'Practical mastery of traditional Gahwa preparation',
+        'Full readiness to lead formal, authentic Gahwa experiences',
+        'Qualification to pursue roles like Gahwa Specialist, Host, or Certified Instructor',
     ];
 
-    $lessonhtml = '';
-    foreach ($lessons as $lesson) {
-        $lessonhtml .= html_writer::tag('li', $lesson);
+    $outcomehtml = '';
+    foreach ($outcomes as $outcome) {
+        $outcomehtml .= html_writer::tag('li', $outcome);
     }
 
     return html_writer::tag('main',
         html_writer::tag('section',
-            html_writer::tag('div', '', ['class' => 'bag-course-photo']) .
             html_writer::tag('div',
-                html_writer::tag('p', 'Professional certificate', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h1', 'Certified Gahwa Specialist') .
-                html_writer::tag('p', 'A focused programme for learners who want practical coffee preparation skills, service confidence and recognised training outcomes.') .
-                html_writer::tag('div',
-                    html_writer::tag('span', '6 Weeks') .
-                    html_writer::tag('span', 'Beginner') .
-                    html_writer::tag('span', 'Certificate'),
-                    ['class' => 'bag-course-meta']
+                html_writer::tag('aside',
+                    html_writer::tag('div',
+                        html_writer::tag('span', 'Available', ['class' => 'bag-course-status']),
+                        ['class' => 'bag-course-card-image']
+                    ) .
+                    html_writer::tag('div',
+                        html_writer::tag('strong', 'Fees are free') .
+                        html_writer::link($urls['login'], 'Enroll Now', ['class' => 'bag-course-enroll']) .
+                        html_writer::tag('span', 'Limited seats available', ['class' => 'bag-course-seats']),
+                        ['class' => 'bag-course-card-body']
+                    ),
+                    ['class' => 'bag-course-card']
                 ) .
-                html_writer::link($urls['login'], 'Enroll Now', ['class' => 'bag-btn bag-btn-primary']),
-                ['class' => 'bag-course-summary']
+                html_writer::tag('div',
+                    html_writer::tag('h1', 'Certified Gahwa Specialist') .
+                    html_writer::tag('p', 'A hands-on advanced course that dives into traditional Gahwa making skills, including roasting and brewing. Tailored for those looking to master Gahwa craftsmanship.') .
+                    html_writer::tag('div',
+                        html_writer::tag('span', '15/03/2026') .
+                        html_writer::tag('span', 'end on 17/03/2026'),
+                        ['class' => 'bag-course-dates']
+                    ) .
+                    html_writer::tag('div',
+                        html_writer::tag('div', html_writer::tag('span', 'Duration') . html_writer::tag('strong', '8 Days')) .
+                        html_writer::tag('div', html_writer::tag('span', 'Languages') . html_writer::tag('strong', 'Arabic')) .
+                        html_writer::tag('div', html_writer::tag('span', 'Location') . html_writer::tag('strong', 'Abu Dhabi')),
+                        ['class' => 'bag-course-facts']
+                    ) .
+                    html_writer::tag('div',
+                        html_writer::tag('span', '', ['class' => 'bag-course-avatar']) .
+                        html_writer::tag('strong', 'Gahwa Specialist,<br>Dari Al Gahwa Host') .
+                        html_writer::link($urls['contact'], 'More and enroll', ['class' => 'bag-course-more']),
+                        ['class' => 'bag-course-teacher']
+                    ),
+                    ['class' => 'bag-course-summary']
+                ),
+                ['class' => 'bag-course-hero-inner']
             ),
             ['class' => 'bag-course-hero']
         ) .
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('h2', 'What You Will Learn') .
-                html_writer::tag('ul', $lessonhtml, ['class' => 'bag-check-list']),
-                ['class' => 'bag-detail-panel']
-            ) .
-            html_writer::tag('div',
-                html_writer::tag('h2', 'Course Information') .
-                html_writer::tag('p', 'Hands-on sessions, guided assessment and mentor feedback designed around professional hospitality settings.'),
-                ['class' => 'bag-detail-panel']
+                html_writer::tag('h2', 'Program Outcome') .
+                html_writer::tag('ul', $outcomehtml, ['class' => 'bag-course-outcome-list']),
+                ['class' => 'bag-course-outcomes']
             ),
             ['class' => 'bag-course-details']
         ),
