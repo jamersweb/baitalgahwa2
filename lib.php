@@ -191,6 +191,8 @@ function theme_baitulghawa_before_standard_top_of_body_html(): string {
         $content = $PAGE->pagetype === 'login-signup'
             ? theme_baitulghawa_register_page($urls)
             : theme_baitulghawa_login_page($urls);
+    } else if ($page === 'about') {
+        $content = theme_baitulghawa_about_page($urls);
     } else if ($page === 'programmes') {
         $content = theme_baitulghawa_programmes_page($urls);
     } else if ($page === 'course') {
@@ -251,7 +253,7 @@ function theme_baitulghawa_is_auth_design_request(): bool {
  */
 function theme_baitulghawa_landing_page(): string {
     $page = optional_param('bagpage', 'home', PARAM_ALPHA);
-    $allowedpages = ['home', 'programmes', 'course', 'contact'];
+    $allowedpages = ['home', 'about', 'programmes', 'course', 'contact'];
 
     return in_array($page, $allowedpages, true) ? $page : 'home';
 }
@@ -267,6 +269,7 @@ function theme_baitulghawa_landing_urls(bool $useloginbase): array {
 
     return [
         'home' => new moodle_url($basepath),
+        'about' => new moodle_url($basepath, ['bagpage' => 'about']),
         'programmes' => new moodle_url($basepath, ['bagpage' => 'programmes']),
         'course' => new moodle_url($basepath, ['bagpage' => 'course']),
         'contact' => new moodle_url($basepath, ['bagpage' => 'contact']),
@@ -306,8 +309,8 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
 
     $links = '';
     foreach ($items as $key => $label) {
-        $target = $key === 'about' ? $urls['home'] : $urls[$key];
-        $active = ($page === $key) || ($key === 'about' && $page === 'home');
+        $target = $urls[$key];
+        $active = $page === $key;
         $links .= html_writer::link($target, $label, [
             'class' => 'bag-nav-link' . ($active ? ' is-active' : ''),
         ]);
@@ -393,6 +396,64 @@ function theme_baitulghawa_home_page(array $urls): string {
                 ['class' => 'bag-section-inner']
             ),
             ['class' => 'bag-section bag-programmes-band']
+        ) .
+        html_writer::tag('section',
+            html_writer::tag('div',
+                html_writer::tag('p', 'Professional growth', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h2', 'Excellence in Professional Development') .
+                html_writer::tag('ul',
+                    html_writer::tag('li', 'Interactive training with industry-led instruction') .
+                    html_writer::tag('li', 'Practical workplace scenarios and assessments') .
+                    html_writer::tag('li', 'Career-focused learning paths for hospitality teams') .
+                    html_writer::tag('li', 'Certification support after programme completion'),
+                    ['class' => 'bag-check-list']
+                ),
+                ['class' => 'bag-section-copy']
+            ) .
+            html_writer::tag('div', '', ['class' => 'bag-student-photo']),
+            ['class' => 'bag-section bag-two-column bag-development']
+        ) .
+        theme_baitulghawa_cta($urls),
+        ['class' => 'bag-landing-main']
+    );
+}
+
+/**
+ * About page markup without the training programme cards.
+ *
+ * @param array $urls
+ * @return string
+ */
+function theme_baitulghawa_about_page(array $urls): string {
+    $stats = [
+        ['50+', 'Professional courses'],
+        ['20+', 'Expert instructors'],
+        ['5k+', 'Learners trained'],
+    ];
+
+    $stathtml = '';
+    foreach ($stats as $stat) {
+        $stathtml .= html_writer::tag('li',
+            html_writer::tag('strong', $stat[0]) . html_writer::tag('span', $stat[1])
+        );
+    }
+
+    return html_writer::tag('main',
+        html_writer::tag('section',
+            html_writer::tag('div',
+                html_writer::tag('div', '', ['class' => 'bag-collage-main']) .
+                html_writer::tag('div', '', ['class' => 'bag-collage-small bag-collage-beans']) .
+                html_writer::tag('div', '', ['class' => 'bag-collage-small bag-collage-cup']),
+                ['class' => 'bag-collage']
+            ) .
+            html_writer::tag('div',
+                html_writer::tag('p', 'About Us', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h1', 'Expertise Across All Disciplines') .
+                html_writer::tag('p', 'Bait Al Gahwa empowers professionals through quality training and development programmes inspired by Emirati heritage.') .
+                html_writer::tag('ul', $stathtml, ['class' => 'bag-stats']),
+                ['class' => 'bag-section-copy']
+            ),
+            ['class' => 'bag-section bag-two-column bag-about-page']
         ) .
         html_writer::tag('section',
             html_writer::tag('div',
