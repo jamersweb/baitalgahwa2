@@ -217,14 +217,17 @@ function theme_baitulghawa_landing_brand(): string {
 function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand): string {
     $items = [
         'home' => 'Home',
-        'programmes' => 'Courses',
+        'about' => 'About Us',
+        'programmes' => 'Training Program',
         'contact' => 'Contact Us',
     ];
 
     $links = '';
     foreach ($items as $key => $label) {
-        $links .= html_writer::link($urls[$key], $label, [
-            'class' => 'bag-nav-link' . ($page === $key ? ' is-active' : ''),
+        $target = $key === 'about' ? $urls['home'] : $urls[$key];
+        $active = ($page === $key) || ($key === 'about' && $page === 'home');
+        $links .= html_writer::link($target, $label, [
+            'class' => 'bag-nav-link' . ($active ? ' is-active' : ''),
         ]);
     }
 
@@ -236,7 +239,7 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
         html_writer::tag('nav', $links, ['class' => 'bag-nav-links', 'aria-label' => 'Main navigation']) .
         html_writer::tag('div',
             html_writer::link($urls['login'], 'Login', ['class' => 'bag-login']) .
-            html_writer::link($urls['signup'], 'Sign Up', ['class' => 'bag-signup']),
+            html_writer::link($urls['signup'], 'Register', ['class' => 'bag-signup']),
             ['class' => 'bag-auth-actions']
         ),
         ['class' => 'bag-site-header']
