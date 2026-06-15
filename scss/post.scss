@@ -390,16 +390,40 @@ footer a,
 .bag-hero {
     align-items: center;
     background:
-        linear-gradient(90deg, rgba(20, 13, 8, .82), rgba(20, 13, 8, .42)),
+        linear-gradient(rgba(10, 10, 10, .58), rgba(10, 10, 10, .58)),
         url(/theme/baitulghawa/pix/hero-workshop.png) center / cover;
     color: #fff;
     display: flex;
-    min-height: min(74vh, 44rem);
-    padding: clamp(8rem, 14vw, 10rem) clamp(1.25rem, 8vw, 8rem) clamp(4rem, 8vw, 6rem);
+    justify-content: center;
+    min-height: min(75vh, 42rem);
+    overflow: hidden;
+    padding: clamp(10rem, 15vw, 12rem) clamp(1.25rem, 8vw, 8rem) clamp(5rem, 9vw, 7rem);
+    position: relative;
+}
+
+.bag-hero::before {
+    background: url(/theme/baitulghawa/pix/footer-flower.png) left center / contain no-repeat;
+    bottom: 1rem;
+    content: "";
+    left: 0;
+    opacity: .22;
+    position: absolute;
+    top: 11rem;
+    width: min(25rem, 38vw);
+}
+
+.bag-hero::after {
+    background: linear-gradient(90deg, rgba(0, 0, 0, .34), transparent 24%, transparent 76%, rgba(0, 0, 0, .28));
+    content: "";
+    inset: 0;
+    position: absolute;
 }
 
 .bag-hero-copy {
-    max-width: 42rem;
+    max-width: 46rem;
+    position: relative;
+    text-align: center;
+    z-index: 1;
 }
 
 .bag-eyebrow {
@@ -423,15 +447,30 @@ footer a,
 
 .bag-hero h1 {
     color: #fff;
-    max-width: 35rem;
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
+    line-height: 1.22;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 42rem;
+    text-transform: uppercase;
 }
 
 .bag-hero p:not(.bag-eyebrow) {
     color: rgba(255, 255, 255, .86);
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin: 0 0 1.5rem;
-    max-width: 34rem;
+    font-size: 1rem;
+    line-height: 1.45;
+    margin: 0 auto 1.55rem;
+    max-width: 43rem;
+}
+
+.bag-hero .bag-eyebrow {
+    display: none;
+}
+
+.bag-hero-actions {
+    display: flex;
+    gap: .8rem;
+    justify-content: center;
 }
 
 .bag-btn {
@@ -450,6 +489,31 @@ footer a,
 .bag-btn-primary {
     background: var(--bag-brown);
     color: #fff;
+}
+
+.bag-btn-gold {
+    background: #d4b259;
+    color: #5e381b;
+    min-width: 11rem;
+}
+
+.bag-btn-gold:hover {
+    background: #c9a64e;
+    color: #4d2d16;
+    text-decoration: none;
+}
+
+.bag-btn-ghost {
+    background: rgba(0, 0, 0, .08);
+    border: 1px solid #d4b259;
+    color: #d4b259;
+    min-width: 11rem;
+}
+
+.bag-btn-ghost:hover {
+    background: rgba(212, 178, 89, .14);
+    color: #f2d789;
+    text-decoration: none;
 }
 
 .bag-btn-primary:hover {
@@ -676,7 +740,7 @@ footer a,
 }
 
 .bag-student-photo {
-    background-image: url(/theme/baitulghawa/pix/instructor.png);
+    background-image: url(/theme/baitulghawa/pix/hero-workshop.png);
     border-radius: .65rem;
     min-height: 28rem;
 }

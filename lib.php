@@ -335,8 +335,12 @@ function theme_baitulghawa_home_page(array $urls): string {
             html_writer::tag('div',
                 html_writer::tag('p', 'Bait Al Gahwa', ['class' => 'bag-eyebrow']) .
                 html_writer::tag('h1', 'Empower Your Future With Excellence') .
-                html_writer::tag('p', 'Learn coffee craft, hospitality skills and professional service standards through focused training built for real careers.') .
-                html_writer::link($urls['programmes'], 'Explore Courses', ['class' => 'bag-btn bag-btn-primary']),
+                html_writer::tag('p', 'Join Bait Al Gahwa\'s premium training programs and unlock your potential through world-class education inspired by Emirati heritage.') .
+                html_writer::tag('div',
+                    html_writer::link($urls['programmes'], 'Explore Course', ['class' => 'bag-btn bag-btn-gold']) .
+                    html_writer::link($urls['signup'], 'Register', ['class' => 'bag-btn bag-btn-ghost']),
+                    ['class' => 'bag-hero-actions']
+                ),
                 ['class' => 'bag-hero-copy']
             ),
             ['class' => 'bag-hero']
