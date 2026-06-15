@@ -1558,6 +1558,17 @@ footer a,
     width: 100%;
 }
 
+.bag-auth-alert {
+    background: rgba(117, 72, 34, .08);
+    border: 1px solid rgba(117, 72, 34, .18);
+    border-radius: .45rem;
+    color: #754822;
+    font-size: .74rem;
+    font-weight: 650;
+    line-height: 1.45;
+    padding: .8rem .95rem;
+}
+
 .bag-login-card .bag-auth-form {
     gap: 1.15rem;
 }

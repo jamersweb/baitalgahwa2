@@ -731,6 +731,14 @@ function theme_baitulghawa_login_page(array $urls): string {
  */
 function theme_baitulghawa_register_page(array $urls): string {
     $action = new moodle_url('/login/signup.php');
+    $message = '';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $message = html_writer::tag('div',
+            'Please check your details. Use a valid email address, matching passwords, and a password that follows the rule below.',
+            ['class' => 'bag-auth-alert', 'role' => 'alert']
+        );
+    }
+
     $hidden = html_writer::empty_tag('input', ['type' => 'hidden', 'name' => '_qf__login_signup_form', 'value' => '1']) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'username', 'value' => '']) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'email2', 'value' => '']) .
@@ -743,6 +751,7 @@ function theme_baitulghawa_register_page(array $urls): string {
                 html_writer::tag('h1', 'Register') .
                 html_writer::tag('form',
                     $hidden .
+                    $message .
                     html_writer::tag('div',
                         theme_baitulghawa_auth_field('text', 'firstname', 'First Name*', 'First Name*', 'user') .
                         theme_baitulghawa_auth_field('text', 'middlename', 'Middle Name', 'Middle Name', 'user') .
@@ -760,15 +769,37 @@ function theme_baitulghawa_register_page(array $urls): string {
                 ) .
                 html_writer::script("
                     document.querySelectorAll('.bag-register-form').forEach(function(form) {
-                        form.addEventListener('submit', function() {
+                        form.addEventListener('submit', function(event) {
                             var email = form.querySelector('[name=\"email\"]');
                             var username = form.querySelector('[name=\"username\"]');
                             var email2 = form.querySelector('[name=\"email2\"]');
+                            var password = form.querySelector('[name=\"password\"]');
+                            var password2 = form.querySelector('[name=\"password2\"]');
+                            var alert = form.querySelector('.bag-auth-alert');
+                            if (!alert) {
+                                alert = document.createElement('div');
+                                alert.className = 'bag-auth-alert';
+                                alert.setAttribute('role', 'alert');
+                                form.insertBefore(alert, form.firstChild.nextSibling);
+                            }
+                            var emailValue = email ? email.value.trim() : '';
+                            var validEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(emailValue);
+                            if (!validEmail) {
+                                event.preventDefault();
+                                alert.textContent = 'Please enter a valid email address, for example name@example.com.';
+                                return;
+                            }
+                            if (password && password2 && password.value !== password2.value) {
+                                event.preventDefault();
+                                alert.textContent = 'Password and confirm password must match.';
+                                return;
+                            }
                             if (email && username) {
-                                username.value = email.value;
+                                var safeusername = emailValue.split('@')[0].toLowerCase().replace(/[^a-z0-9._-]/g, '');
+                                username.value = safeusername || ('user' + Date.now());
                             }
                             if (email && email2) {
-                                email2.value = email.value;
+                                email2.value = emailValue;
                             }
                         });
                     });
