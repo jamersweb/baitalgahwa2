@@ -80,17 +80,32 @@ function theme_baitulghawa_get_extra_scss($theme): string {
 function theme_baitulghawa_before_standard_html_head(): string {
     global $CFG, $PAGE;
 
-    if (empty($PAGE) || $PAGE->pagetype !== 'my-index') {
+    if (empty($PAGE)) {
         return '';
     }
 
-    $dashboardcss = $CFG->dirroot . '/theme/baitulghawa/style/dashboard.css';
-    if (!is_readable($dashboardcss)) {
+    $styles = '';
+
+    if ($PAGE->pagetype === 'my-index') {
+        $dashboardcss = $CFG->dirroot . '/theme/baitulghawa/style/dashboard.css';
+        if (is_readable($dashboardcss)) {
+            $styles .= file_get_contents($dashboardcss);
+        }
+    }
+
+    if (theme_baitulghawa_is_landing_request()) {
+        $landingcss = $CFG->dirroot . '/theme/baitulghawa/scss/post.scss';
+        if (is_readable($landingcss)) {
+            $styles .= "\n" . file_get_contents($landingcss);
+        }
+    }
+
+    if ($styles === '') {
         return '';
     }
 
-    return html_writer::tag('style', file_get_contents($dashboardcss), [
-        'id' => 'theme-baitulghawa-dashboard-css',
+    return html_writer::tag('style', $styles, [
+        'id' => 'theme-baitulghawa-inline-css',
     ]);
 }
 
@@ -100,30 +115,16 @@ function theme_baitulghawa_before_standard_html_head(): string {
  * @return string
  */
 function theme_baitulghawa_before_standard_top_of_body_html(): string {
-    global $CFG, $PAGE, $SITE;
+    global $PAGE;
 
-    if (empty($PAGE) || $PAGE->pagetype !== 'site-index') {
+    if (!theme_baitulghawa_is_landing_request()) {
         return '';
     }
 
-    $page = optional_param('bagpage', 'home', PARAM_ALPHA);
-    $allowedpages = ['home', 'programmes', 'course', 'contact'];
-    if (!in_array($page, $allowedpages, true)) {
-        $page = 'home';
-    }
+    $page = theme_baitulghawa_landing_page();
+    $urls = theme_baitulghawa_landing_urls($PAGE->pagetype === 'login-index');
 
-    $root = rtrim($CFG->wwwroot, '/');
-    $urls = [
-        'home' => new moodle_url('/'),
-        'programmes' => new moodle_url('/', ['bagpage' => 'programmes']),
-        'course' => new moodle_url('/', ['bagpage' => 'course']),
-        'contact' => new moodle_url('/', ['bagpage' => 'contact']),
-        'login' => new moodle_url('/login/index.php'),
-        'signup' => new moodle_url('/login/signup.php'),
-        'courses' => new moodle_url('/course/index.php'),
-    ];
-
-    $brand = format_string($SITE->shortname ?: 'Bait Al Gahwa');
+    $brand = theme_baitulghawa_landing_brand();
     $nav = theme_baitulghawa_landing_nav($urls, $page, $brand);
     $footer = theme_baitulghawa_landing_footer($urls, $brand);
 
@@ -140,8 +141,69 @@ function theme_baitulghawa_before_standard_top_of_body_html(): string {
 
     return html_writer::tag('div', $nav . $content . $footer, [
         'class' => 'bag-landing-shell',
-        'data-root' => $root,
     ]);
+}
+
+/**
+ * Detects when the Figma-style public landing should replace Moodle content.
+ *
+ * @return bool
+ */
+function theme_baitulghawa_is_landing_request(): bool {
+    global $PAGE;
+
+    if (empty($PAGE)) {
+        return false;
+    }
+
+    if ($PAGE->pagetype === 'site-index') {
+        return true;
+    }
+
+    return $PAGE->pagetype === 'login-index' && !optional_param('baglogin', 0, PARAM_BOOL);
+}
+
+/**
+ * Returns validated landing page key.
+ *
+ * @return string
+ */
+function theme_baitulghawa_landing_page(): string {
+    $page = optional_param('bagpage', 'home', PARAM_ALPHA);
+    $allowedpages = ['home', 'programmes', 'course', 'contact'];
+
+    return in_array($page, $allowedpages, true) ? $page : 'home';
+}
+
+/**
+ * Landing URLs. Login-page base is used when Moodle force-login redirects home.
+ *
+ * @param bool $useloginbase
+ * @return array
+ */
+function theme_baitulghawa_landing_urls(bool $useloginbase): array {
+    $basepath = $useloginbase ? '/login/index.php' : '/';
+
+    return [
+        'home' => new moodle_url($basepath),
+        'programmes' => new moodle_url($basepath, ['bagpage' => 'programmes']),
+        'course' => new moodle_url($basepath, ['bagpage' => 'course']),
+        'contact' => new moodle_url($basepath, ['bagpage' => 'contact']),
+        'login' => new moodle_url('/login/index.php', ['baglogin' => 1]),
+        'signup' => new moodle_url('/login/signup.php'),
+        'courses' => new moodle_url('/course/index.php'),
+    ];
+}
+
+/**
+ * Public brand text.
+ *
+ * @return string
+ */
+function theme_baitulghawa_landing_brand(): string {
+    global $SITE;
+
+    return format_string($SITE->shortname ?: 'Bait Al Gahwa');
 }
 
 /**
@@ -167,7 +229,7 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
     }
 
     return html_writer::tag('header',
-        html_writer::tag('a', html_writer::tag('span', 'بيت الغهوة') . html_writer::tag('small', $brand), [
+        html_writer::tag('a', html_writer::tag('span', 'Bait Al Gahwa') . html_writer::tag('small', $brand), [
             'class' => 'bag-brand',
             'href' => (string)$urls['home'],
         ]) .
@@ -455,7 +517,7 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
     return html_writer::tag('footer',
         html_writer::tag('div',
             html_writer::tag('div',
-                html_writer::tag('strong', 'بيت الغهوة') .
+                html_writer::tag('strong', 'Bait Al Gahwa') .
                 html_writer::tag('p', $brand . ' provides coffee, hospitality and artisan training for ambitious learners and teams.') .
                 html_writer::tag('div',
                     html_writer::tag('span', '') . html_writer::tag('span', '') . html_writer::tag('span', ''),
