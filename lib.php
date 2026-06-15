@@ -711,7 +711,8 @@ function theme_baitulghawa_login_page(array $urls): string {
                         ['class' => 'bag-auth-row']
                     ) .
                     html_writer::tag('button', 'Login', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
-                    html_writer::tag('p', 'Don\'t have an account? ' . html_writer::link($urls['signup'], 'Signup'), ['class' => 'bag-auth-switch']),
+                    html_writer::tag('p', 'Don\'t have an account? ' . html_writer::link($urls['signup'], 'Signup'), ['class' => 'bag-auth-switch']) .
+                    theme_baitulghawa_password_toggle_script(),
                     ['class' => 'bag-auth-form', 'action' => (string)$urls['login'], 'method' => 'post']
                 ),
                 ['class' => 'bag-auth-card bag-login-card']
@@ -771,26 +772,46 @@ function theme_baitulghawa_register_page(array $urls): string {
                             }
                         });
                     });
-                    document.querySelectorAll('.bag-password-toggle').forEach(function(button) {
-                        button.addEventListener('click', function() {
-                            var field = button.closest('.bag-auth-input');
-                            var input = field ? field.querySelector('input') : null;
-                            if (!input) {
-                                return;
-                            }
-                            var showing = input.type === 'text';
-                            input.type = showing ? 'password' : 'text';
-                            button.setAttribute('aria-pressed', showing ? 'false' : 'true');
-                            button.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
-                        });
-                    });
-                "),
+                ") .
+                theme_baitulghawa_password_toggle_script(),
                 ['class' => 'bag-auth-card bag-register-card']
             ),
             ['class' => 'bag-auth-section']
         ),
         ['class' => 'bag-landing-main bag-auth-main']
     );
+}
+
+/**
+ * Password visibility toggle for custom auth pages.
+ *
+ * @return string
+ */
+function theme_baitulghawa_password_toggle_script(): string {
+    return html_writer::tag('script', "
+        (function() {
+            if (window.bagPasswordToggleReady) {
+                return;
+            }
+            window.bagPasswordToggleReady = true;
+            document.addEventListener('click', function(event) {
+                var button = event.target.closest('.bag-password-toggle');
+                if (!button) {
+                    return;
+                }
+                event.preventDefault();
+                var field = button.closest('.bag-auth-input');
+                var input = field ? field.querySelector('input[type=\"password\"], input[type=\"text\"]') : null;
+                if (!input) {
+                    return;
+                }
+                var showing = input.type === 'text';
+                input.type = showing ? 'password' : 'text';
+                button.setAttribute('aria-pressed', showing ? 'false' : 'true');
+                button.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+            });
+        })();
+    ");
 }
 
 /**
