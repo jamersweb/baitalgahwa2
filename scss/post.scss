@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;450;600;700;800;900&display=swap");
+
 :root {
     --bag-coffee: #8b5a2b;
     --bag-coffee-dark: #5f3217;
@@ -281,7 +283,7 @@ footer a,
     --bag-border: rgba(95, 61, 31, .14);
     background: var(--bag-surface);
     color: var(--bag-text);
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    font-family: "Open Sans", "Segoe UI", Arial, sans-serif;
     min-height: 100vh;
 }
 
