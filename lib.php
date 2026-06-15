@@ -710,11 +710,15 @@ function theme_baitulghawa_cta(array $urls): string {
  * @return string
  */
 function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
+    global $CFG;
+
+    $flower = rtrim($CFG->wwwroot, '/') . '/theme/baitulghawa/pix/footer-flower.jpg';
+
     return html_writer::tag('footer',
         html_writer::tag('div',
             html_writer::tag('div',
-                html_writer::tag('strong', 'Bait Al Gahwa') .
-                html_writer::tag('p', $brand . ' provides coffee, hospitality and artisan training for ambitious learners and teams.') .
+                html_writer::tag('strong', '&#1576;&#1610;&#1578; &#1575;&#1604;&#1602;&#1607;&#1608;&#1577;') .
+                html_writer::tag('p', 'Empowering professionals through quality training and development programs inspired by Emirati heritage.') .
                 html_writer::tag('div',
                     html_writer::tag('span', '') . html_writer::tag('span', '') . html_writer::tag('span', ''),
                     ['class' => 'bag-socials']
@@ -724,20 +728,22 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
             html_writer::tag('div',
                 html_writer::tag('h2', 'Quick Links') .
                 html_writer::link($urls['home'], 'Home') .
-                html_writer::link($urls['programmes'], 'Courses') .
+                html_writer::link($urls['home'], 'About Us') .
+                html_writer::link($urls['programmes'], 'Training Program') .
                 html_writer::link($urls['contact'], 'Contact Us'),
                 ['class' => 'bag-footer-links']
             ) .
             html_writer::tag('div',
-                html_writer::tag('h2', 'Training') .
-                html_writer::link($urls['course'], 'Gahwa Specialist') .
-                html_writer::link($urls['courses'], 'Moodle Courses') .
-                html_writer::link($urls['login'], 'Student Login'),
+                html_writer::tag('h2', 'Programs') .
+                html_writer::link($urls['course'], 'Leadership Training') .
+                html_writer::link($urls['course'], 'Digital Transformation') .
+                html_writer::link($urls['course'], 'Professional Development') .
+                html_writer::link($urls['course'], 'Customer Service'),
                 ['class' => 'bag-footer-links']
             ),
             ['class' => 'bag-footer-grid']
         ) .
-        html_writer::tag('p', 'Copyright ' . date('Y') . ' Bait Al Gahwa. All rights reserved.', ['class' => 'bag-copyright']),
-        ['class' => 'bag-footer']
+        html_writer::tag('p', '&#169; 2026 Bait Al Gahwa Training Platform. All rights reserved. | Developed by Acusync Technology', ['class' => 'bag-copyright']),
+        ['class' => 'bag-footer', 'style' => '--bag-footer-flower: url("' . s($flower) . '");']
     );
 }

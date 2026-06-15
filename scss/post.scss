@@ -882,20 +882,34 @@ footer a,
 
 .bag-footer {
     background:
-        linear-gradient(rgba(117, 72, 34, .97), rgba(117, 72, 34, .97)),
-        url("https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=1400&q=60") right center / contain no-repeat;
+        linear-gradient(rgba(115, 70, 33, .98), rgba(115, 70, 33, .98));
     color: rgba(255, 250, 244, .84);
-    min-height: 16.25rem;
-    padding: 3.25rem clamp(1.5rem, 8vw, 5.5rem) 1.25rem;
+    min-height: 20.2rem;
+    overflow: hidden;
+    padding: 4.2rem clamp(1.5rem, 7vw, 5rem) 1.1rem;
     position: relative;
+}
+
+.bag-footer::after {
+    background-image: var(--bag-footer-flower), url("https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=900&q=50");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+    bottom: -1.2rem;
+    content: "";
+    opacity: .16;
+    position: absolute;
+    right: -1.25rem;
+    top: 1.3rem;
+    width: min(28rem, 44vw);
 }
 
 .bag-footer-grid {
     display: grid;
-    gap: clamp(2rem, 9vw, 7rem);
-    grid-template-columns: minmax(16rem, 1.4fr) minmax(8rem, .7fr) minmax(10rem, .9fr);
+    gap: clamp(3rem, 11vw, 8.5rem);
+    grid-template-columns: 18rem 8.8rem 13rem;
     margin: 0 auto;
-    max-width: 72rem;
+    max-width: 68.5rem;
     position: relative;
     z-index: 1;
 }
@@ -904,9 +918,11 @@ footer a,
     color: #d0a957;
     display: block;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 2rem;
+    font-size: 2.28rem;
+    font-weight: 500;
+    letter-spacing: .01em;
     line-height: 1;
-    margin-bottom: .55rem;
+    margin-bottom: .72rem;
 }
 
 .bag-footer strong::after {
@@ -914,33 +930,44 @@ footer a,
     content: "BAIT AL GAHWA";
     display: block;
     font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    font-size: .55rem;
+    font-size: .58rem;
     font-weight: 850;
-    letter-spacing: .42em;
-    margin-top: .5rem;
+    letter-spacing: .5em;
+    margin-top: .52rem;
 }
 
 .bag-footer p,
 .bag-copyright {
-    color: rgba(255, 250, 244, .72);
+    color: rgba(255, 250, 244, .9);
     font-size: .86rem;
-    line-height: 1.35;
+    font-weight: 400;
+    line-height: 1.26;
+}
+
+.bag-footer-brand p {
+    margin: 0;
+    max-width: 17.4rem;
 }
 
 .bag-footer-links {
     display: grid;
-    gap: .55rem;
+    align-content: start;
+    gap: 1.05rem;
 }
 
 .bag-footer-links h2 {
     color: #d0a957;
-    font-size: .95rem;
-    margin-bottom: .75rem;
+    font-size: .96rem;
+    font-weight: 850;
+    line-height: 1;
+    margin: 0 0 .65rem;
 }
 
 .bag-footer a {
-    color: rgba(255, 250, 244, .84);
-    font-size: .86rem;
+    color: rgba(255, 250, 244, .92);
+    font-size: .88rem;
+    font-weight: 450;
+    line-height: 1;
     text-decoration: none;
 }
 
@@ -951,26 +978,26 @@ footer a,
 
 .bag-socials {
     display: flex;
-    gap: .7rem;
-    margin-top: 1.45rem;
+    gap: .68rem;
+    margin-top: 2rem;
 }
 
 .bag-socials span {
     background: #fff4df;
     border-radius: 50%;
     display: block;
-    height: 1.35rem;
+    height: 1.45rem;
     position: relative;
-    width: 1.35rem;
+    width: 1.45rem;
 }
 
 .bag-socials span::before {
     color: #754822;
     content: "";
     display: block;
-    font-size: .62rem;
+    font-size: .64rem;
     font-weight: 900;
-    line-height: 1.35rem;
+    line-height: 1.45rem;
     text-align: center;
 }
 
@@ -987,10 +1014,12 @@ footer a,
 }
 
 .bag-copyright {
-    border-top: 1px solid rgba(255, 250, 244, .12);
-    margin: 2rem auto 0;
-    max-width: 72rem;
-    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 250, 244, .13);
+    color: rgba(255, 250, 244, .76);
+    font-size: .75rem;
+    margin: 2.75rem auto 0;
+    max-width: 68.5rem;
+    padding-top: 1.12rem;
     text-align: center;
 }
 
