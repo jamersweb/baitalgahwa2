@@ -94,6 +94,7 @@ function theme_baitulghawa_before_standard_html_head(): string {
     }
 
     if (theme_baitulghawa_is_landing_request()) {
+        $styles .= "\n" . theme_baitulghawa_landing_chrome_reset_css();
         $landingcss = $CFG->dirroot . '/theme/baitulghawa/scss/post.scss';
         if (is_readable($landingcss)) {
             $styles .= "\n" . file_get_contents($landingcss);
@@ -107,6 +108,40 @@ function theme_baitulghawa_before_standard_html_head(): string {
     return html_writer::tag('style', $styles, [
         'id' => 'theme-baitulghawa-inline-css',
     ]);
+}
+
+/**
+ * Hard-hides Moodle chrome on the public landing pages.
+ *
+ * @return string
+ */
+function theme_baitulghawa_landing_chrome_reset_css(): string {
+    return '
+        body { padding-top: 0 !important; }
+        .navbar,
+        .navbar.fixed-top,
+        .navbar-bootswatch,
+        .navbar-light,
+        #page-header,
+        .breadcrumb,
+        .secondary-navigation,
+        .drawer,
+        .drawercontent,
+        .drawer-toggles,
+        #page-footer,
+        .footer-popover {
+            display: none !important;
+        }
+        #page,
+        #page-wrapper,
+        #page.drawers,
+        #page.drawers div[role="main"],
+        #page.drawers .main-inner {
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: none !important;
+        }
+    ';
 }
 
 /**
