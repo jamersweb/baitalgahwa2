@@ -296,7 +296,7 @@ function theme_baitulghawa_landing_brand(): string {
  * @return string
  */
 function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand): string {
-    $logo = theme_baitulghawa_asset_url('logo.png');
+    $logo = theme_baitulghawa_asset_url('logo-dark.png');
     $items = [
         'home' => 'Home',
         'about' => 'About Us',
