@@ -1,1 +1,136 @@
-/* Dashboard-specific Figma styling was reverted. Keep this file for theme sheet registration. */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;450;600;700;800;900&display=swap");
+
+:root {
+    --bag-dashboard-brown: #7a461f;
+    --bag-dashboard-brown-dark: #4f2b14;
+    --bag-dashboard-gold: #c19a4d;
+    --bag-dashboard-line: rgba(122, 70, 31, .22);
+    --bag-dashboard-soft: rgba(122, 70, 31, .08);
+}
+
+body.path-my,
+.path-my #page,
+.path-my .navbar,
+.path-my .drawer,
+.path-my .card,
+.path-my .block,
+.path-my input,
+.path-my select,
+.path-my button {
+    font-family: "Open Sans", "Segoe UI", Arial, sans-serif !important;
+}
+
+.path-my .navbar {
+    background: #fff !important;
+    border-bottom: 1px solid rgba(122, 70, 31, .16) !important;
+    box-shadow: 0 8px 24px rgba(79, 43, 20, .05);
+}
+
+.path-my .navbar .navbar-brand {
+    background: url("/theme/baitulghawa/pix/logo-dark.png") left center / contain no-repeat;
+    display: inline-block;
+    font-size: 0 !important;
+    height: 2.85rem;
+    line-height: 0;
+    margin-right: 2rem;
+    min-width: 8.4rem;
+}
+
+.path-my .navbar .navbar-brand::after {
+    content: "";
+}
+
+.path-my .primary-navigation .nav-link,
+.path-my .navbar .nav-link,
+.path-my .dropdown-toggle,
+.path-my h1,
+.path-my h2,
+.path-my h3,
+.path-my h4,
+.path-my .card-title,
+.path-my .block .card-title {
+    color: var(--bag-dashboard-brown-dark) !important;
+}
+
+.path-my .primary-navigation .nav-link.active,
+.path-my .primary-navigation .nav-link:hover {
+    border-bottom-color: var(--bag-dashboard-brown) !important;
+    color: var(--bag-dashboard-brown) !important;
+}
+
+.path-my .btn-primary,
+.path-my .btn-secondary,
+.path-my button.btn-primary,
+.path-my [data-action="toggle-drawer"],
+.path-my .drawer-toggler,
+.path-my .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--bag-dashboard-brown) !important;
+    border-color: var(--bag-dashboard-brown) !important;
+    color: #fff !important;
+}
+
+.path-my .btn-primary:hover,
+.path-my .btn-secondary:hover,
+.path-my button.btn-primary:hover {
+    background-color: var(--bag-dashboard-brown-dark) !important;
+    border-color: var(--bag-dashboard-brown-dark) !important;
+}
+
+.path-my .card,
+.path-my .block,
+.path-my .block_myoverview,
+.path-my .block_timeline,
+.path-my .list-group,
+.path-my .dropdown-menu {
+    border-color: var(--bag-dashboard-line) !important;
+    box-shadow: 0 16px 40px rgba(79, 43, 20, .07);
+}
+
+.path-my .card-header,
+.path-my .block .card-header,
+.path-my .dropdown-item:hover,
+.path-my .dropdown-item:focus,
+.path-my .list-group-item.active,
+.path-my .nav-pills .nav-link.active {
+    background-color: var(--bag-dashboard-soft) !important;
+    color: var(--bag-dashboard-brown-dark) !important;
+}
+
+.path-my .form-control,
+.path-my .custom-select,
+.path-my .form-select,
+.path-my .input-group-text {
+    border-color: var(--bag-dashboard-line) !important;
+    color: var(--bag-dashboard-brown-dark) !important;
+}
+
+.path-my .form-control:focus,
+.path-my .custom-select:focus,
+.path-my .form-select:focus {
+    border-color: var(--bag-dashboard-brown) !important;
+    box-shadow: 0 0 0 .2rem rgba(122, 70, 31, .14) !important;
+}
+
+.path-my a,
+.path-my .aalink,
+.path-my .icon,
+.path-my .fa,
+.path-my .fa-solid,
+.path-my .fa-regular,
+.path-my .btn-link,
+.path-my .dropdown-item,
+.path-my .page-link {
+    color: var(--bag-dashboard-brown) !important;
+}
+
+.path-my .badge-primary,
+.path-my .page-item.active .page-link {
+    background-color: var(--bag-dashboard-brown) !important;
+    border-color: var(--bag-dashboard-brown) !important;
+    color: #fff !important;
+}
+
+.path-my .userinitials {
+    background-color: rgba(122, 70, 31, .12) !important;
+    color: var(--bag-dashboard-brown-dark) !important;
+}
