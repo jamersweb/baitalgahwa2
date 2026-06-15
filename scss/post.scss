@@ -387,7 +387,6 @@ footer a,
 
 .bag-landing-main {
     overflow: hidden;
-    padding-top: clamp(6rem, 7vw, 7.5rem);
 }
 
 .bag-hero {
@@ -639,6 +638,10 @@ footer a,
 .bag-programmes-band,
 .bag-page-section {
     background: #fff;
+}
+
+.bag-page-section {
+    padding-top: clamp(9rem, 10vw, 10.5rem);
 }
 
 .bag-programme-grid {
@@ -1482,10 +1485,6 @@ footer a,
 }
 
 @media (max-width: 900px) {
-    .bag-landing-main {
-        padding-top: 0;
-    }
-
     .bag-site-header {
         border-radius: 0 0 1rem 1rem;
         grid-template-columns: 1fr;
@@ -1520,6 +1519,10 @@ footer a,
     .bag-hero {
         min-height: 34rem;
         padding-top: 4rem;
+    }
+
+    .bag-page-section {
+        padding-top: clamp(3.5rem, 7vw, 6rem);
     }
 
     .bag-collage,
