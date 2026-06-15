@@ -27,13 +27,13 @@ body.path-my,
 }
 
 .path-my .navbar .navbar-brand {
-    background: url("/theme/baitulghawa/pix/logo-dark.png") left center / contain no-repeat;
+    background: url("/theme/baitulghawa/pix/logo-dark.png") center center / contain no-repeat;
     display: inline-block;
     font-size: 0 !important;
     height: 2.85rem;
     line-height: 0;
-    margin-right: 2rem;
-    min-width: 8.4rem;
+    margin: 0 2rem 0 .75rem;
+    min-width: 7.3rem;
 }
 
 .path-my .navbar .navbar-brand::after {
@@ -61,12 +61,20 @@ body.path-my,
 .path-my .btn-primary,
 .path-my .btn-secondary,
 .path-my button.btn-primary,
-.path-my [data-action="toggle-drawer"],
-.path-my .drawer-toggler,
 .path-my .custom-control-input:checked ~ .custom-control-label::before {
     background-color: var(--bag-dashboard-brown) !important;
     border-color: var(--bag-dashboard-brown) !important;
     color: #fff !important;
+}
+
+.path-my [data-action="toggle-drawer"],
+.path-my .drawer-toggler,
+.path-my .drawer-toggler .btn,
+.path-my .drawer-toggles .btn {
+    background-color: #eef1f4 !important;
+    border-color: #eef1f4 !important;
+    color: #34404a !important;
+    box-shadow: none !important;
 }
 
 .path-my .btn-primary:hover,
