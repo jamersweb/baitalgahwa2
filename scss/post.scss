@@ -1533,7 +1533,7 @@ footer a,
 }
 
 .bag-register-card {
-    max-width: 31.25rem;
+    max-width: 33rem;
 }
 
 .bag-auth-card h1 {
@@ -1577,9 +1577,17 @@ footer a,
     gap: 1.05rem;
 }
 
+.bag-auth-two,
 .bag-auth-three {
     display: grid;
     gap: 1rem;
+}
+
+.bag-auth-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.bag-auth-three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -1600,11 +1608,17 @@ footer a,
     font-weight: 680;
 }
 
-.bag-register-card .bag-auth-input input {
-    border-color: #e5dbd5;
+.bag-register-card .bag-auth-input input,
+.bag-register-card .bag-auth-select {
+    background: #fff;
+    border: 1px solid #e5dbd5;
     border-radius: 999px;
+    color: #2e2824;
     font-size: .7rem;
     height: 2.35rem !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    outline: none;
     padding: 0 2.7rem 0 .95rem !important;
     width: 100% !important;
 }
@@ -1894,6 +1908,16 @@ footer a,
     text-decoration: none;
 }
 
+.bag-auth-back::after {
+    content: "←";
+    margin-left: .45rem;
+}
+
+.bag-auth-back:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
 .bag-register-card .bag-auth-submit {
     border-radius: .35rem;
     font-size: .72rem;
@@ -1916,16 +1940,6 @@ footer a,
     margin-top: -.15rem;
     min-height: 1.75rem;
     min-width: 8.4rem;
-}
-
-.bag-auth-back::after {
-    content: "←";
-    margin-left: .45rem;
-}
-
-.bag-auth-back:hover {
-    color: #fff;
-    text-decoration: none;
 }
 
 .path-login .login-wrapper {
@@ -2017,6 +2031,7 @@ footer a,
 
     .bag-stats,
     .bag-form-row,
+    .bag-auth-two,
     .bag-auth-three {
         grid-template-columns: 1fr;
     }

@@ -731,42 +731,20 @@ function theme_baitulghawa_login_page(array $urls): string {
  */
 function theme_baitulghawa_register_page(array $urls): string {
     $action = new moodle_url('/login/signup.php');
-    $message = '';
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $firstname = trim(optional_param('firstname', '', PARAM_TEXT));
-        $lastname = trim(optional_param('lastname', '', PARAM_TEXT));
-        $email = trim(optional_param('email', '', PARAM_RAW_TRIMMED));
-        $password = optional_param('password', '', PARAM_RAW);
-        $password2 = optional_param('password2', '', PARAM_RAW);
-        $errors = [];
-
-        if ($firstname === '' || $lastname === '') {
-            $errors[] = 'First name and last name are required.';
-        }
-        if (!validate_email($email)) {
-            $errors[] = 'Please enter a valid email address, for example name@example.com.';
-        }
-        if ($password !== $password2) {
-            $errors[] = 'Password and confirm password must match.';
-        }
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,15}$/', $password)) {
-            $errors[] = 'Password must be 8-15 characters and include lowercase, uppercase, number, and special character.';
-        }
-
-        if (empty($errors)) {
-            $errors[] = 'Your details look valid, but Moodle did not create the account. Please check Email-based self-registration, SMTP, or any required signup fields in Moodle admin.';
-        }
-
-        $message = html_writer::tag('div', implode(' ', $errors), ['class' => 'bag-auth-alert', 'role' => 'alert']);
-    }
+    $countries = get_string_manager()->get_list_of_countries();
+    $countryselect = html_writer::tag('label',
+        html_writer::tag('span', 'Country*', ['class' => 'bag-auth-label']) .
+        html_writer::tag('span',
+            html_writer::select($countries, 'country', 'SA', null, ['class' => 'bag-auth-select']),
+            ['class' => 'bag-auth-input']
+        ),
+        ['class' => 'bag-auth-field']
+    );
 
     $hidden = html_writer::empty_tag('input', ['type' => 'hidden', 'name' => '_qf__login_signup_form', 'value' => '1']) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()]) .
         html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'submitbutton', 'value' => 'Create my new account']) .
-        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'username', 'value' => '']) .
-        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'email2', 'value' => '']) .
-        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'city', 'value' => 'Riyadh']) .
-        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'country', 'value' => 'SA']);
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'auth', 'value' => 'email']);
 
     return html_writer::tag('main',
         html_writer::tag('section',
@@ -774,66 +752,29 @@ function theme_baitulghawa_register_page(array $urls): string {
                 html_writer::tag('h1', 'Register') .
                 html_writer::tag('form',
                     $hidden .
-                    $message .
+                    theme_baitulghawa_auth_field('text', 'username', 'Username*', 'Username*', 'user') .
                     html_writer::tag('div',
                         theme_baitulghawa_auth_field('text', 'firstname', 'First Name*', 'First Name*', 'user') .
                         theme_baitulghawa_auth_field('text', 'middlename', 'Middle Name', 'Middle Name', 'user') .
                         theme_baitulghawa_auth_field('text', 'lastname', 'Last Name*', 'Last Name*', 'user'),
                         ['class' => 'bag-auth-three']
                     ) .
-                    theme_baitulghawa_auth_field('email', 'email', 'Your Email', 'Your Email', 'paper-plane') .
+                    theme_baitulghawa_auth_field('email', 'email', 'Email address*', 'Email address*', 'paper-plane') .
+                    theme_baitulghawa_auth_field('email', 'email2', 'Email again*', 'Email again*', 'paper-plane') .
+                    html_writer::tag('div',
+                        theme_baitulghawa_auth_field('text', 'city', 'City/town*', 'City/town*', 'user') .
+                        $countryselect,
+                        ['class' => 'bag-auth-two']
+                    ) .
                     theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock', true) .
                     html_writer::tag('p', 'Password must be 8-15 characters and include 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.', ['class' => 'bag-password-note']) .
                     theme_baitulghawa_auth_field('password', 'password2', 'Confirm Password*', 'Confirm Password*', 'lock', true) .
                     html_writer::tag('button', 'Register', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
                     html_writer::tag('p', 'Already have an account? ' . html_writer::link($urls['login'], 'Login'), ['class' => 'bag-auth-switch']) .
-                    html_writer::link($urls['home'], 'Back', ['class' => 'bag-auth-back']),
+                    html_writer::link($urls['home'], 'Back', ['class' => 'bag-auth-back']) .
+                    theme_baitulghawa_password_toggle_script(),
                     ['class' => 'bag-auth-form bag-register-form', 'action' => (string)$action, 'method' => 'post']
-                ) .
-                html_writer::script("
-                    document.querySelectorAll('.bag-register-form').forEach(function(form) {
-                        form.addEventListener('submit', function(event) {
-                            var email = form.querySelector('[name=\"email\"]');
-                            var username = form.querySelector('[name=\"username\"]');
-                            var email2 = form.querySelector('[name=\"email2\"]');
-                            var password = form.querySelector('[name=\"password\"]');
-                            var password2 = form.querySelector('[name=\"password2\"]');
-                            var alert = form.querySelector('.bag-auth-alert');
-                            if (!alert) {
-                                alert = document.createElement('div');
-                                alert.className = 'bag-auth-alert';
-                                alert.setAttribute('role', 'alert');
-                                form.insertBefore(alert, form.firstChild.nextSibling);
-                            }
-                            var emailValue = email ? email.value.trim() : '';
-                            var validEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(emailValue);
-                            if (!validEmail) {
-                                event.preventDefault();
-                                alert.textContent = 'Please enter a valid email address, for example name@example.com.';
-                                return;
-                            }
-                            if (password && password2 && password.value !== password2.value) {
-                                event.preventDefault();
-                                alert.textContent = 'Password and confirm password must match.';
-                                return;
-                            }
-                            var strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,15}$/.test(password ? password.value : '');
-                            if (!strongPassword) {
-                                event.preventDefault();
-                                alert.textContent = 'Password must be 8-15 characters and include lowercase, uppercase, number, and special character.';
-                                return;
-                            }
-                            if (email && username) {
-                                var safeusername = emailValue.split('@')[0].toLowerCase().replace(/[^a-z0-9._-]/g, '');
-                                username.value = safeusername || ('user' + Date.now());
-                            }
-                            if (email && email2) {
-                                email2.value = emailValue;
-                            }
-                        });
-                    });
-                ") .
-                theme_baitulghawa_password_toggle_script(),
+                ),
                 ['class' => 'bag-auth-card bag-register-card']
             ),
             ['class' => 'bag-auth-section']
