@@ -93,7 +93,7 @@ function theme_baitulghawa_before_standard_html_head(): string {
         }
     }
 
-    if (theme_baitulghawa_is_landing_request()) {
+    if (theme_baitulghawa_is_landing_request() || theme_baitulghawa_is_auth_design_request()) {
         $styles .= "\n" . theme_baitulghawa_landing_chrome_reset_css();
         $landingcss = $CFG->dirroot . '/theme/baitulghawa/scss/post.scss';
         if (is_readable($landingcss)) {
@@ -152,19 +152,23 @@ function theme_baitulghawa_landing_chrome_reset_css(): string {
 function theme_baitulghawa_before_standard_top_of_body_html(): string {
     global $PAGE;
 
-    if (!theme_baitulghawa_is_landing_request()) {
+    if (!theme_baitulghawa_is_landing_request() && !theme_baitulghawa_is_auth_design_request()) {
         return '';
     }
 
     $page = theme_baitulghawa_landing_page();
-    $urls = theme_baitulghawa_landing_urls($PAGE->pagetype === 'login-index');
+    $urls = theme_baitulghawa_landing_urls($PAGE->pagetype === 'login-index' || $PAGE->pagetype === 'login-signup');
 
     $brand = theme_baitulghawa_landing_brand();
     $nav = theme_baitulghawa_landing_nav($urls, $page, $brand);
     $footer = theme_baitulghawa_landing_footer($urls, $brand);
 
     $content = '';
-    if ($page === 'programmes') {
+    if (theme_baitulghawa_is_auth_design_request()) {
+        $content = $PAGE->pagetype === 'login-signup'
+            ? theme_baitulghawa_register_page($urls)
+            : theme_baitulghawa_login_page($urls);
+    } else if ($page === 'programmes') {
         $content = theme_baitulghawa_programmes_page($urls);
     } else if ($page === 'course') {
         $content = theme_baitulghawa_course_page($urls);
@@ -196,6 +200,25 @@ function theme_baitulghawa_is_landing_request(): bool {
     }
 
     return $PAGE->pagetype === 'login-index' && !optional_param('baglogin', 0, PARAM_BOOL);
+}
+
+/**
+ * Detects custom auth pages.
+ *
+ * @return bool
+ */
+function theme_baitulghawa_is_auth_design_request(): bool {
+    global $PAGE;
+
+    if (empty($PAGE)) {
+        return false;
+    }
+
+    if ($PAGE->pagetype === 'login-signup') {
+        return true;
+    }
+
+    return $PAGE->pagetype === 'login-index' && optional_param('baglogin', 0, PARAM_BOOL);
 }
 
 /**
@@ -487,6 +510,141 @@ function theme_baitulghawa_contact_page(array $urls): string {
             ['class' => 'bag-section bag-two-column bag-location']
         ),
         ['class' => 'bag-landing-main']
+    );
+}
+
+/**
+ * Custom login page.
+ *
+ * @param array $urls
+ * @return string
+ */
+function theme_baitulghawa_login_page(array $urls): string {
+    $token = '';
+    if (class_exists('\core\session\manager')) {
+        $token = \core\session\manager::get_login_token();
+    }
+
+    $hidden = html_writer::empty_tag('input', [
+        'type' => 'hidden',
+        'name' => 'logintoken',
+        'value' => $token,
+    ]);
+
+    return html_writer::tag('main',
+        html_writer::tag('section',
+            html_writer::tag('div',
+                html_writer::tag('h1', 'Login to Your Account') .
+                html_writer::tag('form',
+                    $hidden .
+                    theme_baitulghawa_auth_field('text', 'username', 'Your Email', 'Your Email', 'paper-plane') .
+                    theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock') .
+                    html_writer::tag('div',
+                        html_writer::tag('label',
+                            html_writer::empty_tag('input', ['type' => 'checkbox', 'name' => 'rememberusername', 'value' => '1']) .
+                            html_writer::tag('span', 'Remember me')
+                        ) .
+                        html_writer::link(new moodle_url('/login/forgot_password.php'), 'Forgot password?'),
+                        ['class' => 'bag-auth-row']
+                    ) .
+                    html_writer::tag('button', 'Login', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
+                    html_writer::tag('p', 'Don\'t have an account? ' . html_writer::link($urls['signup'], 'Sign up'), ['class' => 'bag-auth-switch']),
+                    ['class' => 'bag-auth-form', 'action' => (string)$urls['login'], 'method' => 'post']
+                ),
+                ['class' => 'bag-auth-card bag-login-card']
+            ),
+            ['class' => 'bag-auth-section']
+        ),
+        ['class' => 'bag-landing-main bag-auth-main']
+    );
+}
+
+/**
+ * Custom registration page.
+ *
+ * @param array $urls
+ * @return string
+ */
+function theme_baitulghawa_register_page(array $urls): string {
+    $action = new moodle_url('/login/signup.php');
+    $hidden = html_writer::empty_tag('input', ['type' => 'hidden', 'name' => '_qf__login_signup_form', 'value' => '1']) .
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'username', 'value' => '']) .
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'email2', 'value' => '']) .
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'city', 'value' => 'Riyadh']) .
+        html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'country', 'value' => 'SA']);
+
+    return html_writer::tag('main',
+        html_writer::tag('section',
+            html_writer::tag('div',
+                html_writer::tag('h1', 'Register') .
+                html_writer::tag('form',
+                    $hidden .
+                    html_writer::tag('div',
+                        theme_baitulghawa_auth_field('text', 'firstname', 'First Name*', 'First Name*', 'user') .
+                        theme_baitulghawa_auth_field('text', 'middlename', 'Middle Name', 'Middle Name', 'user') .
+                        theme_baitulghawa_auth_field('text', 'lastname', 'Last Name*', 'Last Name*', 'user'),
+                        ['class' => 'bag-auth-three']
+                    ) .
+                    theme_baitulghawa_auth_field('email', 'email', 'Your Email', 'Your Email', 'paper-plane') .
+                    theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock') .
+                    html_writer::tag('p', 'Password must be 8-15 characters and include 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.', ['class' => 'bag-password-note']) .
+                    theme_baitulghawa_auth_field('password', 'password2', 'Confirm Password*', 'Confirm Password*', 'lock') .
+                    html_writer::tag('button', 'Register', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
+                    html_writer::tag('p', 'Already have an account? ' . html_writer::link($urls['login'], 'Login'), ['class' => 'bag-auth-switch']) .
+                    html_writer::link($urls['home'], 'Back', ['class' => 'bag-auth-back']),
+                    ['class' => 'bag-auth-form bag-register-form', 'action' => (string)$action, 'method' => 'post']
+                ) .
+                html_writer::script("
+                    document.querySelectorAll('.bag-register-form').forEach(function(form) {
+                        form.addEventListener('submit', function() {
+                            var email = form.querySelector('[name=\"email\"]');
+                            var username = form.querySelector('[name=\"username\"]');
+                            var email2 = form.querySelector('[name=\"email2\"]');
+                            if (email && username) {
+                                username.value = email.value;
+                            }
+                            if (email && email2) {
+                                email2.value = email.value;
+                            }
+                        });
+                    });
+                "),
+                ['class' => 'bag-auth-card bag-register-card']
+            ),
+            ['class' => 'bag-auth-section']
+        ),
+        ['class' => 'bag-landing-main bag-auth-main']
+    );
+}
+
+/**
+ * Shared auth input.
+ *
+ * @param string $type
+ * @param string $name
+ * @param string $label
+ * @param string $placeholder
+ * @param string $icon
+ * @return string
+ */
+function theme_baitulghawa_auth_field(string $type, string $name, string $label, string $placeholder, string $icon): string {
+    $attributes = [
+        'type' => $type,
+        'name' => $name,
+        'placeholder' => $placeholder,
+    ];
+    if ($name !== 'middlename') {
+        $attributes['required'] = 'required';
+    }
+
+    return html_writer::tag('label',
+        html_writer::tag('span', $label, ['class' => 'bag-auth-label']) .
+        html_writer::tag('span',
+            html_writer::empty_tag('input', $attributes) .
+            html_writer::tag('i', '', ['class' => 'bag-auth-icon bag-auth-icon-' . $icon]),
+            ['class' => 'bag-auth-input']
+        ),
+        ['class' => 'bag-auth-field']
     );
 }
 
