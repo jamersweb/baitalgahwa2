@@ -1086,7 +1086,7 @@ footer a,
 }
 
 .bag-register-card {
-    max-width: 54rem;
+    max-width: 31.25rem;
 }
 
 .bag-auth-card h1 {
@@ -1122,6 +1122,43 @@ footer a,
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.bag-register-card h1 {
+    color: #3b3b3b;
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 2.35rem;
+}
+
+.bag-register-card .bag-auth-field {
+    gap: .42rem;
+}
+
+.bag-register-card .bag-auth-label {
+    color: #3f3b38;
+    font-size: .68rem;
+    font-weight: 600;
+}
+
+.bag-register-card .bag-auth-input input {
+    border-color: #e5dbd5;
+    border-radius: 999px;
+    font-size: .7rem;
+    height: 2.35rem;
+    padding-left: .95rem;
+}
+
+.bag-register-card .bag-auth-three .bag-auth-input input {
+    padding-right: 2.25rem;
+}
+
+.bag-register-card .bag-auth-icon {
+    right: .9rem;
+}
+
+.bag-register-card .bag-password-toggle {
+    right: .2rem;
 }
 
 .bag-auth-field {
@@ -1360,6 +1397,13 @@ footer a,
     text-align: left;
 }
 
+.bag-register-card .bag-password-note {
+    color: #99918c;
+    font-size: .68rem;
+    line-height: 1.7;
+    margin: -.1rem 0 0;
+}
+
 .bag-auth-switch a {
     color: #754822;
     text-decoration: none;
@@ -1383,6 +1427,30 @@ footer a,
     min-height: 2.45rem;
     min-width: 9rem;
     text-decoration: none;
+}
+
+.bag-register-card .bag-auth-submit {
+    border-radius: .35rem;
+    font-size: .72rem;
+    font-weight: 700;
+    justify-self: center;
+    margin-top: 1.15rem;
+    max-width: 21.45rem;
+    min-height: 2.4rem;
+}
+
+.bag-register-card .bag-auth-switch {
+    font-size: .7rem;
+    margin-top: .15rem;
+}
+
+.bag-register-card .bag-auth-back {
+    border-radius: .35rem;
+    font-size: .68rem;
+    justify-self: center;
+    margin-top: -.15rem;
+    min-height: 1.75rem;
+    min-width: 8.4rem;
 }
 
 .bag-auth-back::after {
@@ -1468,8 +1536,14 @@ footer a,
     }
 
     .bag-stats,
-    .bag-form-row {
+    .bag-form-row,
+    .bag-auth-three {
         grid-template-columns: 1fr;
+    }
+
+    .bag-register-card,
+    .bag-login-card {
+        max-width: 100%;
     }
 
     .bag-card-image {
