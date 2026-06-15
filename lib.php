@@ -574,19 +574,19 @@ function theme_baitulghawa_course_page(array $urls): string {
  */
 function theme_baitulghawa_contact_page(array $urls): string {
     $contactitems = [
-        ['Email', 'BaitAlGahwa@DCTAbuDhabi.ae', '@'],
-        ['Phone', '+971 2 444 0444', '☎'],
-        ['Instagram', 'abudhabiculture', '◎'],
-        ['Location', 'Abu Dhabi<br>United Arab Emirates', '●'],
+        ['mail', 'Email', 'BaitAlGahwa@DCTAbuDhabi.ae'],
+        ['phone', 'Phone', '+971 2 444 0444'],
+        ['instagram', 'Instagram', 'abudhabiculture'],
+        ['location', 'Location', 'Abu Dhabi<br>United Arab Emirates'],
     ];
 
     $contacthtml = '';
     foreach ($contactitems as $item) {
         $contacthtml .= html_writer::tag('div',
-            html_writer::tag('span', $item[2], ['class' => 'bag-contact-icon']) .
+            html_writer::tag('span', '', ['class' => 'bag-contact-icon bag-contact-icon-' . $item[0]]) .
             html_writer::tag('div',
-                html_writer::tag('strong', $item[0]) .
-                html_writer::tag('span', $item[1])
+                html_writer::tag('strong', $item[1]) .
+                html_writer::tag('span', $item[2])
             ),
             ['class' => 'bag-contact-item']
         );

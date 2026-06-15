@@ -1112,14 +1112,89 @@ footer a,
     align-items: center;
     background: #fffaf6;
     border-radius: 50%;
-    color: var(--bag-brown);
     display: inline-flex;
-    font-size: .86rem;
-    font-weight: 850;
     height: 2.05rem;
     justify-content: center;
     position: relative;
     width: 2.05rem;
+}
+
+.bag-contact-icon::before,
+.bag-contact-icon::after {
+    content: "";
+    display: block;
+    position: absolute;
+}
+
+.bag-contact-icon-mail::before {
+    border: 1.5px solid var(--bag-brown);
+    border-radius: .16rem;
+    height: .62rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: .82rem;
+}
+
+.bag-contact-icon-mail::after {
+    border-bottom: 1.5px solid var(--bag-brown);
+    border-right: 1.5px solid var(--bag-brown);
+    height: .38rem;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: .38rem;
+}
+
+.bag-contact-icon-phone::before {
+    background: var(--bag-brown);
+    clip-path: polygon(26% 0, 55% 8%, 46% 34%, 64% 55%, 91% 47%, 100% 75%, 84% 100%, 55% 87%, 24% 56%, 0 18%);
+    height: .84rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: .84rem;
+}
+
+.bag-contact-icon-instagram::before {
+    border: 1.5px solid var(--bag-brown);
+    border-radius: .22rem;
+    height: .82rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: .82rem;
+}
+
+.bag-contact-icon-instagram::after {
+    border: 1.5px solid var(--bag-brown);
+    border-radius: 50%;
+    box-shadow: .24rem -.24rem 0 -.12rem var(--bag-brown);
+    height: .28rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: .28rem;
+}
+
+.bag-contact-icon-location::before {
+    background: var(--bag-brown);
+    border-radius: 50% 50% 50% 0;
+    height: .82rem;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    width: .82rem;
+}
+
+.bag-contact-icon-location::after {
+    background: #fffaf6;
+    border-radius: 50%;
+    height: .26rem;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: .26rem;
 }
 
 .bag-contact-form-icon {
