@@ -814,5 +814,8 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
 function theme_baitulghawa_asset_url(string $filename): string {
     global $CFG;
 
-    return rtrim($CFG->wwwroot, '/') . '/theme/baitulghawa/pix/' . rawurlencode($filename);
+    $path = $CFG->dirroot . '/theme/baitulghawa/pix/' . $filename;
+    $version = is_readable($path) ? filemtime($path) : time();
+
+    return rtrim($CFG->wwwroot, '/') . '/theme/baitulghawa/pix/' . rawurlencode($filename) . '?v=' . $version;
 }
