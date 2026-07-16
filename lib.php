@@ -902,19 +902,25 @@ function theme_baitulghawa_programme_cards(int $count): string {
 /**
  * Gets visible Moodle courses for the public training programme cards.
  *
+ * Courses are ordered by the latest updates first so newly added/published
+ * items appear in the custom landing sections without manual sorting.
+ *
  * @param int $limit Zero means all visible courses.
  * @return array
  */
 function theme_baitulghawa_get_public_courses(int $limit = 0): array {
     global $DB, $SITE;
 
-    $params = ['siteid' => $SITE->id, 'visible' => 1];
-    $records = $DB->get_records_select(
-        'course',
-        'id <> :siteid AND visible = :visible',
+    $params = ['siteid' => $SITE->id, 'visible' => 1, 'categoryvisible' => 1];
+    $sql = "SELECT c.id, c.fullname, c.shortname, c.summary, c.summaryformat, c.category
+              FROM {course} c
+              JOIN {course_categories} cc ON cc.id = c.category
+             WHERE c.id <> :siteid
+               AND c.visible = :visible
+               AND cc.visible = :categoryvisible";
+    $records = $DB->get_records_sql(
+        $sql . ' ORDER BY c.timemodified DESC, c.id DESC, c.sortorder ASC, c.fullname ASC',
         $params,
-        'sortorder ASC, fullname ASC',
-        'id, fullname, shortname, summary, summaryformat, category',
         0,
         $limit > 0 ? $limit : 0
     );
