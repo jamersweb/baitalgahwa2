@@ -85,7 +85,7 @@ function theme_baitulghawa_before_standard_html_head(): string {
     }
 
     $styles = '';
-    $html = theme_baitulghawa_admin_language_guard();
+    $html = theme_baitulghawa_moodle_language_guard();
 
     if ($PAGE->pagetype === 'my-index') {
         $dashboardcss = $CFG->dirroot . '/theme/baitulghawa/style/dashboard.css';
@@ -113,18 +113,22 @@ function theme_baitulghawa_before_standard_html_head(): string {
 }
 
 /**
- * Keeps Moodle administration in English when public pages are viewed in Arabic.
+ * Keeps Moodle application pages in English when public pages are viewed in Arabic.
  *
  * Moodle's built-in lang URL parameter is global for the session. The public
  * theme uses baglang instead, but this guard recovers existing Arabic sessions
- * when administrators move back into Site administration.
+ * when users move back into Moodle dashboard, courses, reports or administration.
  *
  * @return string
  */
-function theme_baitulghawa_admin_language_guard(): string {
+function theme_baitulghawa_moodle_language_guard(): string {
     global $PAGE;
 
-    if (empty($PAGE) || $PAGE->pagelayout !== 'admin' || strpos(current_language(), 'ar') !== 0) {
+    if (empty($PAGE) || theme_baitulghawa_is_landing_request() || theme_baitulghawa_is_auth_design_request()) {
+        return '';
+    }
+
+    if (strpos(current_language(), 'ar') !== 0) {
         return '';
     }
 
@@ -140,7 +144,7 @@ function theme_baitulghawa_admin_language_guard(): string {
         (function() {
             window.location.replace(" . json_encode((string)$englishurl) . ");
         })();
-    ", ['id' => 'theme-baitulghawa-admin-language-guard']);
+    ", ['id' => 'theme-baitulghawa-moodle-language-guard']);
 }
 
 /**
