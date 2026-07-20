@@ -1,6 +1,6 @@
-# Baitulghawa Moodle Theme
+# Bait Al Gahwa Academy Moodle Theme
 
-Baitulghawa is a custom Moodle theme built as a child theme of Boost.
+Bait Al Gahwa Academy is a custom Moodle theme built as a child theme of Boost.
 
 ## Install with Git
 

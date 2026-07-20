@@ -300,10 +300,10 @@ footer a,
     border-radius: 0 0 1.25rem 1.25rem;
     box-shadow: 0 18px 45px rgba(0, 0, 0, .18);
     display: grid;
-    gap: clamp(1rem, 3vw, 2.5rem);
-    grid-template-columns: minmax(9rem, 1fr) auto minmax(9rem, 1fr);
+    gap: clamp(.7rem, 1.6vw, 1.5rem);
+    grid-template-columns: minmax(8rem, .8fr) minmax(0, auto) minmax(15rem, 1fr);
     left: 50%;
-    max-width: min(76rem, calc(100% - 2rem));
+    max-width: min(84rem, calc(100% - 2rem));
     min-height: 5.9rem;
     padding: .85rem clamp(1.2rem, 3.5vw, 3rem);
     position: fixed;
@@ -330,12 +330,32 @@ footer a,
 .bag-auth-actions {
     align-items: center;
     display: flex;
-    gap: clamp(.65rem, 1.8vw, 1.8rem);
+    gap: clamp(.45rem, 1.1vw, 1.15rem);
     justify-content: center;
 }
 
 .bag-auth-actions {
     justify-content: flex-end;
+}
+
+.bag-language-switcher {
+    align-items: center;
+    display: inline-flex;
+    gap: .42rem;
+    white-space: nowrap;
+}
+
+.bag-language-switcher,
+.bag-language-switcher a {
+    color: var(--bag-subtle);
+    font-size: .76rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.bag-language-switcher a:hover {
+    color: var(--bag-brown-dark);
+    text-decoration: underline;
 }
 
 .bag-nav-link,
@@ -346,7 +366,7 @@ footer a,
     font-size: .82rem;
     font-weight: 700;
     line-height: 1;
-    padding: .65rem .75rem;
+    padding: .62rem .58rem;
     text-decoration: none;
 }
 
@@ -643,6 +663,13 @@ footer a,
 
 .bag-page-section {
     padding-top: clamp(9rem, 10vw, 10.5rem);
+}
+
+.bag-page-intro {
+    color: var(--bag-subtle);
+    line-height: 1.7;
+    margin: .2rem auto 0;
+    max-width: 44rem;
 }
 
 .bag-programme-grid {
@@ -1541,7 +1568,7 @@ footer a,
     font-size: 1.3rem;
     font-weight: 850;
     letter-spacing: 0;
-    margin: 0 0 2rem;
+    margin: 0 0 .8rem;
     text-align: center;
 }
 
@@ -1549,7 +1576,16 @@ footer a,
     color: #3b3b3b;
     font-size: 1.25rem;
     font-weight: 800;
-    margin-bottom: 2.25rem;
+    margin-bottom: .8rem;
+}
+
+.bag-auth-intro {
+    color: #81766f;
+    font-size: .78rem;
+    line-height: 1.55;
+    margin: 0 auto 1.8rem;
+    max-width: 24rem;
+    text-align: center;
 }
 
 .bag-auth-form {
@@ -1595,7 +1631,7 @@ footer a,
     color: #3b3b3b;
     font-size: 1.25rem;
     font-weight: 800;
-    margin-bottom: 2.35rem;
+    margin-bottom: .8rem;
 }
 
 .bag-register-card .bag-auth-field {

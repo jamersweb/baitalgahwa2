@@ -4,7 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Returns the compiled SCSS for the Baitulghawa theme.
+ * Returns the compiled SCSS for the Bait Al Gahwa Academy theme.
  *
  * @param theme_config $theme The theme configuration.
  * @return string
@@ -173,7 +173,7 @@ function theme_baitulghawa_before_standard_top_of_body_html(): string {
     global $PAGE;
 
     if (!theme_baitulghawa_is_landing_request() && !theme_baitulghawa_is_auth_design_request()) {
-        return '';
+        return theme_baitulghawa_academy_label_script();
     }
 
     $page = theme_baitulghawa_landing_page();
@@ -200,7 +200,7 @@ function theme_baitulghawa_before_standard_top_of_body_html(): string {
         $content = theme_baitulghawa_home_page($urls);
     }
 
-    return html_writer::tag('div', $nav . $content . $footer, [
+    return theme_baitulghawa_academy_label_script() . html_writer::tag('div', $nav . $content . $footer, [
         'class' => 'bag-landing-shell',
     ]);
 }
@@ -282,9 +282,7 @@ function theme_baitulghawa_landing_urls(bool $useloginbase): array {
  * @return string
  */
 function theme_baitulghawa_landing_brand(): string {
-    global $SITE;
-
-    return format_string($SITE->shortname ?: 'Bait Al Gahwa');
+    return 'Bait Al Gahwa Academy';
 }
 
 /**
@@ -298,10 +296,10 @@ function theme_baitulghawa_landing_brand(): string {
 function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand): string {
     $logo = theme_baitulghawa_asset_url('logo-dark.png');
     $items = [
-        'home' => 'Home',
-        'about' => 'About Us',
-        'programmes' => 'Training Program',
-        'contact' => 'Contact Us',
+        'home' => 'Academy Home',
+        'about' => 'About the Academy',
+        'programmes' => 'Programme Catalogue',
+        'contact' => 'Support',
     ];
 
     $links = '';
@@ -323,7 +321,8 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
         ]) .
         html_writer::tag('nav', $links, ['class' => 'bag-nav-links', 'aria-label' => 'Main navigation']) .
         html_writer::tag('div',
-            html_writer::link($urls['login'], 'Login', ['class' => 'bag-login']) .
+            theme_baitulghawa_language_switcher() .
+            html_writer::link($urls['login'], 'Sign in', ['class' => 'bag-login']) .
             html_writer::link($urls['signup'], 'Register', ['class' => 'bag-signup']),
             ['class' => 'bag-auth-actions']
         ),
@@ -339,9 +338,9 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
  */
 function theme_baitulghawa_home_page(array $urls): string {
     $stats = [
-        ['50+', 'Professional courses'],
-        ['20+', 'Expert instructors'],
-        ['5k+', 'Learners trained'],
+        ['Preserve', 'Safeguard Emirati Gahwa as living heritage'],
+        ['Practise', 'Build capability through guided learning'],
+        ['Standardise', 'Apply approved tools, methods and etiquette'],
     ];
 
     $stathtml = '';
@@ -357,10 +356,10 @@ function theme_baitulghawa_home_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('p', 'Bait Al Gahwa', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h1', 'Empower Your Future With Excellence') .
-                html_writer::tag('p', 'Join Bait Al Gahwa\'s premium training programs and unlock your potential through world-class education inspired by Emirati heritage.') .
+                html_writer::tag('h1', 'Learn the heritage. Practise the standards. Carry it forward.') .
+                html_writer::tag('p', 'Welcome to Bait Al Gahwa Academy, the learning platform dedicated to the heritage, preparation and serving etiquette of Emirati Gahwa.') .
                 html_writer::tag('div',
-                    html_writer::link($urls['programmes'], 'Explore Course', ['class' => 'bag-btn bag-btn-gold']) .
+                    html_writer::link($urls['programmes'], 'Explore Programmes', ['class' => 'bag-btn bag-btn-gold']) .
                     html_writer::link($urls['signup'], 'Register', ['class' => 'bag-btn bag-btn-ghost']),
                     ['class' => 'bag-hero-actions']
                 ),
@@ -376,9 +375,9 @@ function theme_baitulghawa_home_page(array $urls): string {
                 ['class' => 'bag-collage']
             ) .
             html_writer::tag('div',
-                html_writer::tag('p', 'Why Choose Us', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h2', 'Expertise Across All Disciplines') .
-                html_writer::tag('p', 'From barista foundations to front-of-house service, every programme combines hands-on learning with practical assessment.') .
+                html_writer::tag('p', 'Academy purpose', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h2', 'Preserving the knowledge, skills and etiquette of Emirati Gahwa.') .
+                html_writer::tag('p', 'Bait Al Gahwa Academy combines cultural knowledge, guided practice and assessment to prepare learners to deliver the Bait Al Gahwa experience with authenticity, care and respect.') .
                 html_writer::tag('ul', $stathtml, ['class' => 'bag-stats']),
                 ['class' => 'bag-section-copy']
             ),
@@ -386,23 +385,23 @@ function theme_baitulghawa_home_page(array $urls): string {
         ) .
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('p', 'Featured Learning', ['class' => 'bag-eyebrow bag-center']) .
-                html_writer::tag('h2', 'Our Training Programmes', ['class' => 'bag-center']) .
+                html_writer::tag('p', 'Programme catalogue', ['class' => 'bag-eyebrow bag-center']) .
+                html_writer::tag('h2', 'Learning pathways for Emirati Gahwa practice', ['class' => 'bag-center']) .
                 html_writer::tag('div', $programmes, ['class' => 'bag-programme-grid']) .
-                html_writer::tag('div', html_writer::link($urls['programmes'], 'View Courses', ['class' => 'bag-btn bag-btn-outline']), ['class' => 'bag-center']),
+                html_writer::tag('div', html_writer::link($urls['programmes'], 'View Programme Catalogue', ['class' => 'bag-btn bag-btn-outline']), ['class' => 'bag-center']),
                 ['class' => 'bag-section-inner']
             ),
             ['class' => 'bag-section bag-programmes-band']
         ) .
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('p', 'Professional growth', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h2', 'Excellence in Professional Development') .
+                html_writer::tag('p', 'Standards-led learning', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h2', 'Practical learning rooted in respect, generosity and care') .
                 html_writer::tag('ul',
-                    html_writer::tag('li', 'Interactive training with industry-led instruction') .
-                    html_writer::tag('li', 'Practical workplace scenarios and assessments') .
-                    html_writer::tag('li', 'Career-focused learning paths for hospitality teams') .
-                    html_writer::tag('li', 'Certification support after programme completion'),
+                    html_writer::tag('li', 'Heritage and values introduced before technical preparation') .
+                    html_writer::tag('li', 'Approved tools, ingredients, measurements and sequence') .
+                    html_writer::tag('li', 'Serving etiquette and majlis practice explained clearly') .
+                    html_writer::tag('li', 'Knowledge checks and practical assessment where applicable'),
                     ['class' => 'bag-check-list']
                 ),
                 ['class' => 'bag-section-copy']
@@ -423,9 +422,9 @@ function theme_baitulghawa_home_page(array $urls): string {
  */
 function theme_baitulghawa_about_page(array $urls): string {
     $stats = [
-        ['50+', 'Professional courses'],
-        ['20+', 'Expert instructors'],
-        ['5k+', 'Learners trained'],
+        ['Respect', 'For guests, the majlis, equipment and standards'],
+        ['Generosity', 'Hospitality through attentive preparation and service'],
+        ['Care', 'Faithful practice with precision and cultural confidence'],
     ];
 
     $stathtml = '';
@@ -444,9 +443,9 @@ function theme_baitulghawa_about_page(array $urls): string {
                 ['class' => 'bag-collage']
             ) .
             html_writer::tag('div',
-                html_writer::tag('p', 'About Us', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h1', 'Expertise Across All Disciplines') .
-                html_writer::tag('p', 'Bait Al Gahwa empowers professionals through quality training and development programmes inspired by Emirati heritage.') .
+                html_writer::tag('p', 'About Bait Al Gahwa Academy', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h1', 'The standards-led learning platform for Emirati Gahwa') .
+                html_writer::tag('p', 'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practised and passed on to future generations.') .
                 html_writer::tag('ul', $stathtml, ['class' => 'bag-stats']),
                 ['class' => 'bag-section-copy']
             ),
@@ -454,13 +453,13 @@ function theme_baitulghawa_about_page(array $urls): string {
         ) .
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('p', 'Professional growth', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h2', 'Excellence in Professional Development') .
+                html_writer::tag('p', 'Learning principles', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h2', 'Preserve, practise, standardise and share') .
                 html_writer::tag('ul',
-                    html_writer::tag('li', 'Interactive training with industry-led instruction') .
-                    html_writer::tag('li', 'Practical workplace scenarios and assessments') .
-                    html_writer::tag('li', 'Career-focused learning paths for hospitality teams') .
-                    html_writer::tag('li', 'Certification support after programme completion'),
+                    html_writer::tag('li', 'Cultural meaning and values come before beverage language') .
+                    html_writer::tag('li', 'Technical content traces to approved Emirati Gahwa standards') .
+                    html_writer::tag('li', 'Achievement is recognised only through approved learning and assessment routes') .
+                    html_writer::tag('li', 'Learning supports practitioners, trainers, operators, schools and the wider community'),
                     ['class' => 'bag-check-list']
                 ),
                 ['class' => 'bag-section-copy']
@@ -482,8 +481,9 @@ function theme_baitulghawa_about_page(array $urls): string {
 function theme_baitulghawa_programmes_page(array $urls): string {
     return html_writer::tag('main',
         html_writer::tag('section',
-            html_writer::tag('p', 'Featured Learning', ['class' => 'bag-eyebrow bag-center']) .
-            html_writer::tag('h1', 'Our Training Programmes', ['class' => 'bag-center']) .
+            html_writer::tag('p', 'Programme Catalogue', ['class' => 'bag-eyebrow bag-center']) .
+            html_writer::tag('h1', 'Explore learning pathways for Emirati Gahwa', ['class' => 'bag-center']) .
+            html_writer::tag('p', 'Explore learning pathways designed to build cultural knowledge, practical skill and confidence in the preparation and serving of Emirati Gahwa.', ['class' => 'bag-page-intro bag-center']) .
                 html_writer::tag('div', theme_baitulghawa_programme_cards(0), ['class' => 'bag-programme-grid bag-programme-grid-wide']),
             ['class' => 'bag-page-section']
         ),
@@ -499,9 +499,10 @@ function theme_baitulghawa_programmes_page(array $urls): string {
  */
 function theme_baitulghawa_course_page(array $urls): string {
     $outcomes = [
-        'Practical mastery of traditional Gahwa preparation',
-        'Full readiness to lead formal, authentic Gahwa experiences',
-        'Qualification to pursue roles like Gahwa Specialist, Host, or Certified Instructor',
+        'Explain the cultural meaning, values and etiquette of Emirati Gahwa',
+        'Identify approved traditional tools, ingredients and preparation stages',
+        'Apply the approved method with care, consistency and respect',
+        'Prepare for knowledge checks and practical assessment where applicable',
     ];
 
     $outcomehtml = '';
@@ -514,35 +515,35 @@ function theme_baitulghawa_course_page(array $urls): string {
             html_writer::tag('div',
                 html_writer::tag('aside',
                     html_writer::tag('div',
-                        html_writer::tag('span', 'Available', ['class' => 'bag-course-status']),
+                        html_writer::tag('span', 'Learning pathway', ['class' => 'bag-course-status']),
                         ['class' => 'bag-course-card-image']
                     ) .
                     html_writer::tag('div',
-                        html_writer::tag('strong', 'Fees are free') .
-                        html_writer::link($urls['login'], 'Enroll Now', ['class' => 'bag-course-enroll']) .
-                        html_writer::tag('span', 'Limited seats available', ['class' => 'bag-course-seats']),
+                        html_writer::tag('strong', 'Standards-led learning') .
+                        html_writer::link($urls['login'], 'Start Programme', ['class' => 'bag-course-enroll']) .
+                        html_writer::tag('span', 'Assessment and recognition follow the approved Academy route.', ['class' => 'bag-course-seats']),
                         ['class' => 'bag-course-card-body']
                     ),
                     ['class' => 'bag-course-card']
                 ) .
                 html_writer::tag('div',
-                    html_writer::tag('h1', 'Certified Gahwa Specialist') .
-                    html_writer::tag('p', 'A hands-on advanced course that dives into traditional Gahwa making skills, including roasting and brewing. Tailored for those looking to master Gahwa craftsmanship.') .
+                    html_writer::tag('h1', 'Emirati Gahwa Practitioner Pathway') .
+                    html_writer::tag('p', 'A standards-led programme introducing the heritage, preparation, equipment and serving etiquette of Emirati Gahwa through guided learning and practical application.') .
                     html_writer::tag('div',
-                        html_writer::tag('span', '15/03/2026') .
-                        html_writer::tag('span', 'end on 17/03/2026'),
+                        html_writer::tag('span', 'Blended learning') .
+                        html_writer::tag('span', 'Practical session required where scheduled'),
                         ['class' => 'bag-course-dates']
                     ) .
                     html_writer::tag('div',
-                        html_writer::tag('div', html_writer::tag('span', 'Duration') . html_writer::tag('strong', '8 Days')) .
-                        html_writer::tag('div', html_writer::tag('span', 'Languages') . html_writer::tag('strong', 'Arabic')) .
-                        html_writer::tag('div', html_writer::tag('span', 'Location') . html_writer::tag('strong', 'Abu Dhabi')),
+                        html_writer::tag('div', html_writer::tag('span', 'Pathway') . html_writer::tag('strong', 'Foundations')) .
+                        html_writer::tag('div', html_writer::tag('span', 'Languages') . html_writer::tag('strong', 'English and Arabic')) .
+                        html_writer::tag('div', html_writer::tag('span', 'Recognition') . html_writer::tag('strong', 'Completion record')),
                         ['class' => 'bag-course-facts']
                     ) .
                     html_writer::tag('div',
                         html_writer::tag('span', '', ['class' => 'bag-course-avatar']) .
-                        html_writer::tag('strong', 'Gahwa Specialist,<br>Dari Al Gahwa Host') .
-                        html_writer::link($urls['contact'], 'More and enroll', ['class' => 'bag-course-more']),
+                        html_writer::tag('strong', 'Academy Trainer<br>Guided practice') .
+                        html_writer::link($urls['contact'], 'Ask Academy Support', ['class' => 'bag-course-more']),
                         ['class' => 'bag-course-teacher']
                     ),
                     ['class' => 'bag-course-summary']
@@ -553,7 +554,7 @@ function theme_baitulghawa_course_page(array $urls): string {
         ) .
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('h2', 'Program Outcome') .
+                html_writer::tag('h2', 'By the end of this programme, you will be able to:') .
                 html_writer::tag('ul', $outcomehtml, ['class' => 'bag-course-outcome-list']),
                 ['class' => 'bag-course-outcomes']
             ),
@@ -571,7 +572,7 @@ function theme_baitulghawa_course_page(array $urls): string {
  */
 function theme_baitulghawa_contact_page(array $urls): string {
     $contactitems = [
-        ['mail', 'Email', 'BaitAlGahwa@DCTAbuDhabi.ae'],
+        ['mail', 'Academy Support', 'BaitAlGahwa@DCTAbuDhabi.ae'],
         ['phone', 'Phone', '+971 2 444 0444'],
         ['instagram', 'Instagram', 'abudhabiculture'],
         ['location', 'Location', 'Abu Dhabi<br>United Arab Emirates'],
@@ -593,18 +594,18 @@ function theme_baitulghawa_contact_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('aside',
-                    html_writer::tag('h2', 'Contact Information') .
+                    html_writer::tag('h2', 'Academy Support') .
                     html_writer::tag('div', $contacthtml, ['class' => 'bag-contact-list']) .
                     html_writer::tag('div',
-                        html_writer::tag('h2', 'Response Time') .
-                        html_writer::tag('p', 'We typically respond within 24-48 hours during weekdays. For urgent rescue situations, please call or WhatsApp directly.') .
-                        html_writer::tag('p', 'Usually active during UAE business hours'),
+                        html_writer::tag('h2', 'How we can help') .
+                        html_writer::tag('p', 'Tell us what you need help with. Include the programme name and a screenshot where possible so the Academy Support team can assist you efficiently.') .
+                        html_writer::tag('p', 'Support is reviewed during UAE business hours.'),
                         ['class' => 'bag-response-time']
                     ),
                     ['class' => 'bag-contact-info']
                 ) .
                 html_writer::tag('form',
-                    html_writer::tag('h2', 'Send Us a Message') .
+                    html_writer::tag('h2', 'Contact Academy Support') .
                     html_writer::tag('div',
                         theme_baitulghawa_contact_field('text', 'firstname', 'First Name*', 'First Name*', 'user') .
                         theme_baitulghawa_contact_field('text', 'lastname', 'Last Name', 'Last Name*', 'user'),
@@ -616,8 +617,9 @@ function theme_baitulghawa_contact_page(array $urls): string {
                         html_writer::tag('span', 'Inquiry Type') .
                         html_writer::tag('select',
                             html_writer::tag('option', 'Select Inquiry Type') .
-                            html_writer::tag('option', 'Course inquiry') .
-                            html_writer::tag('option', 'Corporate training') .
+                            html_writer::tag('option', 'Programme enquiry') .
+                            html_writer::tag('option', 'Practical session support') .
+                            html_writer::tag('option', 'Certificate or completion record') .
                             html_writer::tag('option', 'General question'),
                             ['name' => 'subject']
                         ),
@@ -632,7 +634,7 @@ function theme_baitulghawa_contact_page(array $urls): string {
                         ),
                         ['class' => 'bag-contact-field']
                     ) .
-                    html_writer::tag('p', 'Note: This form is for demonstration purposes. For actual inquiries, please contact us via email at BaitAlGahwa@DCTAbuDhabi.ae', ['class' => 'bag-contact-note']) .
+                    html_writer::tag('p', 'For urgent account or access support, contact Academy Support by email and include your programme name.', ['class' => 'bag-contact-note']) .
                     html_writer::tag('button', 'Send Message', ['class' => 'bag-btn bag-btn-primary', 'type' => 'submit']),
                     ['class' => 'bag-contact-form', 'action' => (string)$urls['contact'], 'method' => 'get']
                 ),
@@ -643,9 +645,9 @@ function theme_baitulghawa_contact_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div', '', ['class' => 'bag-location-photo']) .
             html_writer::tag('div',
-                html_writer::tag('p', 'Our Location', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('p', 'Learning location', ['class' => 'bag-eyebrow']) .
                 html_writer::tag('h2', 'House of Artisans - Al Hosn Site') .
-                html_writer::tag('p', 'A welcoming training space designed for practical workshops, hospitality learning and learner support.'),
+                html_writer::tag('p', 'A setting for guided practice, cultural learning and respectful engagement with Emirati Gahwa standards.'),
                 ['class' => 'bag-section-copy']
             ),
             ['class' => 'bag-section bag-two-column bag-location']
@@ -697,10 +699,11 @@ function theme_baitulghawa_login_page(array $urls): string {
     return html_writer::tag('main',
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('h1', 'Login to Your Account') .
+                html_writer::tag('h1', 'Sign in to continue your learning') .
+                html_writer::tag('p', 'Learn the heritage. Practise the standards. Carry it forward.', ['class' => 'bag-auth-intro']) .
                 html_writer::tag('form',
                     $hidden .
-                    theme_baitulghawa_auth_field('text', 'username', 'Your Email', 'Your Email', 'paper-plane') .
+                    theme_baitulghawa_auth_field('text', 'username', 'Email or username', 'Email or username', 'paper-plane') .
                     theme_baitulghawa_auth_field('password', 'password', 'Password*', 'Password*', 'lock', true) .
                     html_writer::tag('div',
                         html_writer::tag('label',
@@ -710,8 +713,9 @@ function theme_baitulghawa_login_page(array $urls): string {
                         html_writer::link(new moodle_url('/login/forgot_password.php'), 'Forgot password?'),
                         ['class' => 'bag-auth-row']
                     ) .
-                    html_writer::tag('button', 'Login', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
-                    html_writer::tag('p', 'Don\'t have an account? ' . html_writer::link($urls['signup'], 'Signup'), ['class' => 'bag-auth-switch']) .
+                    html_writer::tag('button', 'Sign in', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
+                    html_writer::tag('p', 'Having trouble signing in? Contact Academy Support.', ['class' => 'bag-auth-switch']) .
+                    html_writer::tag('p', 'Need an account? ' . html_writer::link($urls['signup'], 'Register'), ['class' => 'bag-auth-switch']) .
                     theme_baitulghawa_password_toggle_script(),
                     ['class' => 'bag-auth-form', 'action' => (string)$urls['login'], 'method' => 'post']
                 ),
@@ -749,7 +753,8 @@ function theme_baitulghawa_register_page(array $urls): string {
     return html_writer::tag('main',
         html_writer::tag('section',
             html_writer::tag('div',
-                html_writer::tag('h1', 'Register') .
+                html_writer::tag('h1', 'Register for Bait Al Gahwa Academy') .
+                html_writer::tag('p', 'Create your learner profile to access assigned programmes and Academy messages.', ['class' => 'bag-auth-intro']) .
                 html_writer::tag('form',
                     $hidden .
                     theme_baitulghawa_auth_field('text', 'username', 'Username*', 'Username*', 'user') .
@@ -770,7 +775,7 @@ function theme_baitulghawa_register_page(array $urls): string {
                     html_writer::tag('p', 'Password must be 8-15 characters and include 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.', ['class' => 'bag-password-note']) .
                     theme_baitulghawa_auth_field('password', 'password2', 'Confirm Password*', 'Confirm Password*', 'lock', true) .
                     html_writer::tag('button', 'Register', ['class' => 'bag-auth-submit', 'type' => 'submit']) .
-                    html_writer::tag('p', 'Already have an account? ' . html_writer::link($urls['login'], 'Login'), ['class' => 'bag-auth-switch']) .
+                    html_writer::tag('p', 'Already have an account? ' . html_writer::link($urls['login'], 'Sign in'), ['class' => 'bag-auth-switch']) .
                     html_writer::link($urls['home'], 'Back', ['class' => 'bag-auth-back']) .
                     theme_baitulghawa_password_toggle_script(),
                     ['class' => 'bag-auth-form bag-register-form', 'action' => (string)$action, 'method' => 'post']
@@ -867,7 +872,7 @@ function theme_baitulghawa_programme_cards(int $count): string {
     $courses = theme_baitulghawa_get_public_courses($count);
 
     if (empty($courses)) {
-        return html_writer::tag('p', 'Training programmes will appear here as soon as courses are published.', [
+        return html_writer::tag('p', 'No learning programmes are currently published. Browse again later or contact Academy Support if you believe a programme is missing.', [
             'class' => 'bag-empty-programmes',
         ]);
     }
@@ -886,10 +891,10 @@ function theme_baitulghawa_programme_cards(int $count): string {
                 html_writer::tag('p', $course['summary']) .
                 html_writer::tag('div',
                     html_writer::tag('span', $course['category']) .
-                    html_writer::tag('span', 'Course'),
+                    html_writer::tag('span', 'Programme'),
                     ['class' => 'bag-card-meta']
                 ) .
-                html_writer::link($course['url'], 'View Details', ['class' => 'bag-card-link']),
+                html_writer::link($course['url'], 'View Programme', ['class' => 'bag-card-link']),
                 ['class' => 'bag-card-body']
             ),
             ['class' => 'bag-programme-card']
@@ -948,7 +953,7 @@ function theme_baitulghawa_get_public_courses(int $limit = 0): array {
 function theme_baitulghawa_course_summary(stdClass $course): string {
     $summary = trim(strip_tags(format_text($course->summary, $course->summaryformat, ['noclean' => true, 'para' => false])));
     if ($summary === '') {
-        return 'Build practical skills with guided instruction and workplace-focused practice.';
+        return 'Build cultural knowledge, practical skill and confidence in the preparation and serving of Emirati Gahwa.';
     }
 
     return shorten_text($summary, 115);
@@ -964,11 +969,11 @@ function theme_baitulghawa_course_category_name(int $categoryid): string {
     global $DB;
 
     if ($categoryid <= 0) {
-        return 'Training';
+        return 'Learning Pathway';
     }
 
     $category = $DB->get_record('course_categories', ['id' => $categoryid], 'name', IGNORE_MISSING);
-    return $category ? format_string($category->name) : 'Training';
+    return $category ? format_string($category->name) : 'Learning Pathway';
 }
 
 /**
@@ -1010,9 +1015,9 @@ function theme_baitulghawa_course_image_url(stdClass $course): string {
  */
 function theme_baitulghawa_cta(array $urls): string {
     return html_writer::tag('section',
-        html_writer::tag('h2', 'Ready To Begin Your Journey?') .
-        html_writer::tag('p', 'Start learning with Bait Al Gahwa today.') .
-        html_writer::link($urls['login'], 'Enroll Now', ['class' => 'bag-btn bag-btn-light']),
+        html_writer::tag('h2', 'Continue your learning with Bait Al Gahwa Academy') .
+        html_writer::tag('p', 'Review the standards, prepare for your next practical session and carry the practice forward with care.') .
+        html_writer::link($urls['login'], 'Sign in', ['class' => 'bag-btn bag-btn-light']),
         ['class' => 'bag-cta']
     );
 }
@@ -1036,7 +1041,7 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
                     'src' => $logo,
                     'alt' => $brand,
                 ]) .
-                html_writer::tag('p', 'Empowering professionals through quality training and development programs inspired by Emirati heritage.') .
+                html_writer::tag('p', 'Bait Al Gahwa Academy supports standards-led learning for the living heritage, preparation and serving etiquette of Emirati Gahwa.') .
                 html_writer::tag('div',
                     html_writer::tag('span', '') . html_writer::tag('span', '') . html_writer::tag('span', ''),
                     ['class' => 'bag-socials']
@@ -1045,25 +1050,152 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
             ) .
             html_writer::tag('div',
                 html_writer::tag('h2', 'Quick Links') .
-                html_writer::link($urls['home'], 'Home') .
-                html_writer::link($urls['home'], 'About Us') .
-                html_writer::link($urls['programmes'], 'Training Program') .
-                html_writer::link($urls['contact'], 'Contact Us'),
+                html_writer::link($urls['home'], 'Academy Home') .
+                html_writer::link($urls['about'], 'About the Academy') .
+                html_writer::link($urls['programmes'], 'Programme Catalogue') .
+                html_writer::link($urls['contact'], 'Support'),
                 ['class' => 'bag-footer-links']
             ) .
             html_writer::tag('div',
-                html_writer::tag('h2', 'Programs') .
-                html_writer::tag('span', 'Leadership Training') .
-                html_writer::tag('span', 'Digital Transformation') .
-                html_writer::tag('span', 'Professional Development') .
-                html_writer::tag('span', 'Customer Service'),
+                html_writer::tag('h2', 'Pathways') .
+                html_writer::tag('span', 'Foundations') .
+                html_writer::tag('span', 'Practitioner') .
+                html_writer::tag('span', 'Trainer') .
+                html_writer::tag('span', 'Schools & Community'),
                 ['class' => 'bag-footer-links']
             ),
             ['class' => 'bag-footer-grid']
         ) .
-        html_writer::tag('p', '&#169; 2026 Bait Al Gahwa Training Platform. All rights reserved. | Developed by Acusync Technology', ['class' => 'bag-copyright']),
+        html_writer::tag('p', '&#169; 2026 Bait Al Gahwa Academy | Department of Culture and Tourism - Abu Dhabi | Privacy | Accessibility | Terms | Support', ['class' => 'bag-copyright']),
         ['class' => 'bag-footer', 'style' => '--bag-footer-flower: url("' . s($flower) . '");']
     );
+}
+
+/**
+ * Visible language links for the Academy public pages.
+ *
+ * @return string
+ */
+function theme_baitulghawa_language_switcher(): string {
+    global $PAGE;
+
+    $currenturl = !empty($PAGE->url) ? $PAGE->url : new moodle_url('/');
+    $englishurl = new moodle_url($currenturl);
+    $arabicurl = new moodle_url($currenturl);
+    $englishurl->param('lang', 'en');
+    $arabicurl->param('lang', 'ar');
+
+    return html_writer::tag('span',
+        html_writer::link($englishurl, 'English') .
+        html_writer::tag('span', '|', ['aria-hidden' => 'true']) .
+        html_writer::link($arabicurl, 'العربية'),
+        ['class' => 'bag-language-switcher', 'aria-label' => 'Language selector']
+    );
+}
+
+/**
+ * Re-labels learner-facing Moodle strings to match the Academy terminology.
+ *
+ * Site administrators should still configure permanent language customisations
+ * in Moodle. This fallback keeps the themed learner experience aligned where
+ * core strings are still using default Moodle wording.
+ *
+ * @return string
+ */
+function theme_baitulghawa_academy_label_script(): string {
+    global $PAGE;
+
+    if (empty($PAGE) || $PAGE->pagelayout === 'admin') {
+        return '';
+    }
+
+    $replacements = [
+        'Site home' => 'Academy Home',
+        'Home' => 'Academy Home',
+        'Dashboard' => 'My Learning',
+        'My courses' => 'My Programmes',
+        'All courses' => 'Programme Catalogue',
+        'Courses' => 'Programmes',
+        'Course overview' => 'Learning Overview',
+        'Recently accessed courses' => 'Continue Learning',
+        'Upcoming events' => 'Upcoming Learning Activities',
+        'Participants' => 'Learners',
+        'Teachers' => 'Academy Trainers',
+        'Teacher' => 'Academy Trainer',
+        'Students' => 'Learners',
+        'Student' => 'Learner',
+        'Grades' => 'Results',
+        'Grade' => 'Result',
+        'Quiz' => 'Knowledge Check',
+        'Assignment' => 'Learning Activity',
+        'Badges' => 'Achievements',
+        'Calendar' => 'Learning Calendar',
+        'Competencies' => 'Standards & Competencies',
+        'Course completion' => 'Programme Progress',
+        'Announcements' => 'Academy Announcements',
+        'Messages' => 'Academy Messages',
+        'Log in' => 'Sign in',
+        'Login' => 'Sign in',
+        'Log out' => 'Sign out',
+        'Logout' => 'Sign out',
+    ];
+
+    $json = json_encode($replacements, JSON_UNESCAPED_SLASHES);
+
+    return html_writer::tag('script', "
+        (function() {
+            var replacements = {$json};
+            var selectors = [
+                'a', 'button', 'span', 'h1', 'h2', 'h3', 'h4',
+                '.nav-link', '.dropdown-item', '.breadcrumb-item',
+                '.card-title', '.page-header-headings h1'
+            ];
+
+            function applyAcademyLabels(root) {
+                if (!root || document.body.classList.contains('pagelayout-admin')) {
+                    return;
+                }
+
+                selectors.forEach(function(selector) {
+                    root.querySelectorAll(selector).forEach(function(node) {
+                        if (node.children.length > 0) {
+                            return;
+                        }
+
+                        var text = node.textContent.trim();
+                        if (Object.prototype.hasOwnProperty.call(replacements, text)) {
+                            node.textContent = replacements[text];
+                        }
+                    });
+                });
+
+                if (document.title) {
+                    document.title = document.title
+                        .replace(/\\bBAG Academy\\b/g, 'Bait Al Gahwa Academy')
+                        .replace(/\\bBayt Al Gahwa\\b/g, 'Bait Al Gahwa')
+                        .replace(/\\bCoffee Academy\\b/g, 'Bait Al Gahwa Academy')
+                        .replace(/\\bArabic Coffee Academy\\b/g, 'Bait Al Gahwa Academy')
+                        .replace(/\\bBait Al Gahwa\\b(?! Academy)/g, 'Bait Al Gahwa Academy');
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                applyAcademyLabels(document);
+                if ('MutationObserver' in window) {
+                    var observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            mutation.addedNodes.forEach(function(node) {
+                                if (node.nodeType === 1) {
+                                    applyAcademyLabels(node);
+                                }
+                            });
+                        });
+                    });
+                    observer.observe(document.body, {childList: true, subtree: true});
+                }
+            });
+        })();
+    ", ['id' => 'theme-baitulghawa-academy-labels']);
 }
 
 /**

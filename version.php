@@ -4,7 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_baitulghawa';
-$plugin->version = 2026060306;
+$plugin->version = 2026072000;
 $plugin->requires = 2022112800;
-$plugin->release = '1.0.12';
+$plugin->release = '1.1.0';
 $plugin->maturity = MATURITY_STABLE;
