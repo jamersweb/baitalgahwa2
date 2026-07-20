@@ -1109,6 +1109,7 @@ function theme_baitulghawa_academy_label_script(): string {
         return '';
     }
 
+    $isarabic = strpos(current_language(), 'ar') === 0;
     $replacements = [
         'Site home' => 'Academy Home',
         'Home' => 'Academy Home',
@@ -1140,16 +1141,154 @@ function theme_baitulghawa_academy_label_script(): string {
         'Logout' => 'Sign out',
     ];
 
-    $json = json_encode($replacements, JSON_UNESCAPED_SLASHES);
+    $arabictranslations = [
+        'Academy Home' => 'الرئيسية',
+        'About the Academy' => 'عن الأكاديمية',
+        'Programme Catalogue' => 'دليل البرامج',
+        'Support' => 'الدعم',
+        'Sign in' => 'تسجيل الدخول',
+        'Register' => 'التسجيل',
+        'English' => 'English',
+        'العربية' => 'العربية',
+        'Bait Al Gahwa' => 'بيت القهوة',
+        'Learn the heritage. Practise the standards. Carry it forward.' => 'تعلّم الإرث. أتقن المعايير. وانقله للأجيال.',
+        'Welcome to Bait Al Gahwa Academy, the learning platform dedicated to the heritage, preparation and serving etiquette of Emirati Gahwa.' => 'مرحباً بكم في أكاديمية بيت القهوة، المنصة التعليمية المتخصصة في تراث القهوة الإماراتية وإعدادها وسنع تقديمها.',
+        'Explore Programmes' => 'استكشف البرامج',
+        'Academy purpose' => 'هدف الأكاديمية',
+        'Preserving the knowledge, skills and etiquette of Emirati Gahwa.' => 'حفظ معارف ومهارات وسنع القهوة الإماراتية.',
+        'Bait Al Gahwa Academy combines cultural knowledge, guided practice and assessment to prepare learners to deliver the Bait Al Gahwa experience with authenticity, care and respect.' => 'تجمع أكاديمية بيت القهوة بين المعرفة الثقافية والتدريب التطبيقي والتقييم، لتأهيل المتعلمين على تقديم تجربة بيت القهوة بأصالة وعناية واحترام.',
+        'Preserve' => 'الحفظ',
+        'Safeguard Emirati Gahwa as living heritage' => 'صون القهوة الإماراتية بوصفها إرثاً حياً',
+        'Practise' => 'الممارسة',
+        'Build capability through guided learning' => 'بناء القدرات من خلال التعلم الموجّه',
+        'Standardise' => 'توحيد المعايير',
+        'Apply approved tools, methods and etiquette' => 'تطبيق الأدوات والأساليب والسنع المعتمدة',
+        'Programme catalogue' => 'دليل البرامج',
+        'Learning pathways for Emirati Gahwa practice' => 'مسارات تعلم لممارسة القهوة الإماراتية',
+        'Explore learning pathways for Emirati Gahwa' => 'استكشف مسارات تعلم القهوة الإماراتية',
+        'Explore learning pathways designed to build cultural knowledge, practical skill and confidence in the preparation and serving of Emirati Gahwa.' => 'استكشف المسارات التعليمية المصممة لتنمية المعرفة الثقافية والمهارات التطبيقية والثقة في إعداد القهوة الإماراتية وتقديمها.',
+        'View Programme' => 'عرض البرنامج',
+        'View Programme Catalogue' => 'عرض دليل البرامج',
+        'Programme' => 'برنامج',
+        'Standards-led learning' => 'تعلم قائم على المعايير',
+        'Practical learning rooted in respect, generosity and care' => 'تعلم تطبيقي يرتكز على الاحترام والكرم والعناية',
+        'Heritage and values introduced before technical preparation' => 'تقديم الإرث والقيم قبل الجوانب التقنية للإعداد',
+        'Approved tools, ingredients, measurements and sequence' => 'الأدوات والمكونات والمقاييس وتسلسل الإعداد المعتمدة',
+        'Serving etiquette and majlis practice explained clearly' => 'شرح سنع التقديم وممارسة المجلس بوضوح',
+        'Knowledge checks and practical assessment where applicable' => 'التحقق من المعرفة والتقييم العملي عند الحاجة',
+        'Continue your learning with Bait Al Gahwa Academy' => 'تابع تعلمك مع أكاديمية بيت القهوة',
+        'Review the standards, prepare for your next practical session and carry the practice forward with care.' => 'راجع المعايير، واستعد لجلستك التطبيقية القادمة، وواصل نقل الممارسة بعناية.',
+        'Quick Links' => 'روابط سريعة',
+        'Pathways' => 'المسارات',
+        'Foundations' => 'الأساسيات',
+        'Practitioner' => 'الممارس',
+        'Trainer' => 'المدرب',
+        'Schools & Community' => 'المدارس والمجتمع',
+        'Bait Al Gahwa Academy supports standards-led learning for the living heritage, preparation and serving etiquette of Emirati Gahwa.' => 'تدعم أكاديمية بيت القهوة التعلم القائم على المعايير للإرث الحي وإعداد القهوة الإماراتية وسنع تقديمها.',
+        'Bait Al Gahwa Academy | Department of Culture and Tourism - Abu Dhabi | Privacy | Accessibility | Terms | Support' => 'أكاديمية بيت القهوة | دائرة الثقافة والسياحة - أبوظبي | الخصوصية | سهولة الوصول | الشروط | الدعم',
+        'The standards-led learning platform for Emirati Gahwa' => 'منصة تعلم قائمة على المعايير للقهوة الإماراتية',
+        'About Bait Al Gahwa Academy' => 'عن أكاديمية بيت القهوة',
+        'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practised and passed on to future generations.' => 'بيت القهوة هو الحاضن والمرجعية المعتمدة لتجربة القهوة الإماراتية ومعاييرها. وتعمل الأكاديمية على بناء المعارف والقدرات من خلال تعلم قائم على المعايير وتدريب تطبيقي وتطوير مهني، بما يسهم في حفظ القهوة الإماراتية بوصفها إرثاً حياً يمارس وينقل للأجيال.',
+        'Learning principles' => 'مبادئ التعلم',
+        'Preserve, practise, standardise and share' => 'الحفظ والممارسة وتوحيد المعايير والمشاركة',
+        'Cultural meaning and values come before beverage language' => 'المعنى الثقافي والقيم تأتي قبل لغة المشروبات',
+        'Technical content traces to approved Emirati Gahwa standards' => 'يرتبط المحتوى التقني بمعايير القهوة الإماراتية المعتمدة',
+        'Achievement is recognised only through approved learning and assessment routes' => 'يتم الاعتراف بالإنجاز فقط من خلال مسارات تعلم وتقييم معتمدة',
+        'Learning supports practitioners, trainers, operators, schools and the wider community' => 'يدعم التعلم الممارسين والمدربين والمشغلين والمدارس والمجتمع الأوسع',
+        'Emirati Gahwa Practitioner Pathway' => 'مسار ممارس القهوة الإماراتية',
+        'Learning pathway' => 'مسار تعلم',
+        'Start Programme' => 'ابدأ البرنامج',
+        'Assessment and recognition follow the approved Academy route.' => 'يتبع التقييم والاعتراف مسار الأكاديمية المعتمد.',
+        'A standards-led programme introducing the heritage, preparation, equipment and serving etiquette of Emirati Gahwa through guided learning and practical application.' => 'برنامج قائم على المعايير يقدم تراث القهوة الإماراتية وإعدادها وأدواتها وسنع تقديمها من خلال تعلم موجه وتطبيق عملي.',
+        'Blended learning' => 'تعلم مدمج',
+        'Practical session required where scheduled' => 'جلسة تطبيقية مطلوبة عند جدولتها',
+        'Pathway' => 'المسار',
+        'Languages' => 'اللغات',
+        'English and Arabic' => 'العربية والإنجليزية',
+        'Recognition' => 'الاعتراف',
+        'Completion record' => 'سجل إتمام',
+        'Academy Trainer' => 'مدرب الأكاديمية',
+        'Guided practice' => 'تدريب موجه',
+        'Ask Academy Support' => 'اسأل دعم الأكاديمية',
+        'By the end of this programme, you will be able to:' => 'بنهاية هذا البرنامج، ستكون قادراً على:',
+        'Explain the cultural meaning, values and etiquette of Emirati Gahwa' => 'شرح المعنى الثقافي والقيم وسنع القهوة الإماراتية',
+        'Identify approved traditional tools, ingredients and preparation stages' => 'تحديد الأدوات التقليدية والمكونات ومراحل الإعداد المعتمدة',
+        'Apply the approved method with care, consistency and respect' => 'تطبيق الطريقة المعتمدة بعناية واتساق واحترام',
+        'Prepare for knowledge checks and practical assessment where applicable' => 'الاستعداد للتحقق من المعرفة والتقييم العملي عند الحاجة',
+        'Academy Support' => 'دعم الأكاديمية',
+        'How we can help' => 'كيف يمكننا مساعدتك',
+        'Tell us what you need help with. Include the programme name and a screenshot where possible so the Academy Support team can assist you efficiently.' => 'أخبرنا بنوع المساعدة التي تحتاج إليها. اذكر اسم البرنامج وأرفق لقطة شاشة إن أمكن، ليتمكن فريق دعم الأكاديمية من مساعدتك بكفاءة.',
+        'Support is reviewed during UAE business hours.' => 'تتم مراجعة طلبات الدعم خلال ساعات العمل في دولة الإمارات.',
+        'Contact Academy Support' => 'تواصل مع دعم الأكاديمية',
+        'First Name*' => 'الاسم الأول*',
+        'Last Name' => 'اسم العائلة',
+        'Your Email' => 'بريدك الإلكتروني',
+        'Phone Number *' => 'رقم الهاتف*',
+        'Inquiry Type' => 'نوع الاستفسار',
+        'Select Inquiry Type' => 'اختر نوع الاستفسار',
+        'Programme enquiry' => 'استفسار عن برنامج',
+        'Practical session support' => 'دعم جلسة تطبيقية',
+        'Certificate or completion record' => 'شهادة أو سجل إتمام',
+        'General question' => 'سؤال عام',
+        'Message' => 'الرسالة',
+        'Write Message...' => 'اكتب الرسالة...',
+        'For urgent account or access support, contact Academy Support by email and include your programme name.' => 'لدعم الحساب أو الوصول العاجل، تواصل مع دعم الأكاديمية عبر البريد الإلكتروني واذكر اسم البرنامج.',
+        'Send Message' => 'إرسال الرسالة',
+        'Learning location' => 'موقع التعلم',
+        'House of Artisans - Al Hosn Site' => 'بيت الحرفيين - موقع الحصن',
+        'A setting for guided practice, cultural learning and respectful engagement with Emirati Gahwa standards.' => 'بيئة للتدريب الموجه والتعلم الثقافي والتفاعل باحترام مع معايير القهوة الإماراتية.',
+        'Sign in to continue your learning' => 'سجّل الدخول لمتابعة تعلمك',
+        'Email or username' => 'البريد الإلكتروني أو اسم المستخدم',
+        'Password*' => 'كلمة المرور*',
+        'Remember me' => 'تذكرني',
+        'Forgot password?' => 'هل نسيت كلمة المرور؟',
+        'Having trouble signing in? Contact Academy Support.' => 'هل تواجه صعوبة في تسجيل الدخول؟ تواصل مع دعم الأكاديمية.',
+        'Need an account?' => 'تحتاج إلى حساب؟',
+        'Register for Bait Al Gahwa Academy' => 'التسجيل في أكاديمية بيت القهوة',
+        'Create your learner profile to access assigned programmes and Academy messages.' => 'أنشئ ملفك التعليمي للوصول إلى البرامج المسندة ورسائل الأكاديمية.',
+        'Username*' => 'اسم المستخدم*',
+        'Middle Name' => 'الاسم الأوسط',
+        'Email address*' => 'عنوان البريد الإلكتروني*',
+        'Email again*' => 'تأكيد البريد الإلكتروني*',
+        'City/town*' => 'المدينة*',
+        'Country*' => 'الدولة*',
+        'Password must be 8-15 characters and include 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.' => 'يجب أن تتكون كلمة المرور من 8 إلى 15 خانة وتحتوي على حرف صغير وحرف كبير ورقم ورمز خاص.',
+        'Confirm Password*' => 'تأكيد كلمة المرور*',
+        'Already have an account?' => 'لديك حساب بالفعل؟',
+        'Back' => 'رجوع',
+    ];
+
+    $json = json_encode($replacements, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $arabicjson = json_encode($arabictranslations, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $arabicflag = $isarabic ? 'true' : 'false';
 
     return html_writer::tag('script', "
         (function() {
             var replacements = {$json};
+            var arabicTranslations = {$arabicjson};
+            var isArabic = {$arabicflag};
             var selectors = [
-                'a', 'button', 'span', 'h1', 'h2', 'h3', 'h4',
+                'a', 'button', 'span', 'p', 'li', 'strong', 'h1', 'h2', 'h3', 'h4', 'option',
                 '.nav-link', '.dropdown-item', '.breadcrumb-item',
                 '.card-title', '.page-header-headings h1'
             ];
+
+            function normaliseText(text) {
+                return String(text || '').replace(/\\s+/g, ' ').trim();
+            }
+
+            function translatePlaceholders(root) {
+                if (!isArabic) {
+                    return;
+                }
+
+                root.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(function(node) {
+                    var translated = arabicTranslations[normaliseText(node.getAttribute('placeholder'))];
+                    if (translated) {
+                        node.setAttribute('placeholder', translated);
+                    }
+                });
+            }
 
             function applyAcademyLabels(root) {
                 if (!root || document.body.classList.contains('pagelayout-admin')) {
@@ -1162,12 +1301,19 @@ function theme_baitulghawa_academy_label_script(): string {
                             return;
                         }
 
-                        var text = node.textContent.trim();
+                        var text = normaliseText(node.textContent);
                         if (Object.prototype.hasOwnProperty.call(replacements, text)) {
-                            node.textContent = replacements[text];
+                            text = replacements[text];
+                            node.textContent = text;
+                        }
+
+                        if (isArabic && Object.prototype.hasOwnProperty.call(arabicTranslations, text)) {
+                            node.textContent = arabicTranslations[text];
                         }
                     });
                 });
+
+                translatePlaceholders(root);
 
                 if (document.title) {
                     document.title = document.title
@@ -1176,6 +1322,9 @@ function theme_baitulghawa_academy_label_script(): string {
                         .replace(/\\bCoffee Academy\\b/g, 'Bait Al Gahwa Academy')
                         .replace(/\\bArabic Coffee Academy\\b/g, 'Bait Al Gahwa Academy')
                         .replace(/\\bBait Al Gahwa\\b(?! Academy)/g, 'Bait Al Gahwa Academy');
+                    if (isArabic) {
+                        document.title = document.title.replace(/Bait Al Gahwa Academy/g, 'أكاديمية بيت القهوة');
+                    }
                 }
             }
 
