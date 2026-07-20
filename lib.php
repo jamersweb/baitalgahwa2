@@ -567,6 +567,7 @@ function theme_baitulghawa_course_page(array $urls): string {
     $category = theme_baitulghawa_course_category_name((int)$course->category);
     $courseurl = new moodle_url('/course/view.php', ['id' => $course->id]);
     $image = theme_baitulghawa_course_image_url($course);
+    $fallbackimage = theme_baitulghawa_course_fallback_image_url((int)$course->id);
     $dates = theme_baitulghawa_course_date_label($course);
 
     $outcomes = [
@@ -589,7 +590,7 @@ function theme_baitulghawa_course_page(array $urls): string {
                         html_writer::tag('span', 'Published programme', ['class' => 'bag-course-status']),
                         [
                             'class' => 'bag-course-card-image',
-                            'style' => 'background-image: url("' . s($image) . '");',
+                            'style' => theme_baitulghawa_background_image_style($image, $fallbackimage),
                         ]
                     ) .
                     html_writer::tag('div',
@@ -958,7 +959,7 @@ function theme_baitulghawa_programme_cards(int $count): string {
                 'class' => 'bag-card-image',
                 'href' => (string)$course['url'],
                 'aria-label' => $course['name'],
-                'style' => 'background-image: url("' . s($course['image']) . '");',
+                'style' => theme_baitulghawa_background_image_style($course['image'], $course['fallbackimage']),
             ]) .
             html_writer::tag('div',
                 html_writer::tag('h3', html_writer::link($course['url'], $course['name'])) .
@@ -1005,11 +1006,13 @@ function theme_baitulghawa_get_public_courses(int $limit = 0): array {
     $courses = [];
     foreach ($records as $record) {
         $courses[] = [
+            'id' => (int)$record->id,
             'name' => format_string($record->fullname),
             'summary' => theme_baitulghawa_course_summary($record),
             'category' => theme_baitulghawa_course_category_name((int)$record->category),
             'url' => new moodle_url('/course/view.php', ['id' => $record->id]),
             'image' => theme_baitulghawa_course_image_url($record),
+            'fallbackimage' => theme_baitulghawa_course_fallback_image_url((int)$record->id),
         ];
     }
 
@@ -1128,35 +1131,98 @@ function theme_baitulghawa_course_category_name(int $categoryid): string {
  * @return string
  */
 function theme_baitulghawa_course_image_url(stdClass $course): string {
-    global $CFG;
-
     $context = context_course::instance($course->id, IGNORE_MISSING);
     if ($context) {
-        $fs = get_file_storage();
-        $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'sortorder ASC, id ASC', false);
-        foreach ($files as $file) {
-            $mimetype = (string)$file->get_mimetype();
-            if ($file->is_valid_image() || strpos($mimetype, 'image/') === 0) {
-                if (theme_baitulghawa_is_landing_request() || theme_baitulghawa_is_auth_design_request()) {
-                    $datauri = theme_baitulghawa_course_image_data_uri($file);
-                    if ($datauri !== '') {
-                        return $datauri;
-                    }
-                }
-
-                return moodle_url::make_pluginfile_url(
-                    $file->get_contextid(),
-                    $file->get_component(),
-                    $file->get_filearea(),
-                    $file->get_itemid(),
-                    $file->get_filepath(),
-                    $file->get_filename()
-                )->out(false);
+        foreach (['overviewfiles', 'summary'] as $filearea) {
+            $imageurl = theme_baitulghawa_course_file_area_image_url($context, $filearea);
+            if ($imageurl !== '') {
+                return $imageurl;
             }
         }
     }
 
-    return theme_baitulghawa_asset_url('training-screen.png');
+    return theme_baitulghawa_course_fallback_image_url((int)$course->id);
+}
+
+/**
+ * Builds a layered CSS background declaration with a guaranteed fallback image.
+ *
+ * @param string $image
+ * @param string $fallbackimage
+ * @return string
+ */
+function theme_baitulghawa_background_image_style(string $image, string $fallbackimage): string {
+    return 'background-image: url("' . s($image) . '"), url("' . s($fallbackimage) . '");';
+}
+
+/**
+ * Gets the first image from a Moodle course file area.
+ *
+ * @param context_course $context
+ * @param string $filearea
+ * @return string
+ */
+function theme_baitulghawa_course_file_area_image_url(context_course $context, string $filearea): string {
+    $fs = get_file_storage();
+    $files = $fs->get_area_files($context->id, 'course', $filearea, false, 'sortorder ASC, id ASC', false);
+
+    foreach ($files as $file) {
+        $imageurl = theme_baitulghawa_stored_image_url($file);
+        if ($imageurl !== '') {
+            return $imageurl;
+        }
+    }
+
+    return '';
+}
+
+/**
+ * Converts a stored image file to a public-safe URL for landing cards.
+ *
+ * @param stored_file $file
+ * @return string
+ */
+function theme_baitulghawa_stored_image_url(stored_file $file): string {
+    $mimetype = (string)$file->get_mimetype();
+    if (!$file->is_valid_image() && strpos($mimetype, 'image/') !== 0) {
+        return '';
+    }
+
+    if (theme_baitulghawa_is_landing_request() || theme_baitulghawa_is_auth_design_request()) {
+        $datauri = theme_baitulghawa_course_image_data_uri($file);
+        if ($datauri !== '') {
+            return $datauri;
+        }
+    }
+
+    return moodle_url::make_pluginfile_url(
+        $file->get_contextid(),
+        $file->get_component(),
+        $file->get_filearea(),
+        $file->get_itemid(),
+        $file->get_filepath(),
+        $file->get_filename()
+    )->out(false);
+}
+
+/**
+ * Provides stable theme artwork when an admin image is not attached to a course.
+ *
+ * @param int $courseid
+ * @return string
+ */
+function theme_baitulghawa_course_fallback_image_url(int $courseid): string {
+    $fallbacks = [
+        'training-screen.png',
+        'course-training-screen.png',
+        'course-training-screen-alt.png',
+        'coffee-beans-bag.png',
+        'instructor.png',
+        'coffee-roast.png',
+    ];
+
+    $index = $courseid > 0 ? $courseid % count($fallbacks) : 0;
+    return theme_baitulghawa_asset_url($fallbacks[$index]);
 }
 
 /**
