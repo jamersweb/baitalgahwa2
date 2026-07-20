@@ -1241,7 +1241,7 @@ function theme_baitulghawa_course_image_data_uri(stored_file $file): string {
         return '';
     }
 
-    if ($file->get_filesize() > 5 * 1024 * 1024) {
+    if ($file->get_filesize() > 25 * 1024 * 1024) {
         return '';
     }
 
