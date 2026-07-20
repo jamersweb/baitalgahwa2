@@ -85,6 +85,7 @@ function theme_baitulghawa_before_standard_html_head(): string {
     }
 
     $styles = '';
+    $html = theme_baitulghawa_admin_language_guard();
 
     if ($PAGE->pagetype === 'my-index') {
         $dashboardcss = $CFG->dirroot . '/theme/baitulghawa/style/dashboard.css';
@@ -102,13 +103,44 @@ function theme_baitulghawa_before_standard_html_head(): string {
         $styles .= "\n" . theme_baitulghawa_landing_asset_override_css();
     }
 
-    if ($styles === '') {
+    if ($styles !== '') {
+        $html .= html_writer::tag('style', $styles, [
+            'id' => 'theme-baitulghawa-inline-css',
+        ]);
+    }
+
+    return $html;
+}
+
+/**
+ * Keeps Moodle administration in English when public pages are viewed in Arabic.
+ *
+ * Moodle's built-in lang URL parameter is global for the session. The public
+ * theme uses baglang instead, but this guard recovers existing Arabic sessions
+ * when administrators move back into Site administration.
+ *
+ * @return string
+ */
+function theme_baitulghawa_admin_language_guard(): string {
+    global $PAGE;
+
+    if (empty($PAGE) || $PAGE->pagelayout !== 'admin' || strpos(current_language(), 'ar') !== 0) {
         return '';
     }
 
-    return html_writer::tag('style', $styles, [
-        'id' => 'theme-baitulghawa-inline-css',
-    ]);
+    if (optional_param('lang', '', PARAM_ALPHA) === 'en') {
+        return '';
+    }
+
+    $englishurl = new moodle_url($PAGE->url);
+    $englishurl->remove_params(['baglang']);
+    $englishurl->param('lang', 'en');
+
+    return html_writer::tag('script', "
+        (function() {
+            window.location.replace(" . json_encode((string)$englishurl) . ");
+        })();
+    ", ['id' => 'theme-baitulghawa-admin-language-guard']);
 }
 
 /**
@@ -256,6 +288,17 @@ function theme_baitulghawa_landing_page(): string {
 }
 
 /**
+ * Returns the public landing language without changing Moodle's global session language.
+ *
+ * @return string
+ */
+function theme_baitulghawa_landing_language(): string {
+    $language = optional_param('baglang', 'en', PARAM_ALPHA);
+
+    return $language === 'ar' ? 'ar' : 'en';
+}
+
+/**
  * Landing URLs. Login-page base is used when Moodle force-login redirects home.
  *
  * @param bool $useloginbase
@@ -263,15 +306,16 @@ function theme_baitulghawa_landing_page(): string {
  */
 function theme_baitulghawa_landing_urls(bool $useloginbase): array {
     $basepath = $useloginbase ? '/login/index.php' : '/';
+    $languageparams = theme_baitulghawa_landing_language() === 'ar' ? ['baglang' => 'ar'] : [];
 
     return [
-        'home' => new moodle_url($basepath),
-        'about' => new moodle_url($basepath, ['bagpage' => 'about']),
-        'programmes' => new moodle_url($basepath, ['bagpage' => 'programmes']),
-        'course' => new moodle_url($basepath, ['bagpage' => 'course']),
-        'contact' => new moodle_url($basepath, ['bagpage' => 'contact']),
-        'login' => new moodle_url('/login/index.php', ['baglogin' => 1]),
-        'signup' => new moodle_url('/login/signup.php'),
+        'home' => new moodle_url($basepath, $languageparams),
+        'about' => new moodle_url($basepath, $languageparams + ['bagpage' => 'about']),
+        'programmes' => new moodle_url($basepath, $languageparams + ['bagpage' => 'programmes']),
+        'course' => new moodle_url($basepath, $languageparams + ['bagpage' => 'course']),
+        'contact' => new moodle_url($basepath, $languageparams + ['bagpage' => 'contact']),
+        'login' => new moodle_url('/login/index.php', $languageparams + ['baglogin' => 1]),
+        'signup' => new moodle_url('/login/signup.php', $languageparams),
         'courses' => new moodle_url('/course/index.php'),
     ];
 }
@@ -1122,8 +1166,10 @@ function theme_baitulghawa_language_switcher(): string {
     $currenturl = !empty($PAGE->url) ? $PAGE->url : new moodle_url('/');
     $englishurl = new moodle_url($currenturl);
     $arabicurl = new moodle_url($currenturl);
-    $englishurl->param('lang', 'en');
-    $arabicurl->param('lang', 'ar');
+    $englishurl->remove_params(['lang', 'baglang']);
+    $arabicurl->remove_params(['lang', 'baglang']);
+    $englishurl->param('baglang', 'en');
+    $arabicurl->param('baglang', 'ar');
 
     return html_writer::tag('span',
         html_writer::link($englishurl, 'English') .
@@ -1149,7 +1195,9 @@ function theme_baitulghawa_academy_label_script(): string {
         return '';
     }
 
-    $isarabic = strpos(current_language(), 'ar') === 0;
+    $isarabic = theme_baitulghawa_is_landing_request() || theme_baitulghawa_is_auth_design_request()
+        ? theme_baitulghawa_landing_language() === 'ar'
+        : strpos(current_language(), 'ar') === 0;
     $replacements = [
         'Site home' => 'Academy Home',
         'Home' => 'Academy Home',
