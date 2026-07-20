@@ -546,11 +546,34 @@ function theme_baitulghawa_programmes_page(array $urls): string {
  * @return string
  */
 function theme_baitulghawa_course_page(array $urls): string {
+    $courseid = optional_param('courseid', 0, PARAM_INT);
+    $course = theme_baitulghawa_get_public_course($courseid);
+
+    if (!$course) {
+        return html_writer::tag('main',
+            html_writer::tag('section',
+                html_writer::tag('p', 'Programme Catalogue', ['class' => 'bag-eyebrow bag-center']) .
+                html_writer::tag('h1', 'This programme is no longer available', ['class' => 'bag-center']) .
+                html_writer::tag('p', 'It may have been unpublished or removed by the Academy team. Please choose from the current published programmes.', ['class' => 'bag-page-intro bag-center']) .
+                html_writer::tag('div', html_writer::link($urls['programmes'], 'View Programme Catalogue', ['class' => 'bag-btn bag-btn-gold']), ['class' => 'bag-center']),
+                ['class' => 'bag-page-section']
+            ),
+            ['class' => 'bag-landing-main']
+        );
+    }
+
+    $name = format_string($course->fullname);
+    $summary = theme_baitulghawa_course_summary($course);
+    $category = theme_baitulghawa_course_category_name((int)$course->category);
+    $courseurl = new moodle_url('/course/view.php', ['id' => $course->id]);
+    $image = theme_baitulghawa_course_image_url($course);
+    $dates = theme_baitulghawa_course_date_label($course);
+
     $outcomes = [
-        'Explain the cultural meaning, values and etiquette of Emirati Gahwa',
-        'Identify approved traditional tools, ingredients and preparation stages',
-        'Apply the approved method with care, consistency and respect',
-        'Prepare for knowledge checks and practical assessment where applicable',
+        'Review the course content published by the Academy team',
+        'Complete the activities, checks and assessments assigned in Moodle',
+        'Track your progress through the official learning platform',
+        'Continue with the latest course version maintained by administrators',
     ];
 
     $outcomehtml = '';
@@ -563,35 +586,38 @@ function theme_baitulghawa_course_page(array $urls): string {
             html_writer::tag('div',
                 html_writer::tag('aside',
                     html_writer::tag('div',
-                        html_writer::tag('span', 'Learning pathway', ['class' => 'bag-course-status']),
-                        ['class' => 'bag-course-card-image']
+                        html_writer::tag('span', 'Published programme', ['class' => 'bag-course-status']),
+                        [
+                            'class' => 'bag-course-card-image',
+                            'style' => 'background-image: url("' . s($image) . '");',
+                        ]
                     ) .
                     html_writer::tag('div',
-                        html_writer::tag('strong', 'Standards-led learning') .
-                        html_writer::link($urls['login'], 'Start Programme', ['class' => 'bag-course-enroll']) .
-                        html_writer::tag('span', 'Assessment and recognition follow the approved Academy route.', ['class' => 'bag-course-seats']),
+                        html_writer::tag('strong', $category) .
+                        html_writer::link($courseurl, 'Open Course', ['class' => 'bag-course-enroll']) .
+                        html_writer::tag('span', 'This course is loaded from the current Moodle course catalogue.', ['class' => 'bag-course-seats']),
                         ['class' => 'bag-course-card-body']
                     ),
                     ['class' => 'bag-course-card']
                 ) .
                 html_writer::tag('div',
-                    html_writer::tag('h1', 'Emirati Gahwa Practitioner Pathway') .
-                    html_writer::tag('p', 'A standards-led programme introducing the heritage, preparation, equipment and serving etiquette of Emirati Gahwa through guided learning and practical application.') .
+                    html_writer::tag('h1', $name) .
+                    html_writer::tag('p', $summary) .
                     html_writer::tag('div',
-                        html_writer::tag('span', 'Blended learning') .
-                        html_writer::tag('span', 'Practical session required where scheduled'),
+                        html_writer::tag('span', $category) .
+                        html_writer::tag('span', $dates),
                         ['class' => 'bag-course-dates']
                     ) .
                     html_writer::tag('div',
-                        html_writer::tag('div', html_writer::tag('span', 'Pathway') . html_writer::tag('strong', 'Foundations')) .
-                        html_writer::tag('div', html_writer::tag('span', 'Languages') . html_writer::tag('strong', 'English and Arabic')) .
-                        html_writer::tag('div', html_writer::tag('span', 'Recognition') . html_writer::tag('strong', 'Completion record')),
+                        html_writer::tag('div', html_writer::tag('span', 'Course') . html_writer::tag('strong', format_string($course->shortname ?: $course->fullname))) .
+                        html_writer::tag('div', html_writer::tag('span', 'Category') . html_writer::tag('strong', $category)) .
+                        html_writer::tag('div', html_writer::tag('span', 'Status') . html_writer::tag('strong', 'Published')),
                         ['class' => 'bag-course-facts']
                     ) .
                     html_writer::tag('div',
                         html_writer::tag('span', '', ['class' => 'bag-course-avatar']) .
-                        html_writer::tag('strong', 'Academy Trainer<br>Guided practice') .
-                        html_writer::link($urls['contact'], 'Ask Academy Support', ['class' => 'bag-course-more']),
+                        html_writer::tag('strong', 'Academy Course<br>Official Moodle content') .
+                        html_writer::link($courseurl, 'Continue', ['class' => 'bag-course-more']),
                         ['class' => 'bag-course-teacher']
                     ),
                     ['class' => 'bag-course-summary']
@@ -962,15 +988,13 @@ function theme_baitulghawa_programme_cards(int $count): string {
  * @return array
  */
 function theme_baitulghawa_get_public_courses(int $limit = 0): array {
-    global $DB, $SITE;
+    global $DB;
 
-    $params = ['siteid' => $SITE->id, 'visible' => 1, 'categoryvisible' => 1];
+    $params = [];
     $sql = "SELECT c.id, c.fullname, c.shortname, c.summary, c.summaryformat, c.category
               FROM {course} c
               JOIN {course_categories} cc ON cc.id = c.category
-             WHERE c.id <> :siteid
-               AND c.visible = :visible
-               AND cc.visible = :categoryvisible";
+             WHERE " . theme_baitulghawa_public_course_conditions($params);
     $records = $DB->get_records_sql(
         $sql . ' ORDER BY c.timemodified DESC, c.id DESC, c.sortorder ASC, c.fullname ASC',
         $params,
@@ -984,12 +1008,85 @@ function theme_baitulghawa_get_public_courses(int $limit = 0): array {
             'name' => format_string($record->fullname),
             'summary' => theme_baitulghawa_course_summary($record),
             'category' => theme_baitulghawa_course_category_name((int)$record->category),
-            'url' => new moodle_url('/login/index.php', ['bagpage' => 'course', 'courseid' => $record->id]),
+            'url' => new moodle_url('/course/view.php', ['id' => $record->id]),
             'image' => theme_baitulghawa_course_image_url($record),
         ];
     }
 
     return $courses;
+}
+
+/**
+ * Gets one published Moodle course for the public course page.
+ *
+ * @param int $courseid
+ * @return stdClass|null
+ */
+function theme_baitulghawa_get_public_course(int $courseid): ?stdClass {
+    global $DB;
+
+    if ($courseid <= 0) {
+        return null;
+    }
+
+    $params = ['courseid' => $courseid];
+    $sql = "SELECT c.id, c.fullname, c.shortname, c.summary, c.summaryformat, c.category, c.startdate, c.enddate
+              FROM {course} c
+              JOIN {course_categories} cc ON cc.id = c.category
+             WHERE c.id = :courseid
+               AND " . theme_baitulghawa_public_course_conditions($params);
+
+    $course = $DB->get_record_sql($sql, $params, IGNORE_MISSING);
+    return $course ?: null;
+}
+
+/**
+ * Shared SQL conditions for courses that should appear in the public catalogue.
+ *
+ * @param array $params
+ * @return string
+ */
+function theme_baitulghawa_public_course_conditions(array &$params): string {
+    global $DB, $SITE;
+
+    $params += [
+        'siteid' => $SITE->id,
+        'visible' => 1,
+        'categoryvisible' => 1,
+    ];
+
+    $conditions = [
+        'c.id <> :siteid',
+        'c.visible = :visible',
+        'cc.visible = :categoryvisible',
+    ];
+
+    $columns = $DB->get_columns('course');
+    if (isset($columns['deletioninprogress'])) {
+        $params['deletioninprogress'] = 0;
+        $conditions[] = 'c.deletioninprogress = :deletioninprogress';
+    }
+
+    return implode("\n               AND ", $conditions);
+}
+
+/**
+ * Formats course start/end dates for the public course page.
+ *
+ * @param stdClass $course
+ * @return string
+ */
+function theme_baitulghawa_course_date_label(stdClass $course): string {
+    if (!empty($course->startdate) && !empty($course->enddate)) {
+        return userdate($course->startdate, get_string('strftimedate', 'langconfig')) . ' - ' .
+            userdate($course->enddate, get_string('strftimedate', 'langconfig'));
+    }
+
+    if (!empty($course->startdate)) {
+        return 'Starts ' . userdate($course->startdate, get_string('strftimedate', 'langconfig'));
+    }
+
+    return 'Available now';
 }
 
 /**

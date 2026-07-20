@@ -693,6 +693,10 @@ footer a,
 
 .bag-card-image {
     display: block;
+    background-color: #f4eee6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 13rem;
 }
 
@@ -873,7 +877,7 @@ footer a,
 }
 
 .bag-course-card-image {
-    background: url(/theme/baitulghawa/pix/coffee-roast.png) center / cover;
+    background: url(/theme/baitulghawa/pix/coffee-roast.png) center / cover no-repeat;
     min-height: 25rem;
     padding: 1rem;
 }
