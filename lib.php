@@ -992,6 +992,13 @@ function theme_baitulghawa_course_image_url(stdClass $course): string {
         foreach ($files as $file) {
             $mimetype = (string)$file->get_mimetype();
             if ($file->is_valid_image() || strpos($mimetype, 'image/') === 0) {
+                if (theme_baitulghawa_is_landing_request() || theme_baitulghawa_is_auth_design_request()) {
+                    $datauri = theme_baitulghawa_course_image_data_uri($file);
+                    if ($datauri !== '') {
+                        return $datauri;
+                    }
+                }
+
                 return moodle_url::make_pluginfile_url(
                     $file->get_contextid(),
                     $file->get_component(),
@@ -1005,6 +1012,39 @@ function theme_baitulghawa_course_image_url(stdClass $course): string {
     }
 
     return theme_baitulghawa_asset_url('training-screen.png');
+}
+
+/**
+ * Converts a course overview image into an embeddable public card image.
+ *
+ * Course overview pluginfile URLs can be blocked for unauthenticated visitors
+ * on login/public pages. Embedding the approved overview image keeps the public
+ * catalogue aligned with the course image selected by administrators.
+ *
+ * @param stored_file $file
+ * @return string
+ */
+function theme_baitulghawa_course_image_data_uri(stored_file $file): string {
+    $mimetype = (string)$file->get_mimetype();
+    if (strpos($mimetype, 'image/') !== 0) {
+        return '';
+    }
+
+    if ($file->get_filesize() > 5 * 1024 * 1024) {
+        return '';
+    }
+
+    try {
+        $content = $file->get_content();
+    } catch (Throwable $exception) {
+        return '';
+    }
+
+    if ($content === false || $content === '') {
+        return '';
+    }
+
+    return 'data:' . $mimetype . ';base64,' . base64_encode($content);
 }
 
 /**
