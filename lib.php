@@ -557,13 +557,14 @@ function theme_baitulghawa_certificate_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('p', 'Certificate Preview', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h1', 'Mock certificate display') .
-                html_writer::tag('p', 'A management-ready preview of the learner recognition moment for completed Academy programmes.') .
+                html_writer::tag('h1', 'Certificate preview') .
+                html_writer::tag('p', 'A polished sample of the learner recognition moment for completed Academy programmes, ready to present to management.') .
                 html_writer::link($urls['programmes'], 'View Programme Catalogue', ['class' => 'bag-btn bag-btn-gold']),
                 ['class' => 'bag-certificate-copy']
             ) .
             html_writer::tag('div',
                 html_writer::tag('div',
+                    html_writer::tag('span', '', ['class' => 'bag-certificate-seal', 'aria-hidden' => 'true']) .
                     html_writer::tag('div',
                         html_writer::tag('span', 'Bait Al Gahwa Academy') .
                         html_writer::tag('strong', 'Certificate of Completion'),
@@ -579,8 +580,14 @@ function theme_baitulghawa_certificate_page(array $urls): string {
                         ['class' => 'bag-certificate-meta']
                     ) .
                     html_writer::tag('div',
-                        html_writer::tag('span', 'Academy Director') .
-                        html_writer::tag('span', 'Department of Culture and Tourism - Abu Dhabi'),
+                        html_writer::tag('div',
+                            html_writer::tag('span', 'Academy Director') .
+                            html_writer::tag('strong', 'Authorised Signature')
+                        ) .
+                        html_writer::tag('div',
+                            html_writer::tag('span', 'Department of Culture and Tourism - Abu Dhabi') .
+                            html_writer::tag('strong', 'Issuing Authority')
+                        ),
                         ['class' => 'bag-certificate-signatures']
                     ),
                     ['class' => 'bag-certificate-paper']
