@@ -392,7 +392,7 @@ function theme_baitulghawa_home_page(array $urls): string {
     $stats = [
         ['Preserve', 'Safeguard Emirati Gahwa as living heritage'],
         ['Practice', 'Build capability through guided learning'],
-        ['Standardize', 'Apply approved tools, methods and etiquette'],
+        ['Standardise', 'Apply approved tools, methods and etiquette'],
     ];
 
     $stathtml = '';
@@ -506,7 +506,7 @@ function theme_baitulghawa_about_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('p', 'Learning principles', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h2', 'Preserve, practice, standardize and share') .
+                html_writer::tag('h2', 'Preserve, practice, standardise and share') .
                 html_writer::tag('ul',
                     html_writer::tag('li', 'Cultural meaning and values come before beverage language') .
                     html_writer::tag('li', 'Technical content traces to approved Emirati Gahwa standards') .
@@ -1654,7 +1654,7 @@ function theme_baitulghawa_academy_label_script(): string {
         'Safeguard Emirati Gahwa as living heritage' => 'صون القهوة الإماراتية بوصفها إرثاً حياً',
         'Practice' => 'الممارسة',
         'Build capability through guided learning' => 'بناء القدرات من خلال التعلم الموجّه',
-        'Standardize' => 'توحيد المعايير',
+        'Standardise' => 'توحيد المعايير',
         'Apply approved tools, methods and etiquette' => 'تطبيق الأدوات والأساليب والسنع المعتمدة',
         'Programme catalogue' => 'دليل البرامج',
         'Learning pathways for Emirati Gahwa practice' => 'مسارات تعلم لممارسة القهوة الإماراتية',
@@ -1683,7 +1683,7 @@ function theme_baitulghawa_academy_label_script(): string {
         'About Bait Al Gahwa Academy' => 'عن أكاديمية بيت القهوة',
         'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practiced and passed on to future generations.' => 'بيت القهوة هو الحاضن والمرجعية المعتمدة لتجربة القهوة الإماراتية ومعاييرها. وتعمل الأكاديمية على بناء المعارف والقدرات من خلال تعلم قائم على المعايير وتدريب تطبيقي وتطوير مهني، بما يسهم في حفظ القهوة الإماراتية بوصفها إرثاً حياً يمارس وينقل للأجيال.',
         'Learning principles' => 'مبادئ التعلم',
-        'Preserve, practice, standardize and share' => 'الحفظ والممارسة وتوحيد المعايير والمشاركة',
+        'Preserve, practice, standardise and share' => 'الحفظ والممارسة وتوحيد المعايير والمشاركة',
         'Cultural meaning and values come before beverage language' => 'المعنى الثقافي والقيم تأتي قبل لغة المشروبات',
         'Technical content traces to approved Emirati Gahwa standards' => 'يرتبط المحتوى التقني بمعايير القهوة الإماراتية المعتمدة',
         'Achievement is recognised only through approved learning and assessment routes' => 'يتم الاعتراف بالإنجاز فقط من خلال مسارات تعلم وتقييم معتمدة',
