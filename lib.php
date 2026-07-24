@@ -1568,11 +1568,35 @@ function theme_baitulghawa_landing_footer(array $urls, string $brand): string {
 function theme_baitulghawa_language_switcher(): string {
     global $PAGE;
 
-    $currenturl = !empty($PAGE->url) ? $PAGE->url : new moodle_url('/');
-    $englishurl = new moodle_url($currenturl);
-    $arabicurl = new moodle_url($currenturl);
-    $englishurl->remove_params(['lang', 'baglang']);
-    $arabicurl->remove_params(['lang', 'baglang']);
+    $basepath = '/';
+    if (!empty($PAGE) && $PAGE->pagetype === 'login-signup') {
+        $basepath = '/login/signup.php';
+    } else if (!empty($PAGE) && $PAGE->pagetype === 'login-index') {
+        $basepath = '/login/index.php';
+    }
+
+    $params = [];
+    $page = optional_param('bagpage', '', PARAM_ALPHA);
+    if ($page !== '' && $page !== 'home') {
+        $params['bagpage'] = $page;
+    }
+
+    $courseid = optional_param('courseid', 0, PARAM_INT);
+    if ($courseid > 0) {
+        $params['courseid'] = $courseid;
+    }
+
+    $category = optional_param('bagcategory', '', PARAM_ALPHANUMEXT);
+    if ($category !== '') {
+        $params['bagcategory'] = $category;
+    }
+
+    if (theme_baitulghawa_is_auth_design_request()) {
+        $params['baglogin'] = 1;
+    }
+
+    $englishurl = new moodle_url($basepath, $params);
+    $arabicurl = new moodle_url($basepath, $params);
     $englishurl->param('baglang', 'en');
     $arabicurl->param('baglang', 'ar');
 
@@ -1768,6 +1792,11 @@ function theme_baitulghawa_academy_label_script(): string {
 
             function normaliseText(text) {
                 return String(text || '').replace(/\\s+/g, ' ').trim();
+            }
+
+            if (isArabic) {
+                document.documentElement.setAttribute('lang', 'ar');
+                document.documentElement.setAttribute('dir', 'rtl');
             }
 
             function translatePlaceholders(root) {
