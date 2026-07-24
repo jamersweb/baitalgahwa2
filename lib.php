@@ -230,6 +230,8 @@ function theme_baitulghawa_before_standard_top_of_body_html(): string {
         $content = theme_baitulghawa_programmes_page($urls);
     } else if ($page === 'course') {
         $content = theme_baitulghawa_course_page($urls);
+    } else if ($page === 'certificate') {
+        $content = theme_baitulghawa_certificate_page($urls);
     } else if ($page === 'contact') {
         $content = theme_baitulghawa_contact_page($urls);
     } else {
@@ -286,7 +288,7 @@ function theme_baitulghawa_is_auth_design_request(): bool {
  */
 function theme_baitulghawa_landing_page(): string {
     $page = optional_param('bagpage', 'home', PARAM_ALPHA);
-    $allowedpages = ['home', 'about', 'programmes', 'course', 'contact'];
+    $allowedpages = ['home', 'about', 'programmes', 'course', 'certificate', 'contact'];
 
     return in_array($page, $allowedpages, true) ? $page : 'home';
 }
@@ -317,6 +319,7 @@ function theme_baitulghawa_landing_urls(bool $useloginbase): array {
         'about' => new moodle_url($basepath, $languageparams + ['bagpage' => 'about']),
         'programmes' => new moodle_url($basepath, $languageparams + ['bagpage' => 'programmes']),
         'course' => new moodle_url($basepath, $languageparams + ['bagpage' => 'course']),
+        'certificate' => new moodle_url($basepath, $languageparams + ['bagpage' => 'certificate']),
         'contact' => new moodle_url($basepath, $languageparams + ['bagpage' => 'contact']),
         'login' => new moodle_url('/login/index.php', $languageparams + ['baglogin' => 1]),
         'signup' => new moodle_url('/login/signup.php', $languageparams),
@@ -347,6 +350,7 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
         'home' => 'Academy Home',
         'about' => 'About the Academy',
         'programmes' => 'Programme Catalogue',
+        'certificate' => 'Certificate Preview',
         'contact' => 'Support',
     ];
 
@@ -387,8 +391,8 @@ function theme_baitulghawa_landing_nav(array $urls, string $page, string $brand)
 function theme_baitulghawa_home_page(array $urls): string {
     $stats = [
         ['Preserve', 'Safeguard Emirati Gahwa as living heritage'],
-        ['Practise', 'Build capability through guided learning'],
-        ['Standardise', 'Apply approved tools, methods and etiquette'],
+        ['Practice', 'Build capability through guided learning'],
+        ['Standardize', 'Apply approved tools, methods and etiquette'],
     ];
 
     $stathtml = '';
@@ -404,7 +408,7 @@ function theme_baitulghawa_home_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('p', 'Bait Al Gahwa', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h1', 'Learn the heritage. Practise the standards. Carry it forward.') .
+                html_writer::tag('h1', 'Learn the heritage. Practice the standards. Carry it forward.') .
                 html_writer::tag('p', 'Welcome to Bait Al Gahwa Academy, the learning platform dedicated to the heritage, preparation and serving etiquette of Emirati Gahwa.') .
                 html_writer::tag('div',
                     html_writer::link($urls['programmes'], 'Explore Programmes', ['class' => 'bag-btn bag-btn-gold']) .
@@ -493,7 +497,7 @@ function theme_baitulghawa_about_page(array $urls): string {
             html_writer::tag('div',
                 html_writer::tag('p', 'About Bait Al Gahwa Academy', ['class' => 'bag-eyebrow']) .
                 html_writer::tag('h1', 'The standards-led learning platform for Emirati Gahwa') .
-                html_writer::tag('p', 'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practised and passed on to future generations.') .
+                html_writer::tag('p', 'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practiced and passed on to future generations.') .
                 html_writer::tag('ul', $stathtml, ['class' => 'bag-stats']),
                 ['class' => 'bag-section-copy']
             ),
@@ -502,7 +506,7 @@ function theme_baitulghawa_about_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('p', 'Learning principles', ['class' => 'bag-eyebrow']) .
-                html_writer::tag('h2', 'Preserve, practise, standardise and share') .
+                html_writer::tag('h2', 'Preserve, practice, standardize and share') .
                 html_writer::tag('ul',
                     html_writer::tag('li', 'Cultural meaning and values come before beverage language') .
                     html_writer::tag('li', 'Technical content traces to approved Emirati Gahwa standards') .
@@ -527,13 +531,63 @@ function theme_baitulghawa_about_page(array $urls): string {
  * @return string
  */
 function theme_baitulghawa_programmes_page(array $urls): string {
+    $activecategory = optional_param('bagcategory', '', PARAM_ALPHANUMEXT);
+
     return html_writer::tag('main',
         html_writer::tag('section',
             html_writer::tag('p', 'Programme Catalogue', ['class' => 'bag-eyebrow bag-center']) .
             html_writer::tag('h1', 'Explore learning pathways for Emirati Gahwa', ['class' => 'bag-center']) .
             html_writer::tag('p', 'Explore learning pathways designed to build cultural knowledge, practical skill and confidence in the preparation and serving of Emirati Gahwa.', ['class' => 'bag-page-intro bag-center']) .
-                html_writer::tag('div', theme_baitulghawa_programme_cards(0), ['class' => 'bag-programme-grid bag-programme-grid-wide']),
+                theme_baitulghawa_programme_category_filters($urls['programmes'], $activecategory) .
+                html_writer::tag('div', theme_baitulghawa_programme_cards(0, $activecategory), ['class' => 'bag-programme-grid bag-programme-grid-wide']),
             ['class' => 'bag-page-section']
+        ),
+        ['class' => 'bag-landing-main']
+    );
+}
+
+/**
+ * Certificate preview page for management demos.
+ *
+ * @param array $urls
+ * @return string
+ */
+function theme_baitulghawa_certificate_page(array $urls): string {
+    return html_writer::tag('main',
+        html_writer::tag('section',
+            html_writer::tag('div',
+                html_writer::tag('p', 'Certificate Preview', ['class' => 'bag-eyebrow']) .
+                html_writer::tag('h1', 'Mock certificate display') .
+                html_writer::tag('p', 'A management-ready preview of the learner recognition moment for completed Academy programmes.') .
+                html_writer::link($urls['programmes'], 'View Programme Catalogue', ['class' => 'bag-btn bag-btn-gold']),
+                ['class' => 'bag-certificate-copy']
+            ) .
+            html_writer::tag('div',
+                html_writer::tag('div',
+                    html_writer::tag('div',
+                        html_writer::tag('span', 'Bait Al Gahwa Academy') .
+                        html_writer::tag('strong', 'Certificate of Completion'),
+                        ['class' => 'bag-certificate-heading']
+                    ) .
+                    html_writer::tag('p', 'This certifies that') .
+                    html_writer::tag('h2', 'Learner Name') .
+                    html_writer::tag('p', 'has successfully completed the') .
+                    html_writer::tag('h3', 'Emirati Gahwa Practitioner Pathway') .
+                    html_writer::tag('div',
+                        html_writer::tag('span', 'Issued 24 July 2026') .
+                        html_writer::tag('span', 'Credential ID BAG-MOCK-2026'),
+                        ['class' => 'bag-certificate-meta']
+                    ) .
+                    html_writer::tag('div',
+                        html_writer::tag('span', 'Academy Director') .
+                        html_writer::tag('span', 'Department of Culture and Tourism - Abu Dhabi'),
+                        ['class' => 'bag-certificate-signatures']
+                    ),
+                    ['class' => 'bag-certificate-paper']
+                ),
+                ['class' => 'bag-certificate-preview', 'aria-label' => 'Mock certificate preview']
+            ),
+            ['class' => 'bag-page-section bag-certificate-section']
         ),
         ['class' => 'bag-landing-main']
     );
@@ -565,6 +619,8 @@ function theme_baitulghawa_course_page(array $urls): string {
     $name = format_string($course->fullname);
     $summary = theme_baitulghawa_course_summary($course);
     $category = theme_baitulghawa_course_category_name((int)$course->category);
+    $level = theme_baitulghawa_course_level_label($course);
+    $duplicatenote = theme_baitulghawa_course_duplicate_note($course);
     $courseurl = new moodle_url('/course/view.php', ['id' => $course->id]);
     $image = theme_baitulghawa_course_image_url($course);
     $fallbackimage = theme_baitulghawa_course_fallback_image_url((int)$course->id);
@@ -612,9 +668,10 @@ function theme_baitulghawa_course_page(array $urls): string {
                     html_writer::tag('div',
                         html_writer::tag('div', html_writer::tag('span', 'Course') . html_writer::tag('strong', format_string($course->shortname ?: $course->fullname))) .
                         html_writer::tag('div', html_writer::tag('span', 'Category') . html_writer::tag('strong', $category)) .
-                        html_writer::tag('div', html_writer::tag('span', 'Status') . html_writer::tag('strong', 'Published')),
+                        html_writer::tag('div', html_writer::tag('span', 'Level') . html_writer::tag('strong', $level)),
                         ['class' => 'bag-course-facts']
                     ) .
+                    $duplicatenote .
                     html_writer::tag('div',
                         html_writer::tag('span', '', ['class' => 'bag-course-avatar']) .
                         html_writer::tag('strong', 'Academy Course<br>Official Moodle content') .
@@ -775,7 +832,7 @@ function theme_baitulghawa_login_page(array $urls): string {
         html_writer::tag('section',
             html_writer::tag('div',
                 html_writer::tag('h1', 'Sign in to continue your learning') .
-                html_writer::tag('p', 'Learn the heritage. Practise the standards. Carry it forward.', ['class' => 'bag-auth-intro']) .
+                html_writer::tag('p', 'Learn the heritage. Practice the standards. Carry it forward.', ['class' => 'bag-auth-intro']) .
                 html_writer::tag('form',
                     $hidden .
                     theme_baitulghawa_auth_field('text', 'username', 'Email or username', 'Email or username', 'paper-plane') .
@@ -943,8 +1000,18 @@ function theme_baitulghawa_auth_field(string $type, string $name, string $label,
  * @param int $count
  * @return string
  */
-function theme_baitulghawa_programme_cards(int $count): string {
-    $courses = theme_baitulghawa_get_public_courses($count);
+function theme_baitulghawa_programme_cards(int $count, string $categoryslug = ''): string {
+    $courses = theme_baitulghawa_get_public_courses(0);
+
+    if ($categoryslug !== '') {
+        $courses = array_values(array_filter($courses, static function(array $course) use ($categoryslug): bool {
+            return $course['categoryslug'] === $categoryslug;
+        }));
+    }
+
+    if ($count > 0) {
+        $courses = array_slice($courses, 0, $count);
+    }
 
     if (empty($courses)) {
         return html_writer::tag('p', 'No learning programmes are currently published. Browse again later or contact Academy Support if you believe a programme is missing.', [
@@ -966,9 +1033,12 @@ function theme_baitulghawa_programme_cards(int $count): string {
                 html_writer::tag('p', $course['summary']) .
                 html_writer::tag('div',
                     html_writer::tag('span', $course['category']) .
-                    html_writer::tag('span', 'Programme'),
+                    html_writer::tag('span', $course['level']),
                     ['class' => 'bag-card-meta']
                 ) .
+                (!empty($course['duplicate_note'])
+                    ? html_writer::tag('p', $course['duplicate_note'], ['class' => 'bag-duplicate-note'])
+                    : '') .
                 html_writer::link($course['url'], 'View Programme', ['class' => 'bag-card-link']),
                 ['class' => 'bag-card-body']
             ),
@@ -977,6 +1047,43 @@ function theme_baitulghawa_programme_cards(int $count): string {
     }
 
     return $html;
+}
+
+/**
+ * Visible category filters for the public programme catalogue.
+ *
+ * @param moodle_url $baseurl
+ * @param string $activecategory
+ * @return string
+ */
+function theme_baitulghawa_programme_category_filters(moodle_url $baseurl, string $activecategory): string {
+    $courses = theme_baitulghawa_get_public_courses(0);
+    if (empty($courses)) {
+        return '';
+    }
+
+    $categories = [];
+    foreach ($courses as $course) {
+        $categories[$course['categoryslug']] = $course['category'];
+    }
+
+    asort($categories, SORT_NATURAL | SORT_FLAG_CASE);
+
+    $filters = html_writer::link($baseurl, 'All levels', [
+        'class' => 'bag-category-filter' . ($activecategory === '' ? ' is-active' : ''),
+    ]);
+
+    foreach ($categories as $slug => $label) {
+        $url = new moodle_url($baseurl, ['bagcategory' => $slug]);
+        $filters .= html_writer::link($url, $label, [
+            'class' => 'bag-category-filter' . ($activecategory === $slug ? ' is-active' : ''),
+        ]);
+    }
+
+    return html_writer::tag('div', $filters, [
+        'class' => 'bag-category-filters',
+        'aria-label' => 'Programme category filters',
+    ]);
 }
 
 /**
@@ -996,27 +1103,57 @@ function theme_baitulghawa_get_public_courses(int $limit = 0): array {
               FROM {course} c
               JOIN {course_categories} cc ON cc.id = c.category
              WHERE " . theme_baitulghawa_public_course_conditions($params);
-    $records = $DB->get_records_sql(
-        $sql . ' ORDER BY c.timemodified DESC, c.id DESC, c.sortorder ASC, c.fullname ASC',
-        $params,
-        0,
-        $limit > 0 ? $limit : 0
-    );
+    $records = $DB->get_records_sql($sql . ' ORDER BY c.timemodified DESC, c.id DESC, c.sortorder ASC, c.fullname ASC', $params);
 
     $courses = [];
     foreach ($records as $record) {
-        $courses[] = [
+        $key = theme_baitulghawa_course_duplicate_key(format_string($record->fullname));
+        if (isset($courses[$key])) {
+            $courses[$key] = theme_baitulghawa_merge_public_course_cards($courses[$key], $record);
+            continue;
+        }
+
+        $category = theme_baitulghawa_course_category_name((int)$record->category);
+        $courses[$key] = [
             'id' => (int)$record->id,
             'name' => format_string($record->fullname),
             'summary' => theme_baitulghawa_course_summary($record),
-            'category' => theme_baitulghawa_course_category_name((int)$record->category),
+            'category' => $category,
+            'categoryslug' => theme_baitulghawa_slug($category),
+            'level' => theme_baitulghawa_course_level_label($record),
             'url' => new moodle_url('/course/view.php', ['id' => $record->id]),
             'image' => theme_baitulghawa_course_image_url($record),
             'fallbackimage' => theme_baitulghawa_course_fallback_image_url((int)$record->id),
+            'duplicateids' => [(int)$record->id],
+            'duplicate_note' => '',
         ];
     }
 
-    return $courses;
+    $courses = array_values($courses);
+
+    return $limit > 0 ? array_slice($courses, 0, $limit) : $courses;
+}
+
+/**
+ * Merges duplicate public course cards while keeping the richest visible summary.
+ *
+ * Logical duplicates are grouped only for catalogue display. Moodle course
+ * records remain untouched so administrators can review the split safely.
+ *
+ * @param array $existing
+ * @param stdClass $record
+ * @return array
+ */
+function theme_baitulghawa_merge_public_course_cards(array $existing, stdClass $record): array {
+    $summary = theme_baitulghawa_course_summary($record);
+    if (core_text::strlen($summary) > core_text::strlen($existing['summary'])) {
+        $existing['summary'] = $summary;
+    }
+
+    $existing['duplicateids'][] = (int)$record->id;
+    $existing['duplicate_note'] = 'Duplicate Moodle course entries with the same normalized title are shown here as one programme. Useful content is preserved in the source courses for administrator review.';
+
+    return $existing;
 }
 
 /**
@@ -1105,6 +1242,100 @@ function theme_baitulghawa_course_summary(stdClass $course): string {
     }
 
     return shorten_text($summary, 115);
+}
+
+/**
+ * Normalizes course names for duplicate catalogue grouping.
+ *
+ * @param string $name
+ * @return string
+ */
+function theme_baitulghawa_course_duplicate_key(string $name): string {
+    $key = core_text::strtolower($name);
+    $key = preg_replace('/\b(copy|duplicate|version|draft|final|old|new|v\d+)\b/u', ' ', $key);
+    $key = preg_replace('/[\(\[\{].*?[\)\]\}]/u', ' ', $key);
+    $key = preg_replace('/[^a-z0-9]+/u', ' ', $key);
+    $key = trim(preg_replace('/\s+/u', ' ', $key));
+
+    return $key !== '' ? $key : core_text::strtolower($name);
+}
+
+/**
+ * Builds a stable URL/category slug.
+ *
+ * @param string $text
+ * @return string
+ */
+function theme_baitulghawa_slug(string $text): string {
+    $slug = core_text::strtolower($text);
+    $slug = preg_replace('/[^a-z0-9]+/u', '-', $slug);
+    $slug = trim($slug, '-');
+
+    return $slug !== '' ? $slug : 'learning-pathway';
+}
+
+/**
+ * Derives a learner-facing level from course category/name metadata.
+ *
+ * @param stdClass $course
+ * @return string
+ */
+function theme_baitulghawa_course_level_label(stdClass $course): string {
+    $category = theme_baitulghawa_course_category_name((int)$course->category);
+    $haystack = core_text::strtolower($category . ' ' . format_string($course->fullname) . ' ' . format_string($course->shortname ?? ''));
+
+    if (strpos($haystack, 'foundation') !== false || strpos($haystack, 'intro') !== false || strpos($haystack, 'beginner') !== false) {
+        return 'Foundation';
+    }
+
+    if (strpos($haystack, 'trainer') !== false || strpos($haystack, 'instructor') !== false) {
+        return 'Trainer';
+    }
+
+    if (strpos($haystack, 'school') !== false || strpos($haystack, 'community') !== false) {
+        return 'Schools & Community';
+    }
+
+    if (strpos($haystack, 'advanced') !== false || strpos($haystack, 'practitioner') !== false || strpos($haystack, 'professional') !== false) {
+        return 'Practitioner';
+    }
+
+    return $category !== '' ? $category : 'Learning Pathway';
+}
+
+/**
+ * Explains duplicate course handling on the public course detail page.
+ *
+ * @param stdClass $course
+ * @return string
+ */
+function theme_baitulghawa_course_duplicate_note(stdClass $course): string {
+    global $DB;
+
+    $params = [];
+    $sql = "SELECT c.id, c.fullname, c.shortname, c.summary, c.summaryformat, c.category
+              FROM {course} c
+              JOIN {course_categories} cc ON cc.id = c.category
+             WHERE " . theme_baitulghawa_public_course_conditions($params);
+    $records = $DB->get_records_sql($sql, $params);
+    $currentkey = theme_baitulghawa_course_duplicate_key(format_string($course->fullname));
+    $matches = [];
+
+    foreach ($records as $record) {
+        if ((int)$record->id !== (int)$course->id && theme_baitulghawa_course_duplicate_key(format_string($record->fullname)) === $currentkey) {
+            $matches[] = format_string($record->fullname);
+        }
+    }
+
+    if (empty($matches)) {
+        return '';
+    }
+
+    return html_writer::tag(
+        'p',
+        'Duplicate review: matching Moodle course records are treated as the same public programme because their normalized names match. Separate source entries remain available to administrators so useful content is not removed without review.',
+        ['class' => 'bag-course-duplicate-note']
+    );
 }
 
 /**
@@ -1406,7 +1637,7 @@ function theme_baitulghawa_academy_label_script(): string {
         'English' => 'English',
         'العربية' => 'العربية',
         'Bait Al Gahwa' => 'بيت القهوة',
-        'Learn the heritage. Practise the standards. Carry it forward.' => 'تعلّم الإرث. أتقن المعايير. وانقله للأجيال.',
+        'Learn the heritage. Practice the standards. Carry it forward.' => 'تعلّم الإرث. أتقن المعايير. وانقله للأجيال.',
         'Welcome to Bait Al Gahwa Academy, the learning platform dedicated to the heritage, preparation and serving etiquette of Emirati Gahwa.' => 'مرحباً بكم في أكاديمية بيت القهوة، المنصة التعليمية المتخصصة في تراث القهوة الإماراتية وإعدادها وسنع تقديمها.',
         'Explore Programmes' => 'استكشف البرامج',
         'Academy purpose' => 'هدف الأكاديمية',
@@ -1414,9 +1645,9 @@ function theme_baitulghawa_academy_label_script(): string {
         'Bait Al Gahwa Academy combines cultural knowledge, guided practice and assessment to prepare learners to deliver the Bait Al Gahwa experience with authenticity, care and respect.' => 'تجمع أكاديمية بيت القهوة بين المعرفة الثقافية والتدريب التطبيقي والتقييم، لتأهيل المتعلمين على تقديم تجربة بيت القهوة بأصالة وعناية واحترام.',
         'Preserve' => 'الحفظ',
         'Safeguard Emirati Gahwa as living heritage' => 'صون القهوة الإماراتية بوصفها إرثاً حياً',
-        'Practise' => 'الممارسة',
+        'Practice' => 'الممارسة',
         'Build capability through guided learning' => 'بناء القدرات من خلال التعلم الموجّه',
-        'Standardise' => 'توحيد المعايير',
+        'Standardize' => 'توحيد المعايير',
         'Apply approved tools, methods and etiquette' => 'تطبيق الأدوات والأساليب والسنع المعتمدة',
         'Programme catalogue' => 'دليل البرامج',
         'Learning pathways for Emirati Gahwa practice' => 'مسارات تعلم لممارسة القهوة الإماراتية',
@@ -1443,9 +1674,9 @@ function theme_baitulghawa_academy_label_script(): string {
         'Bait Al Gahwa Academy | Department of Culture and Tourism - Abu Dhabi | Privacy | Accessibility | Terms | Support' => 'أكاديمية بيت القهوة | دائرة الثقافة والسياحة - أبوظبي | الخصوصية | سهولة الوصول | الشروط | الدعم',
         'The standards-led learning platform for Emirati Gahwa' => 'منصة تعلم قائمة على المعايير للقهوة الإماراتية',
         'About Bait Al Gahwa Academy' => 'عن أكاديمية بيت القهوة',
-        'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practised and passed on to future generations.' => 'بيت القهوة هو الحاضن والمرجعية المعتمدة لتجربة القهوة الإماراتية ومعاييرها. وتعمل الأكاديمية على بناء المعارف والقدرات من خلال تعلم قائم على المعايير وتدريب تطبيقي وتطوير مهني، بما يسهم في حفظ القهوة الإماراتية بوصفها إرثاً حياً يمارس وينقل للأجيال.',
+        'Bait Al Gahwa is the custodian and approved reference for the Emirati Gahwa experience and its standards. The Academy builds knowledge and capability through standards-led learning, guided practice and professional development, helping preserve Emirati Gahwa as living heritage that is practiced and passed on to future generations.' => 'بيت القهوة هو الحاضن والمرجعية المعتمدة لتجربة القهوة الإماراتية ومعاييرها. وتعمل الأكاديمية على بناء المعارف والقدرات من خلال تعلم قائم على المعايير وتدريب تطبيقي وتطوير مهني، بما يسهم في حفظ القهوة الإماراتية بوصفها إرثاً حياً يمارس وينقل للأجيال.',
         'Learning principles' => 'مبادئ التعلم',
-        'Preserve, practise, standardise and share' => 'الحفظ والممارسة وتوحيد المعايير والمشاركة',
+        'Preserve, practice, standardize and share' => 'الحفظ والممارسة وتوحيد المعايير والمشاركة',
         'Cultural meaning and values come before beverage language' => 'المعنى الثقافي والقيم تأتي قبل لغة المشروبات',
         'Technical content traces to approved Emirati Gahwa standards' => 'يرتبط المحتوى التقني بمعايير القهوة الإماراتية المعتمدة',
         'Achievement is recognised only through approved learning and assessment routes' => 'يتم الاعتراف بالإنجاز فقط من خلال مسارات تعلم وتقييم معتمدة',

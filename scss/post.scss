@@ -50,7 +50,8 @@ body {
 
 #page.drawers .main-inner,
 #page.drawers .footer-popover {
-    max-width: 1180px;
+    max-width: min(1440px, calc(100vw - 2rem));
+    width: 100%;
 }
 
 #page.drawers .main-inner,
@@ -58,6 +59,55 @@ body {
 .course-content,
 .block-region {
     border-radius: 0;
+}
+
+#page.drawers .main-inner,
+#page-content,
+#region-main,
+.course-content,
+.course-content .section,
+.activity-item,
+.card,
+.block,
+.bag-landing-shell,
+.bag-landing-shell * {
+    min-width: 0;
+}
+
+#region-main,
+#page-content,
+.course-content,
+.course-content .content,
+.course-content .summary,
+.activity-item,
+.activity-description,
+.no-overflow,
+.generaltable,
+.bag-card-body,
+.bag-course-summary,
+.bag-detail-panel,
+.bag-contact-info,
+.bag-contact-form {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.no-overflow {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.course-content table,
+#region-main table,
+.generaltable {
+    max-width: 100%;
+}
+
+.course-content pre,
+#region-main pre,
+.course-content code,
+#region-main code {
+    white-space: pre-wrap;
 }
 
 h1,
@@ -683,6 +733,35 @@ footer a,
     max-width: 74rem;
 }
 
+.bag-category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    justify-content: center;
+    margin: 1.6rem auto .4rem;
+    max-width: 64rem;
+}
+
+.bag-category-filter {
+    background: #fff;
+    border: 1px solid var(--bag-border);
+    border-radius: 999px;
+    color: var(--bag-brown-dark);
+    font-size: .74rem;
+    font-weight: 800;
+    line-height: 1;
+    padding: .65rem 1rem;
+    text-decoration: none;
+}
+
+.bag-category-filter:hover,
+.bag-category-filter.is-active {
+    background: var(--bag-brown);
+    border-color: var(--bag-brown);
+    color: #fff;
+    text-decoration: none;
+}
+
 .bag-programme-card {
     background: #fff;
     border: 1px solid var(--bag-border);
@@ -745,6 +824,17 @@ footer a,
     font-size: .82rem;
     line-height: 1.55;
     margin: 0 0 .8rem;
+}
+
+.bag-duplicate-note,
+.bag-course-duplicate-note {
+    background: rgba(193, 154, 77, .12);
+    border-left: 3px solid var(--bag-gold);
+    color: #6f625a;
+    font-size: .72rem;
+    line-height: 1.45;
+    margin: .8rem 0 0;
+    padding: .7rem .85rem;
 }
 
 .bag-card-meta {
@@ -992,6 +1082,7 @@ footer a,
 .bag-course-teacher {
     align-items: center;
     display: flex;
+    flex-wrap: wrap;
     gap: .7rem;
 }
 
@@ -1023,6 +1114,12 @@ footer a,
 .bag-course-more:hover {
     color: var(--bag-brown-dark);
     text-decoration: none;
+}
+
+.bag-course-duplicate-note {
+    border-radius: .28rem;
+    color: rgba(255, 255, 255, .84);
+    margin: 0 0 1.2rem;
 }
 
 .bag-course-details {
@@ -1070,6 +1167,117 @@ footer a,
     border: 1px solid var(--bag-border);
     border-radius: .45rem;
     padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.bag-certificate-section {
+    align-items: center;
+    background: #f1eae2;
+    display: grid;
+    gap: clamp(2rem, 6vw, 5rem);
+    grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+    min-height: 42rem;
+}
+
+.bag-certificate-copy {
+    max-width: 31rem;
+}
+
+.bag-certificate-copy h1 {
+    color: var(--bag-text);
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.04;
+    margin: 0 0 1rem;
+}
+
+.bag-certificate-copy p {
+    color: var(--bag-subtle);
+    line-height: 1.7;
+    margin: 0 0 1.4rem;
+}
+
+.bag-certificate-preview {
+    background: #fff;
+    border: 1px solid rgba(95, 61, 31, .16);
+    border-radius: .5rem;
+    box-shadow: 0 24px 60px rgba(65, 39, 22, .12);
+    padding: clamp(.8rem, 2vw, 1.2rem);
+}
+
+.bag-certificate-paper {
+    aspect-ratio: 1.414 / 1;
+    background:
+        linear-gradient(135deg, rgba(202, 165, 84, .12), transparent 28%),
+        linear-gradient(315deg, rgba(123, 67, 31, .10), transparent 30%),
+        #fffaf4;
+    border: 2px solid #d4b259;
+    color: var(--bag-text);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 22rem;
+    padding: clamp(1.4rem, 4vw, 3.5rem);
+    position: relative;
+    text-align: center;
+}
+
+.bag-certificate-paper::before {
+    border: 1px solid rgba(123, 67, 31, .25);
+    content: "";
+    inset: clamp(.55rem, 1.4vw, 1rem);
+    pointer-events: none;
+    position: absolute;
+}
+
+.bag-certificate-heading span,
+.bag-certificate-paper p,
+.bag-certificate-meta,
+.bag-certificate-signatures {
+    color: var(--bag-subtle);
+    font-size: clamp(.66rem, 1.2vw, .86rem);
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.bag-certificate-heading strong {
+    color: var(--bag-brown);
+    display: block;
+    font-size: clamp(1.45rem, 4vw, 3.1rem);
+    font-weight: 900;
+    line-height: 1;
+    margin: .45rem 0 1.4rem;
+}
+
+.bag-certificate-paper h2 {
+    color: #23160e;
+    font-size: clamp(1.65rem, 4vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin: .45rem 0;
+}
+
+.bag-certificate-paper h3 {
+    color: var(--bag-brown-dark);
+    font-size: clamp(1rem, 2.2vw, 1.65rem);
+    font-weight: 850;
+    line-height: 1.2;
+    margin: .45rem 0 1.6rem;
+}
+
+.bag-certificate-meta,
+.bag-certificate-signatures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem 1.2rem;
+    justify-content: center;
+}
+
+.bag-certificate-signatures {
+    border-top: 1px solid rgba(95, 61, 31, .18);
+    margin: 1.5rem auto 0;
+    max-width: 34rem;
+    padding-top: 1rem;
 }
 
 .bag-contact-grid {
@@ -2018,6 +2226,7 @@ footer a,
     .bag-programme-grid,
     .bag-programme-grid-wide,
     .bag-course-hero-inner,
+    .bag-certificate-section,
     .bag-contact-grid,
     .bag-footer-grid {
         grid-template-columns: 1fr;
@@ -2083,5 +2292,10 @@ footer a,
 
     .bag-card-image {
         height: 11rem;
+    }
+
+    .bag-certificate-paper {
+        aspect-ratio: auto;
+        min-height: 25rem;
     }
 }
